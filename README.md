@@ -1,1 +1,5 @@
-CPNV_ProjetC#_ARI+DCT
+CPNV ProjetC# 
+by
+Alessandro Rossi
+and
+Damien Chervet
