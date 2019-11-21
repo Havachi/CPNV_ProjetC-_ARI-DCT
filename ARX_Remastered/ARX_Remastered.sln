@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainMenu", "MainMenu\MainMe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBConnectionLib", "DBConnectionLib\DBConnectionLib.csproj", "{17299C8A-4E90-4238-A4C2-89973AB358F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARX_Tests", "ARX_Tests\ARX_Tests.csproj", "{805EC814-6401-4C46-AB2E-0A7F902239B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{17299C8A-4E90-4238-A4C2-89973AB358F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17299C8A-4E90-4238-A4C2-89973AB358F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17299C8A-4E90-4238-A4C2-89973AB358F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{805EC814-6401-4C46-AB2E-0A7F902239B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{805EC814-6401-4C46-AB2E-0A7F902239B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{805EC814-6401-4C46-AB2E-0A7F902239B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{805EC814-6401-4C46-AB2E-0A7F902239B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
