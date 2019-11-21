@@ -16,13 +16,8 @@ namespace MainMenu
         {
             InitializeComponent();
         }
-
-        public void formLogin()
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        
+        private void btnLogin_Click(object sender, EventArgs e)
         {
              var FormLogin = new MainMenu();
              FormLogin.Show();

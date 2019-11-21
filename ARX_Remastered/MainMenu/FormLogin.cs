@@ -10,20 +10,32 @@ using System.Windows.Forms;
 
 namespace MainMenu
 {
+
     public partial class FormLogin : Form
     {
+        private string username;
+        private string password;
+
         public FormLogin()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnLoginConnexion_Click(object sender, EventArgs e)
         {
+            //Appelle la méthode permettant de se connecter
+            //Définit les valeurs de username et password avant envoi
+            username = tbxLoginUsername.Text;
+            password = tbxLoginPassword.Text;
 
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void btnLoginRegister_Click(object sender, EventArgs e)
         {
+            //Appelle la méthode permettant de créer un compte
+            //Définit les valeurs de username et password avant envoi
+            username = tbxLoginUsername.Text;
+            password = tbxLoginPassword.Text;
 
         }
     }
