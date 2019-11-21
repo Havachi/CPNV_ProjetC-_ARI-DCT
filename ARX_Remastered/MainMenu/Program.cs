@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MainMenu
+
+    //BLLA
 {
     static class Program
     {
