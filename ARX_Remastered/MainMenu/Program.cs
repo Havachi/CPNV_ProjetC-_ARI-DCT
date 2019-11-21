@@ -1,3 +1,10 @@
+/// 
+/// File name : Register.cs
+/// Author : Alessandro Rossi
+/// Date : 21.11.2019
+/// Description : This is the Enrty point of the application, 
+/// this file start the form for the main menu
+/// 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +13,12 @@ using System.Windows.Forms;
 
 namespace MainMenu
 
-    //BLLA
+
 {
     static class Program
     {
         /// <summary>
-        /// Point d'entrée principal de l'application.
+        /// Entry point of the application
         /// </summary>
         [STAThread]
         static void Main()

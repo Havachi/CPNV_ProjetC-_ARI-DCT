@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,60 @@ namespace MainMenuLib
     /// </summary>
     public class Register
     {
+        private string username;
+        private string password;
+        private List<string> illegalChar = new List<string>();
 
+
+        public Register(string username, string password)
+        {
+            populateIllegalChar();
+
+            this.username = username;
+            this.password = password;
+        }
+        public void VerifRegister()
+        {
+
+            if (username.Length < 8)
+            {
+                Exception e = new Exception("Username too short");
+                throw e;
+            }
+            else
+            {
+                foreach (var c in illegalChar)
+                {
+                    foreach (var i in illegalChar)
+                    {
+                        if (c.Contains(i))
+                        {
+                            Exception e = new Exception("Invalid username");
+                            throw e;
+                        }
+                    }
+                }
+            }
+            if (password.Length < 8)
+            {
+                Exception e = new Exception("Password too short");
+            }
+            else
+            {
+                //Password encryption
+                HashAlgorithm sha = new SHA256CryptoServiceProvider();
+                byte[] result = sha.ComputeHash(password);
+                password.GetHashCode();
+            }
+
+        }
+        private void populateIllegalChar()
+        {
+            illegalChar.Add("-- ");
+            illegalChar.Add("/*");
+            illegalChar.Add("*/");
+        }
+
+    }
     }
 }

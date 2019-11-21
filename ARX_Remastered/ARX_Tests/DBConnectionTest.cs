@@ -7,6 +7,9 @@ namespace ARX_Tests
     [TestClass]
     public class DbConnectionTest
     {
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void TestConnectionWithDatabase()
         {
@@ -15,14 +18,6 @@ namespace ARX_Tests
                 //init of the connection
                 DBConnection connDB = new DBConnection();
                 connDB.OpenConnection();
-
-                //insert a player
-                connDB.AddPlayer("Toto");
-
-                //get a specific player
-                string name = connDB.GetPlayerName(1);
-
-                Console.WriteLine("nom : " + name);
 
                 //close connection
                 connDB.CloseConnection();
@@ -37,5 +32,26 @@ namespace ARX_Tests
                 Console.ReadKey();
             }
         }
+        /// <summary>
+        /// Test if the login work with an existing user
+        /// First the user is created
+        /// then the login is tested, with method from MainMenulLib\login.cs
+        /// </summary>
+        [TestMethod]
+        public void TestLoginExistingUser()
+        {
+
+        }
+        /// <summary>
+        /// Test if the login not work
+        /// The test try to login with an unexisting user username
+        /// TBD: The test should catch anexception 
+        /// </summary>
+        [TestMethod]
+        public void TestLoginNonExistingUser()
+        {
+
+        }
+
     }
 }

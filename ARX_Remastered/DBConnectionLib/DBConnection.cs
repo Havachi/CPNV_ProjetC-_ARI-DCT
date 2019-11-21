@@ -1,5 +1,6 @@
-﻿using System;
-
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Data.Common;
 
 namespace DBConnectionLib
 {
