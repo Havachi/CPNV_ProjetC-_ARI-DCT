@@ -28,26 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_Login = new System.Windows.Forms.Button();
             this.lblARXMainMenu = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button1
+            // btn_Login
             // 
-            this.button1.Location = new System.Drawing.Point(141, 136);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_Login.Font = new System.Drawing.Font("Monoton", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Login.Location = new System.Drawing.Point(270, 400);
+            this.btn_Login.Name = "btn_Login";
+            this.btn_Login.Size = new System.Drawing.Size(250, 60);
+            this.btn_Login.TabIndex = 0;
+            this.btn_Login.Text = "Login";
+            this.btn_Login.UseVisualStyleBackColor = true;
+            this.btn_Login.Click += new System.EventHandler(this.button1_Click);
             // 
             // lblARXMainMenu
             // 
             this.lblARXMainMenu.AutoSize = true;
-            this.lblARXMainMenu.Location = new System.Drawing.Point(156, 34);
+            this.lblARXMainMenu.Font = new System.Drawing.Font("Monoton", 30.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblARXMainMenu.Location = new System.Drawing.Point(259, 55);
             this.lblARXMainMenu.Name = "lblARXMainMenu";
-            this.lblARXMainMenu.Size = new System.Drawing.Size(60, 13);
+            this.lblARXMainMenu.Size = new System.Drawing.Size(279, 63);
             this.lblARXMainMenu.TabIndex = 1;
             this.lblARXMainMenu.Text = "Main Menu";
             // 
@@ -55,11 +57,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 381);
+            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.lblARXMainMenu);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_Login);
             this.Name = "MainMenu";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainMenu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -67,7 +70,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_Login;
         private System.Windows.Forms.Label lblARXMainMenu;
     }
 }

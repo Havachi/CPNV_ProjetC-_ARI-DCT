@@ -10,25 +10,19 @@ using System.Windows.Forms;
 
 namespace MainMenu
 {
-    public partial class MainMenu : Form
+    public partial class FormLogin : Form
     {
-        public MainMenu()
+        public FormLogin()
         {
             InitializeComponent();
         }
 
-        public void formLogin()
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-             var FormLogin = new MainMenu();
-             FormLogin.Show();
+
         }
 
-        private void MainMenu_Load(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
