@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Data.Common;
 using MySql.Data.MySqlClient;
 
 namespace DBConnectionLib
-    {
+{
         public class DBConnection
         {
             private MySqlConnection connection;
@@ -24,9 +25,44 @@ namespace DBConnectionLib
             }
 
             /// <summary>
-            /// Open connection to the database
+            /// get the name of the player according to his id
             /// </summary>
-            public void OpenConnection()
+            /// <param name="id">id of the player</param>
+            /// <returns></returns>
+            public string GetPlayerName(int id)
+            {
+                string name = "";
+
+                // Create a command object
+                MySqlCommand cmd = connection.CreateCommand();
+
+                cmd.CommandText = "select pseudo from players where id = " + id;
+
+                DbDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    //we go through the result of the select, we might get only one response. 
+                    //Despite this, we use a while
+                    while (reader.Read())
+                    {
+                        name = reader.GetString(0);
+                        //if a field can be null, we check if the result is not null before getting the value
+                        //if (!reader.IsDBNull(2))
+                        //{
+                        //    telContact = reader.GetString(2);
+                        //}
+
+                    }
+                    return name;
+                }
+
+                return name;
+            }
+        /// <summary>
+        /// Open connection to the database
+        /// </summary>
+        public void OpenConnection()
             {
                 connection.Open();
             }
@@ -40,6 +76,6 @@ namespace DBConnectionLib
             }
 
         }
-    }
-
 }
+
+

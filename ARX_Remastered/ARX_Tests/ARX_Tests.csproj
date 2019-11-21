@@ -49,11 +49,21 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="DbConnectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBConnectionLib\DBConnectionLib.csproj">
+      <Project>{17299c8a-4e90-4238-a4c2-89973ab358f8}</Project>
+      <Name>DBConnectionLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MainMenu\MainMenu.csproj">
+      <Project>{a6207834-ed3c-4b20-af25-a4e1d9985af7}</Project>
+      <Name>MainMenu</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
