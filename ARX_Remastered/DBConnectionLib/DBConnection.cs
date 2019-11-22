@@ -140,6 +140,22 @@ namespace DBConnectionLib
                 }
                 throw new UnknownUsernameException();
             }
+
+            public bool CheckIfUsernameExistInDB(string username)
+            {
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = $"SELECT UserID FROM users WHERE Username =\"{username}\" ";
+                DbDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
         }
 }
 

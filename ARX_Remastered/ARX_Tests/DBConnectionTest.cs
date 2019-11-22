@@ -8,7 +8,7 @@ namespace ARX_Tests
     public class DbConnectionTest
     {
         /// <summary>
-        /// 
+        /// Test if it is possible to connect to the database
         /// </summary>
         [TestMethod]
         public void TestConnectionWithDatabase()
@@ -18,7 +18,7 @@ namespace ARX_Tests
             d.CloseConnection();
         }
         /// <summary>
-        /// 
+        /// Try to select the ID of an existing username in database
         /// </summary>
         [TestMethod]
         public void TestSelectInDatabase()
