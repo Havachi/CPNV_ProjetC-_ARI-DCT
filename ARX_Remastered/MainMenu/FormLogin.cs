@@ -33,6 +33,8 @@ namespace MainMenu
             CheckData logincheck = new CheckData(username, password);
 
             MessageBox.Show("Connexion établie");
+
+            ///Appeler la fonction LoginDB pour se connecter
         }
 
         private void btnLoginRegister_Click(object sender, EventArgs e)
@@ -43,8 +45,10 @@ namespace MainMenu
             password = tbxLoginPassword.Text;
 
             CheckData logincheck = new CheckData(username, password);
-
+            
             MessageBox.Show("Votre compte a été créé");
+
+            ///Appeler la fonction RegisterDB pour se connecter
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
