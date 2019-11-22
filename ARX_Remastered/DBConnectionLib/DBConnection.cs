@@ -83,17 +83,19 @@ namespace DBConnectionLib
             public bool CheckUsername(string username)
             {
                 MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "SELECT UserID FROM users WHERE Username = " + username;
+                cmd.CommandText = $"SELECT UserID FROM users WHERE Username = \"{username}\"";
                 DbDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    return true;
+                    while (reader.Read())
+                    {
+                        reader.Close();
+                        return true;
+                    }
                 }
-                else
-                {
-                    throw new UnknownUsernameException();
-                    return false;
-                }
+
+                throw new UnknownUsernameException();
+                
             }
             /// <summary>
             /// check if the password entered by the user is the same as the one in the database
@@ -105,36 +107,36 @@ namespace DBConnectionLib
             {
                 string pswInDB;
                 MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "SELECT UserPassword FROM users WHERE UserID = " + UserID;
+                cmd.CommandText = $"SELECT UserPassword FROM users WHERE UserID = \"{UserID}\"";
                 DbDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    pswInDB = reader.GetString(0);
-                    if (pswInDB == Password)
+                    while (reader.Read())
                     {
-                        return true;
+                        pswInDB = reader.GetString(0);
+                        if (pswInDB == Password)
+                        {
+                            reader.Close();
+                            return true;
+                        }
                     }
-                    else
-                    {
-                        throw new InvalidPasswordException();
-                        return false;
-                    }
-
                 }
-                else
-                {
-                    throw new Exception("Oula");
-                }
+                throw new InvalidPasswordException();
             }
 
             public string GetUserIDFromUsername(string username)
             {
                 MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "SELECT UserID FROM users WHERE Username = " + username;
+                cmd.CommandText = $"SELECT UserID FROM users WHERE Username =\"{username}\" ";
                 DbDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    return reader.GetString(0);
+                    while (reader.Read())
+                    {
+                        var result = reader.GetString(0);
+                        reader.Close();
+                        return result;
+                    }
                 }
                 throw new UnknownUsernameException();
             }
