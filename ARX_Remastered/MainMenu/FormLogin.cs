@@ -30,10 +30,9 @@ namespace MainMenu
             username = tbxLoginUsername.Text;
             password = tbxLoginPassword.Text;
 
-            if (username == null || password == null)
-            {
-                throw new ArgumentNullException();
-            }
+            CheckData logincheck = new CheckData(username, password);
+
+            MessageBox.Show("Connexion établie");
         }
 
         private void btnLoginRegister_Click(object sender, EventArgs e)
@@ -43,10 +42,9 @@ namespace MainMenu
             username = tbxLoginUsername.Text;
             password = tbxLoginPassword.Text;
 
-            if (username == null || password == null)
-            {
-                throw new ArgumentNullException();
-            }
+            CheckData logincheck = new CheckData(username, password);
+
+            MessageBox.Show("Votre compte a été créé");
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
