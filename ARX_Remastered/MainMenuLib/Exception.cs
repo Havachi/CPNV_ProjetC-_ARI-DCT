@@ -13,8 +13,10 @@ namespace MainMenu
 
         }
 
-        public ArgumentNullException(string messageAlert, System.Exception inner) : base(messageAlert, inner) { }
+        public ArgumentNullException(string message = "One field is empty") : base(message)
+        {
 
+        }
 
     }
 
