@@ -12,11 +12,18 @@ using MySql.Data.MySqlClient;
 
 namespace MainMenuLib
 {
+    /// <summary>
+    /// This class contain all method for login
+    /// </summary>
     public class Login
     {
         private string username;
         private string password;
-
+        /// <summary>
+        /// This is the constructor for the Login Object
+        /// </summary>
+        /// <param name="username">Username of the user</param>
+        /// <param name="password">Password of the user</param>
         public Login(string username, string password)
         {
             this.username = username;
@@ -31,7 +38,6 @@ namespace MainMenuLib
         /// <returns>Exception if not OK</returns>
         public bool LoginDB(Login login)
         {
-            
             string ID;
             DBConnection connection = new DBConnection();
             connection.OpenConnection();
