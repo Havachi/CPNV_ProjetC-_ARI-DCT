@@ -36,7 +36,7 @@ namespace DBConnectionLib
                 // Create a command object
                 MySqlCommand cmd = connection.CreateCommand();
 
-                cmd.CommandText = "select pseudo from players where id = " + id;
+                cmd.CommandText = "SELECT Username FROM users WHERE UserID = " + id;
 
                 DbDataReader reader = cmd.ExecuteReader();
 

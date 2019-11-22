@@ -13,45 +13,23 @@ namespace ARX_Tests
         [TestMethod]
         public void TestConnectionWithDatabase()
         {
-            try
-            {
-                //init of the connection
-                DBConnection connDB = new DBConnection();
-                connDB.OpenConnection();
-
-                //close connection
-                connDB.CloseConnection();
-            }
-            catch (Exception exc)
-            {
-                //we display the error message.
-                Console.WriteLine(exc.Message);
-            }
-            finally
-            {
-                Console.ReadKey();
-            }
+            DBConnection d = new DBConnection();
+            d.OpenConnection();
+            d.CloseConnection();
         }
         /// <summary>
-        /// Test if the login work with an existing user
-        /// First the user is created
-        /// then the login is tested, with method from MainMenulLib\login.cs
+        /// 
         /// </summary>
         [TestMethod]
-        public void TestLoginExistingUser()
+        public void TestSelectInDatabase()
         {
-
+            DBConnection d = new DBConnection();
+            d.OpenConnection();
+            var dOut = d.GetPlayerName(1);
+            Assert.AreEqual("Havachi",dOut);
+            d.CloseConnection();
         }
-        /// <summary>
-        /// Test if the login not work
-        /// The test try to login with an unexisting user username
-        /// TBD: The test should catch anexception 
-        /// </summary>
-        [TestMethod]
-        public void TestLoginNonExistingUser()
-        {
 
-        }
 
     }
 }

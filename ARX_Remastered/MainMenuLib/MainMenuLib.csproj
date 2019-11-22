@@ -71,5 +71,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBConnectionLib\DBConnectionLib.csproj">
+      <Project>{17299c8a-4e90-4238-a4c2-89973ab358f8}</Project>
+      <Name>DBConnectionLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

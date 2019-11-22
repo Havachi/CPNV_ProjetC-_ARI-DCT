@@ -59,9 +59,6 @@ namespace MainMenuLib
             else
             {
                 //Password encryption
-                HashAlgorithm sha = new SHA256CryptoServiceProvider();
-                byte[] result = sha.ComputeHash(password);
-                password.GetHashCode();
             }
 
         }
@@ -73,5 +70,5 @@ namespace MainMenuLib
         }
 
     }
-    }
 }
+

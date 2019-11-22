@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoginTest.cs" />
     <Compile Include="DbConnectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -82,6 +83,14 @@
     <ProjectReference Include="..\DBConnectionLib\DBConnectionLib.csproj">
       <Project>{17299c8a-4e90-4238-a4c2-89973ab358f8}</Project>
       <Name>DBConnectionLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameLib\GameLib.csproj">
+      <Project>{07322e42-5f0f-4cf8-b55e-1850bb18c2e3}</Project>
+      <Name>GameLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MainMenuLib\MainMenuLib.csproj">
+      <Project>{9d508df8-e330-40ba-bdcd-765e1581e249}</Project>
+      <Name>MainMenuLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\MainMenu\MainMenu.csproj">
       <Project>{a6207834-ed3c-4b20-af25-a4e1d9985af7}</Project>
