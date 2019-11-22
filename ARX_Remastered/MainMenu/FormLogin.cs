@@ -62,6 +62,9 @@ namespace MainMenu
 
 
             ///Appeler la fonction RegisterDB pour se connecter
+            Register register = new Register(username, password);
+            register.RegisterInDB(register);
+
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
