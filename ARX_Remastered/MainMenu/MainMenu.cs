@@ -19,8 +19,10 @@ namespace MainMenu
         
         private void btnLogin_Click(object sender, EventArgs e)
         {
-             var FormLogin = new MainMenu();
-             FormLogin.Show();
+            using (FormLogin formLogin = new FormLogin());
+            {
+                //formLogin.ShowDialog(this);
+            }
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
