@@ -29,4 +29,17 @@ namespace MainMenuLib
 
         }
     }
+    [Serializable]
+    public class UsernameAlreadyExistException : Exception
+    {
+        public UsernameAlreadyExistException()
+        {
+
+        }
+
+        public UsernameAlreadyExistException(string message = "Username already exist") : base(message)
+        {
+
+        }
+    }
 }

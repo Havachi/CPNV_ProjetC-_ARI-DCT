@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data.Common;
+using System.Threading;
 
 
 namespace DBConnectionLib
@@ -13,7 +14,6 @@ namespace DBConnectionLib
             {
                 InitConnection();
             }
-
             /// <summary>
             /// Initialize the connection to the database
             /// </summary>
@@ -24,7 +24,6 @@ namespace DBConnectionLib
                 string connectionString = "SERVER=127.0.0.1; DATABASE=arx_db; UID=DBConnector; PASSWORD=1234";
                 connection = new MySqlConnection(connectionString);
             }
-
             /// <summary>
             /// get the name of the player according to his id
             /// </summary>
@@ -67,7 +66,6 @@ namespace DBConnectionLib
                 {
                     connection.Open();
                 }
-
             /// <summary>
             /// Close connection to the database
             /// </summary>
@@ -123,7 +121,11 @@ namespace DBConnectionLib
                 }
                 throw new InvalidPasswordException();
             }
-
+            /// <summary>
+            /// Get the UserID from the database with the username
+            /// </summary>
+            /// <param name="username"></param>
+            /// <returns>String : UserID </returns>
             public string GetUserIDFromUsername(string username)
             {
                 MySqlCommand cmd = connection.CreateCommand();
@@ -140,7 +142,12 @@ namespace DBConnectionLib
                 }
                 throw new UnknownUsernameException();
             }
-
+            /// <summary>
+            /// Check if the Username that the user input is already taken
+            /// </summary>
+            /// <param name="username">User username</param>
+            /// <returns>True : Username is not used</returns>
+            /// <returns>False: Username already taken </returns>
             public bool CheckIfUsernameExistInDB(string username)
             {
                 MySqlCommand cmd = connection.CreateCommand();
@@ -156,6 +163,25 @@ namespace DBConnectionLib
 
                 return true;
             }
+            /// <summary>
+            /// This method insert data in the database
+            /// </summary>
+            public void InsertDataInDB(string username,string password)
+            {
+                // Create a SQL command
+                MySqlCommand cmd = connection.CreateCommand();
+                OpenConnection();
+                // SQL request
+                cmd.CommandText = $"INSERT INTO Users (Username, UserPassword) values (@username, @password)";
+
+                // use of the pseudo string, parameter of the method AddPlayer
+                cmd.Parameters.AddWithValue("@username",username);
+                cmd.Parameters.AddWithValue("@password", password);
+
+                // Execute the SQL command
+                cmd.ExecuteNonQuery();
+                CloseConnection();
+            }   
         }
 }
 

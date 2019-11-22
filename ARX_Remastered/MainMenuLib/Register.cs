@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using DBConnectionLib;
 
 namespace MainMenuLib
 {
@@ -23,7 +24,19 @@ namespace MainMenuLib
 
         public bool RegisterInDB(Register reg)
         {
+            DBConnection connection = new DBConnection();
 
+
+            if (connection.CheckIfUsernameExistInDB(username))
+            {
+                throw new UsernameAlreadyExistException();
+            }
+            else
+            {
+                connection.InsertDataInDB(username,password);
+                return true;
+            }
+            
         }
 
     }
