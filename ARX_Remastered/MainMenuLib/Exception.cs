@@ -10,15 +10,8 @@ namespace MainMenuLib
 
         }
 
-<<<<<<< Updated upstream
-        public ArgumentNullException(string message = "One field is empty") : base(message)
-        {
-
-        }
-=======
         public InvalidUsernameException(string message = "Unkown Username") : base(message)
         {
->>>>>>> Stashed changes
 
         }
     }
