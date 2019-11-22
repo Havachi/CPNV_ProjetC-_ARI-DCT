@@ -3,17 +3,24 @@ using System;
 using System.Data.Common;
 using System.Threading;
 
+//TODO IN THIS FILE: Remove Hardcoded values to connect to the database and replace by a JSON File containing those values
 
 namespace DBConnectionLib
 {
+        /// <summary>
+        /// This Class contains all method used to connect, disconnect, Inserting to the Database
+        /// Also contains some method to check values in the database (E.g. Checking if the username is already used)
+        /// </summary>
         public class DBConnection
         {
+            #region private attibut
+
             private MySqlConnection connection;
 
-            public DBConnection()
-            {
-                InitConnection();
-            }
+            #endregion
+
+            #region Private methods
+
             /// <summary>
             /// Initialize the connection to the database
             /// </summary>
@@ -24,11 +31,24 @@ namespace DBConnectionLib
                 string connectionString = "SERVER=127.0.0.1; DATABASE=arx_db; UID=DBConnector; PASSWORD=1234";
                 connection = new MySqlConnection(connectionString);
             }
+
+
+            #endregion
+
+            #region Public methods
+
             /// <summary>
-            /// get the name of the player according to his id
-            /// </summary>
-            /// <param name="id">id of the player</param>
-            /// <returns></returns>
+        /// Constructor for the Object DBConnection
+        /// </summary>
+            public DBConnection()
+            {
+                InitConnection();
+            }
+            /// <summary>
+        /// get the name of the player according to his id
+        /// </summary>
+        /// <param name="id">id of the player</param>
+        /// <returns></returns>
             public string GetPlayerName(int id)
             {
                 string name = "";
@@ -182,7 +202,9 @@ namespace DBConnectionLib
                     
                 }
                 CloseConnection();
-            }   
+            }
+
+            #endregion
         }
 }
 
