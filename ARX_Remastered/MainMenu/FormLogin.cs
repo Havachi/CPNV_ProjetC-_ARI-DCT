@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+// ReSharper disable All
 
 namespace MainMenu
 {
@@ -31,8 +32,9 @@ namespace MainMenu
             password = tbxLoginPassword.Text;
 
             CheckData logincheck = new CheckData(username, password);
+            logincheck.CheckLoginField(username, password);
 
-            MessageBox.Show("Connexion établie");
+            MessageBox.Show(@"Connexion établie");
 
             ///Appeler la fonction LoginDB pour se connecter
         }
@@ -45,8 +47,12 @@ namespace MainMenu
             password = tbxLoginPassword.Text;
 
             CheckData logincheck = new CheckData(username, password);
-            
-            MessageBox.Show("Votre compte a été créé");
+
+            logincheck.CheckLoginField(username, password);
+            logincheck.VerifRegister(username, password);
+
+            MessageBox.Show(@"Votre compte a été créé");
+
 
             ///Appeler la fonction RegisterDB pour se connecter
         }

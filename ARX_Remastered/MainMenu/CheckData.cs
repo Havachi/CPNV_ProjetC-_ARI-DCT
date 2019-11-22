@@ -33,7 +33,7 @@ namespace MainMenu
             illegalChar.Add("/*");
             illegalChar.Add("*/");
         }
-        public void VerifRegister()
+        public void VerifRegister(string username, string password)
         {
 
             if (username.Length < 8)
