@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,6 +30,10 @@ namespace MainMenu
             username = tbxLoginUsername.Text;
             password = tbxLoginPassword.Text;
 
+            if (username == null || password == null)
+            {
+                throw new ArgumentNullException();
+            }
         }
 
         private void btnLoginRegister_Click(object sender, EventArgs e)
@@ -37,6 +43,16 @@ namespace MainMenu
             username = tbxLoginUsername.Text;
             password = tbxLoginPassword.Text;
 
+            if (username == null || password == null)
+            {
+                throw new ArgumentNullException();
+            }
         }
+
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
