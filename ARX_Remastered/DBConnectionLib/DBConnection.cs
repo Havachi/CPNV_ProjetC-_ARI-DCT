@@ -150,32 +150,37 @@ namespace DBConnectionLib
             /// <returns>False: Username already taken </returns>
             public bool CheckIfUsernameExistInDB(string username)
             {
-                MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = $"SELECT UserID FROM users WHERE Username =\"{username}\" ";
-                DbDataReader reader = cmd.ExecuteReader();
+                string query = $"SELECT UserID FROM users WHERE Username =\"{username}\" ";
+
+                MySqlCommand cmd = new MySqlCommand(query,connection);
+
+                MySqlDataReader reader;
+                OpenConnection();
+                reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        return false;
+                        return true;
                     }
                 }
-
-                return true;
+                CloseConnection();
+                return false;
             }
             /// <summary>
             /// This method insert data in the database
             /// </summary>
             public void InsertDataInDB(string username,string password)
             {
-                // Create a SQL command
-                MySqlCommand cmd = connection.CreateCommand();
+                string query = $"INSERT INTO Users (Username, UserPassword) values (\"{username}\", \"{password}\")";
+                MySqlCommand cmd = new MySqlCommand(query,connection);
+                MySqlDataReader reader;
                 OpenConnection();
-                // SQL request
-                cmd.CommandText = $"INSERT INTO Users (Username, UserPassword) values ({username}, {password})";
-
-                // Execute the SQL command
-                cmd.ExecuteNonQuery();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    
+                }
                 CloseConnection();
             }   
         }

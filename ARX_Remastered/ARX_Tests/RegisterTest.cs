@@ -22,9 +22,13 @@ namespace ARX_Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(UsernameAlreadyExistException))]
         public void TryRegisterInDbWithInvalidInput()
         {
-
+            string username = "Havachi";
+            string password = "1234";
+            Register r = new Register(username, password);
+            r.RegisterInDB(r);
         }
     }
 }
