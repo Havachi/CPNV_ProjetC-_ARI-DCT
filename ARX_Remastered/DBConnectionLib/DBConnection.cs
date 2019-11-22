@@ -172,11 +172,7 @@ namespace DBConnectionLib
                 MySqlCommand cmd = connection.CreateCommand();
                 OpenConnection();
                 // SQL request
-                cmd.CommandText = $"INSERT INTO Users (Username, UserPassword) values (@username, @password)";
-
-                // use of the pseudo string, parameter of the method AddPlayer
-                cmd.Parameters.AddWithValue("@username",username);
-                cmd.Parameters.AddWithValue("@password", password);
+                cmd.CommandText = $"INSERT INTO Users (Username, UserPassword) values ({username}, {password})";
 
                 // Execute the SQL command
                 cmd.ExecuteNonQuery();
