@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using 
+using MainMenuLib;
+
 namespace ARX_Tests
 {
     [TestClass]
@@ -20,6 +21,9 @@ namespace ARX_Tests
         {
             string username = "Havachi";
             string password = "1234";
+            Login l = new Login(username,password);
+
+            l.LoginDB();
 
             
         }
@@ -29,9 +33,29 @@ namespace ARX_Tests
         /// TBD: The test should catch an exception 
         /// </summary>
         [TestMethod]
-        public void TestLoginNonExistingUser()
-        {
 
+        public void TestLoginInvalidUsername()
+        {
+            string username = "Oof";
+            string password = "1234";
+            Login l = new Login(username, password);
+
+            l.LoginDB();
+        }
+        /// <summary>
+        /// Test if the login not work
+        /// The test try to login with an unexisting user username
+        /// TBD: The test should catch an exception 
+        /// </summary>
+        [TestMethod]
+
+        public void TestLoginInvalidPassword()
+        {
+            string username = "Havachi";
+            string password = "4321";
+            Login l = new Login(username, password);
+
+            l.LoginDB();
         }
     }
 }

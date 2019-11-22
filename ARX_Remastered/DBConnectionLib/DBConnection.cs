@@ -59,13 +59,13 @@ namespace DBConnectionLib
 
                 return name;
             }
-        /// <summary>
-        /// Open connection to the database
-        /// </summary>
-        public void OpenConnection()
-            {
-                connection.Open();
-            }
+            /// <summary>
+            /// Open connection to the database
+            /// </summary>
+            public void OpenConnection()
+                {
+                    connection.Open();
+                }
 
             /// <summary>
             /// Close connection to the database
@@ -75,6 +75,36 @@ namespace DBConnectionLib
                 connection.Dispose();
             }
 
+            public string CheckUsername(string username)
+            {
+
+                string id;
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = "SELECT UserID FROM users WHERE Username = " + username;
+                DbDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    id = reader.GetString(0);
+                }
+                else
+                {
+                    id = null;
+                }
+
+                return id;
+            }
+
+            public void CheckPassword(string UserID)
+            {
+                string id;
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = "SELECT UserPassword FROM users WHERE UserID = " + UserID;
+                DbDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    id = reader.GetString(0);
+                }
+        }
         }
 }
 

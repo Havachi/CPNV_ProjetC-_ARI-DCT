@@ -55,6 +55,7 @@ namespace MainMenuLib
             if (password.Length < 8)
             {
                 Exception e = new Exception("Password too short");
+                throw e;
             }
             else
             {
