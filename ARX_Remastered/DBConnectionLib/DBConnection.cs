@@ -2,6 +2,7 @@
 using System;
 using System.Data.Common;
 
+
 namespace DBConnectionLib
 {
         public class DBConnection
@@ -74,37 +75,69 @@ namespace DBConnectionLib
             {
                 connection.Dispose();
             }
-
-            public string CheckUsername(string username)
+            /// <summary>
+            ///  Check if the username exist in database 
+            /// </summary>
+            /// <param name="username"></param>
+            /// <returns></returns>
+            public bool CheckUsername(string username)
             {
-
-                string id;
                 MySqlCommand cmd = connection.CreateCommand();
                 cmd.CommandText = "SELECT UserID FROM users WHERE Username = " + username;
                 DbDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    id = reader.GetString(0);
+                    return true;
                 }
                 else
                 {
-                    id = null;
+                    throw new UnknownUsernameException();
+                    return false;
                 }
-
-                return id;
             }
-
-            public void CheckPassword(string UserID)
+            /// <summary>
+            /// check if the password entered by the user is the same as the one in the database
+            /// </summary>
+            /// <param name="UserID"></param>
+            /// <param name="Password"></param>
+            /// <returns></returns>
+            public bool CheckPassword(string UserID, string Password)
             {
-                string id;
+                string pswInDB;
                 MySqlCommand cmd = connection.CreateCommand();
                 cmd.CommandText = "SELECT UserPassword FROM users WHERE UserID = " + UserID;
                 DbDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    id = reader.GetString(0);
+                    pswInDB = reader.GetString(0);
+                    if (pswInDB == Password)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        throw new InvalidPasswordException();
+                        return false;
+                    }
+
                 }
-        }
+                else
+                {
+                    throw new Exception("Oula");
+                }
+            }
+
+            public string GetUserIDFromUsername(string username)
+            {
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = "SELECT UserID FROM users WHERE Username = " + username;
+                DbDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    return reader.GetString(0);
+                }
+                throw new UnknownUsernameException();
+            }
         }
 }
 

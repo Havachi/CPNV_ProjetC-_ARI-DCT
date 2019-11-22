@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DBConnectionLib;
+using MainMenu;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MainMenuLib;
+using DBConnectionLib;
+using InvalidPasswordException = DBConnectionLib.InvalidPasswordException;
 
 namespace ARX_Tests
 {
@@ -27,35 +31,37 @@ namespace ARX_Tests
 
             
         }
+
         /// <summary>
         /// Test if the login not work
         /// The test try to login with an unexisting user username
         /// TBD: The test should catch an exception 
         /// </summary>
         [TestMethod]
-
+        [ExpectedException(typeof(UnknownUsernameException))]
         public void TestLoginInvalidUsername()
         {
             string username = "Oof";
             string password = "1234";
-            Login l = new Login(username, password);
+            Login login = new Login(username, password);
 
-            l.LoginDB();
+            login.LoginDB();
         }
+
         /// <summary>
         /// Test if the login not work
         /// The test try to login with an unexisting user username
         /// TBD: The test should catch an exception 
         /// </summary>
         [TestMethod]
-
+        [ExpectedException(typeof(InvalidPasswordException))]
         public void TestLoginInvalidPassword()
         {
             string username = "Havachi";
             string password = "4321";
-            Login l = new Login(username, password);
+            Login login = new Login(username, password);
 
-            l.LoginDB();
+            login.LoginDB();
         }
     }
 }

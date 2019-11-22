@@ -21,20 +21,23 @@ namespace MainMenuLib
 
         }
 
-        public void LoginDB()
+        public void LoginDB(Login login)
         {
+            
             string ID;
             DBConnection connection = new DBConnection();
             connection.OpenConnection();
-            ID = connection.CheckUsername(username);
-            if (ID!=null)
+            ID = connection.GetUserIDFromUsername(login.username);
+            if (!connection.CheckUsername(username))
             {
-                connection.CheckPassword(ID);
+                throw new UnknownUsernameException();
             }
-            else
+            if (!connection.CheckPassword(ID, password))
             {
-                //Exception
+                throw new InvalidPasswordException();
+                
             }
+
         }
     } 
 }

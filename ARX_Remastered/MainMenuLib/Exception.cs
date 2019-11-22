@@ -1,33 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MainMenu
+namespace MainMenuLib
 {
-    public class ArgumentNullException : Exception
+    [Serializable]
+    public class InvalidUsernameException : Exception
     {
-        public ArgumentNullException()
+        public InvalidUsernameException()
         {
 
         }
 
+<<<<<<< Updated upstream
         public ArgumentNullException(string message = "One field is empty") : base(message)
         {
 
         }
+=======
+        public InvalidUsernameException(string message = "Unkown Username") : base(message)
+        {
+>>>>>>> Stashed changes
 
+        }
     }
 
-    public class UnknownUsernameException : Exception
+    [Serializable]
+    public class InvalidPasswordException : Exception
     {
-        public UnknownUsernameException()
+        public InvalidPasswordException()
         {
 
         }
 
-        public UnknownUsernameException(string message = "Unkown Username") : base(message)
+        public InvalidPasswordException(string message = "Wrong Password") : base(message)
         {
 
         }
