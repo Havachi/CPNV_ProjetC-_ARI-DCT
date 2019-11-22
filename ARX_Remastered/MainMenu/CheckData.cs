@@ -11,6 +11,7 @@ namespace MainMenu
     {
         private string username;
         private string password;
+        private List<string> illegalChar = new List<string>();
 
         public CheckData(string username, string password)
         {
@@ -24,6 +25,47 @@ namespace MainMenu
             {
                 throw new ArgumentNullException();
             }
+        }
+
+        private void populateIllegalChar()
+        {
+            illegalChar.Add("-- ");
+            illegalChar.Add("/*");
+            illegalChar.Add("*/");
+        }
+        public void VerifRegister()
+        {
+
+            if (username.Length < 8)
+            {
+                Exception e = new Exception("Username too short");
+                throw e;
+            }
+            else
+            {
+                populateIllegalChar();
+                foreach (var c in illegalChar)
+                {
+                    foreach (var i in illegalChar)
+                    {
+                        if (c.Contains(i))
+                        {
+                            Exception e = new Exception("Invalid username");
+                            throw e;
+                        }
+                    }
+                }
+            }
+            if (password.Length < 8)
+            {
+                Exception e = new Exception("Password too short");
+                throw e;
+            }
+            else
+            {
+                //Password encryption
+            }
+
         }
     }
 }
