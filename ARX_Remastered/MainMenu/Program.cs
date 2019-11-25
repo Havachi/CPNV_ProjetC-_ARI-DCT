@@ -1,10 +1,3 @@
-/// 
-/// File name : Register.cs
-/// Author : Alessandro Rossi
-/// Date : 21.11.2019
-/// Description : This is the Enrty point of the application, 
-/// this file start the form for the main menu
-/// 
 using System;
 using System.Collections.Generic;
 using System.Linq;

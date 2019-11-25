@@ -31,6 +31,7 @@ namespace MainMenuLib
         /// </summary>
         /// <param name="reg">Contains a username and a password</param>
         /// <returns>True: Everything OK</returns>
+        /// 
         public bool RegisterInDB(Register reg)
         {
             DBConnection connection = new DBConnection();
@@ -47,6 +48,7 @@ namespace MainMenuLib
             }
             
         }
+
 
     }
 }
