@@ -34,16 +34,16 @@ namespace MainMenuLib
         /// 
         public bool RegisterInDB(Register reg)
         {
-            DBConnection connection = new DBConnection();
+            
+            DBInteraction dbi = new DBInteraction();
 
-
-            if (connection.CheckIfUsernameExistInDB(username))
+            if (dbi.CheckIfUsernameExistInDB(username))
             {
                 throw new UsernameAlreadyExistException();
             }
             else
             {
-                connection.InsertDataInDB(username,password);
+                dbi.InsertDataInDB(username,password);
                 return true;
             }
             

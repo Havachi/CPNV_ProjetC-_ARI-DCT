@@ -39,13 +39,15 @@ namespace MainMenuLib
         {
             string ID;
             DBConnection connection = new DBConnection();
+            DBInteraction dbi = new DBInteraction();
+
             connection.OpenConnection();
-            ID = connection.GetUserIDFromUsername(login.username);
-            if (!connection.CheckUsername(username))
+            ID = dbi.GetUserIDFromUsername(login.username);
+            if (!dbi.CheckUsername(username))
             {
                 throw new UnknownUsernameException();
             }
-            if (!connection.CheckPassword(ID, password))
+            if (!dbi.CheckPassword(ID, password))
             {
                 throw new InvalidPasswordException();
             }
