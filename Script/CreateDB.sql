@@ -1,0 +1,15 @@
+DROP DATABASE IF EXISTS arx_db;
+CREATE DATABASE `arx_db`;
+USE `arx_db`;
+CREATE TABLE `users` (
+	`UserID` INT(50) NOT NULL AUTO_INCREMENT,
+	`Username` VARCHAR(200) NOT NULL,
+	`UserEmail` VARCHAR(200) NOT NULL,
+	`UserPassword` VARCHAR(200) NOT NULL,
+	`UserBestTime` VARCHAR(200) NULL DEFAULT 'TBD',
+	`UserBestScore` VARCHAR(200) NULL DEFAULT 'TBD',
+	PRIMARY KEY (`UserID`)
+);
+
+
+
