@@ -20,6 +20,7 @@ namespace MainMenu
     {
         private string username;
         private string password;
+        public Form formLogin;
 
         public FormLogin()
         {
@@ -43,6 +44,8 @@ namespace MainMenu
             ///Appeler la fonction LoginDB pour se connecter
             Login login = new Login(username, password);
             login.LoginDB(login);
+
+            Close();
         }
 
         private void btnLoginRegister_Click(object sender, EventArgs e)
@@ -65,6 +68,8 @@ namespace MainMenu
             Register register = new Register(username, password);
             register.RegisterInDB(register);
 
+            Close();
+            ShowDialog(this);
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
