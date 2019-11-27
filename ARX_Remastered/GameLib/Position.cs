@@ -8,22 +8,22 @@ namespace GameLib
 {
     public class Position
     {
-        private string positionX;
-        private string positionY;
+        private int positionX;
+        private int positionY;
 
 
-        public Position(string positionX, string positionY)
+        public Position(int positionX, int positionY)
         {
             this.positionX = positionX;
             this.positionY = positionY;
         }
 
-        public string PositionX
+        public int PositionX
         {
             get { return positionX; }
             set { positionX = value; }
         }
-        public string PositionY
+        public int PositionY
         {
             get { return positionY;}
             set { positionY = value; }

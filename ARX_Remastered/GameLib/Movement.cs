@@ -9,17 +9,30 @@ namespace GameLib
     public class Movement
     {
         private string direction;
-        private string speed; 
         
 
-        public Movement(string direction, string speed)
+        public Movement(string direction)
         {
             this.direction = direction;
-            this.speed = speed;
         }
 
-        public void Move()
+        public void Move(Player player,string direction)
         {
+            switch (direction)
+            {           
+                case "N":
+                    player.Position.PositionY -= 1;
+                    break;
+                case "E":
+                    player.Position.PositionX += 1;
+                    break;
+                case "S":
+                    player.Position.PositionY += 1;
+                    break;
+                case "W":
+                    player.Position.PositionX -= 1;
+                    break;
+            }
             
         }
 
