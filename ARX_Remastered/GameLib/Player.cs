@@ -12,13 +12,15 @@ namespace GameLib
         private double lifepoint;
         private Position position;
         private Inventory inventory;
+        private string direction;
 
-        public Player(string userName, double lifePoint, Position position, Inventory inventory)
+        public Player(string userName, double lifePoint, Position position, Inventory inventory, string direction)
         {
             this.username = userName;
             this.lifepoint = lifePoint;
             this.position = position;
             this.inventory = inventory;
+            this.direction = direction;
         }
         public string Username
         {
@@ -44,6 +46,11 @@ namespace GameLib
             {
                 return inventory;
             }
+        }
+        public string Direction
+        {
+            get { return direction; }
+            set { direction = value; }
         }
     }
 }
