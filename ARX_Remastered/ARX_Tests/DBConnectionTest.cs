@@ -24,8 +24,10 @@ namespace ARX_Tests
         public void TestSelectInDatabase()
         {
             DBConnection d = new DBConnection();
+            DBInteraction dbi= new DBInteraction();
             d.OpenConnection();
-            var dOut = d.GetPlayerName(1);
+
+            var dOut = dbi.GetPlayerName(1);
             Assert.AreEqual("Havachi",dOut);
             d.CloseConnection();
         }

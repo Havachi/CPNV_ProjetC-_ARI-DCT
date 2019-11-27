@@ -11,11 +11,22 @@ namespace GameLib
         private string positionX;
         private string positionY;
 
-        private Position(string positionX, string positionY)
+
+        public Position(string positionX, string positionY)
         {
             this.positionX = positionX;
             this.positionY = positionY;
         }
 
+        public string PositionX
+        {
+            get { return positionX; }
+            set { positionX = value; }
+        }
+        public string PositionY
+        {
+            get { return positionY;}
+            set { positionY = value; }
+        }
     }
 }

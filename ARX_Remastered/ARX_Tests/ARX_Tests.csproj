@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameTest.cs" />
     <Compile Include="LoginTest.cs" />
     <Compile Include="DbConnectionTest.cs" />
     <Compile Include="MenuTest.cs" />

@@ -15,9 +15,10 @@ namespace ARX_Tests
         [TestMethod]
         public void TryRegisterInDbWithValidInput()
         {
+            string userEmail = "test.Test@test.test";
             string username = "TestUser1";
             string password = "1234";
-            Register r = new Register(username,password);
+            Register r = new Register(userEmail, username, password);
             Assert.IsTrue(r.RegisterInDB(r));
         }
 
@@ -25,9 +26,10 @@ namespace ARX_Tests
         [ExpectedException(typeof(UsernameAlreadyExistException))]
         public void TryRegisterInDbWithInvalidInput()
         {
+            string userEmail = "alessandro.rossi@cpnv.ch";
             string username = "Havachi";
             string password = "1234";
-            Register r = new Register(username, password);
+            Register r = new Register(userEmail, username, password);
             r.RegisterInDB(r);
         }
     }

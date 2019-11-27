@@ -8,17 +8,37 @@ namespace GameLib
 {
     public class Player
     {
-        private string lifePoint;
-        private string speedPoint;
+        private string userName;
+        private double lifePoint;
         private Position position;
         private Inventory inventory;
 
-        public Player(string lifePoint, string speedPoint, Position position, Inventory inventory)
+        public Player(string userName, double lifePoint, Position position, Inventory inventory)
         {
+            this.userName = userName;
             this.lifePoint = lifePoint;
-            this.speedPoint = speedPoint;
             this.position = position;
             this.inventory = inventory;
+        }
+        public Player(string userName, Position position, Inventory inventory)
+        {
+            this.userName = userName;
+            this.lifePoint = 100;
+            this.position = position;
+            this.inventory = inventory;
+        }
+        public Player(string userName, Inventory inventory)
+        {
+            this.userName = userName;
+            this.lifePoint = 100;
+            this.position = position;
+            this.inventory = inventory;
+        }
+        public Player(string userName)
+        {
+            this.userName = userName;
+            this.lifePoint = 100;
+            
         }
     }
 }
