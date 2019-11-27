@@ -43,7 +43,7 @@ namespace ProjetBanque
             var base64Hash = Convert.ToBase64String(hashBytes);
 
             // Format hash with extra information
-            return string.Format("$BANQUEHASH$V1${0}${1}", iterations, base64Hash);
+            return string.Format("$ARX${0}${1}", iterations, base64Hash);
         }
 
 
@@ -56,7 +56,7 @@ namespace ProjetBanque
         public bool Verify(string password, string hashedPassword)
         {
             // Extract iteration and Base64 string
-            var splittedHashString = hashedPassword.Replace("$BANQUEHASH$V1$", "").Split('$');
+            var splittedHashString = hashedPassword.Replace("$ARX$", "").Split('$');
             var iterations = int.Parse(splittedHashString[0]);
             var base64Hash = splittedHashString[1];
 

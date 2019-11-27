@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DBConnectionLib;
 using MySql.Data.MySqlClient;
+using ProjetBanque;
 
 namespace MainMenuLib
 {
@@ -38,21 +39,23 @@ namespace MainMenuLib
         /// <returns>Exception if not OK</returns>
         public bool LoginDB(Login login)
         {
-            string ID;
+            string hashedPassword;
+            string userEmail = login.userEmail;
+            string password = login.password;
             DBConnection connection = new DBConnection();
-            DBInteraction dbi = new DBInteraction();
+            
+            CryptoPassword c = new CryptoPassword();
 
-            connection.OpenConnection();
-            ID = dbi.GetUserIDFromUsername(login.userEmail);
-            if (!dbi.CheckEmail(userEmail))
+            hashedPassword = connection.GetUserPassword(userEmail);
+
+            if (!connection.CheckEmail(userEmail))
             {
-                throw new UnknownUsernameException();
+                throw new UnknownUserEmailAddressException();
             }
-            if (!dbi.CheckPassword(ID, password))
+            if (!c.Verify(password, hashedPassword))
             {
                 throw new InvalidPasswordException();
             }
-
             return true;
         }
     } 

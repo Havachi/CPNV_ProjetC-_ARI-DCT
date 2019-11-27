@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using DBConnectionLib;
 using MainMenuLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -22,15 +23,5 @@ namespace ARX_Tests
             Assert.IsTrue(r.RegisterInDB(r));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(UsernameAlreadyExistException))]
-        public void TryRegisterInDbWithInvalidInput()
-        {
-            string userEmail = "alessandro.rossi@cpnv.ch";
-            string username = "Havachi";
-            string password = "1234";
-            Register r = new Register(userEmail, username, password);
-            r.RegisterInDB(r);
-        }
     }
 }

@@ -47,4 +47,32 @@ namespace DBConnectionLib
 
         }
     }
+
+    [Serializable]
+    public class UserEmailAlreadyExistException : Exception
+    {
+        public UserEmailAlreadyExistException()
+        {
+
+        }
+
+        public UserEmailAlreadyExistException(string message = "Email Address already in use") : base(message)
+        {
+
+        }
+    }
+
+    [Serializable]
+    public class UsernameAlreadyExistException : Exception
+    {
+        public UsernameAlreadyExistException()
+        {
+
+        }
+
+        public UsernameAlreadyExistException(string message = "Username already in use") : base(message)
+        {
+
+        }
+    }
 }
