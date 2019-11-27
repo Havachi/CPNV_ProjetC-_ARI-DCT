@@ -70,5 +70,10 @@ namespace MainMenu
         {
 
         }
+
+        private void tbxRegisterPasswordCheck_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -66,5 +66,10 @@ namespace MainMenu
                 Close();
             }
         }
+
+        private void tbxLoginPassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

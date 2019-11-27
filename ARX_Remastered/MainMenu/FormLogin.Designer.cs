@@ -64,13 +64,17 @@
             this.tbxLoginMail.Name = "tbxLoginMail";
             this.tbxLoginMail.Size = new System.Drawing.Size(125, 20);
             this.tbxLoginMail.TabIndex = 2;
+            this.tbxLoginMail.Text = "Mail";
             // 
             // tbxLoginPassword
             // 
             this.tbxLoginPassword.Location = new System.Drawing.Point(395, 213);
             this.tbxLoginPassword.Name = "tbxLoginPassword";
+            this.tbxLoginPassword.PasswordChar = '*';
             this.tbxLoginPassword.Size = new System.Drawing.Size(125, 20);
             this.tbxLoginPassword.TabIndex = 3;
+            this.tbxLoginPassword.Text = "Password";
+            this.tbxLoginPassword.TextChanged += new System.EventHandler(this.tbxLoginPassword_TextChanged);
             // 
             // lblLoginUsername
             // 

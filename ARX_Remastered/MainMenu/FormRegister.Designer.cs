@@ -72,6 +72,7 @@
             // 
             this.tbxRegisterPassword.Location = new System.Drawing.Point(395, 194);
             this.tbxRegisterPassword.Name = "tbxRegisterPassword";
+            this.tbxRegisterPassword.PasswordChar = '*';
             this.tbxRegisterPassword.Size = new System.Drawing.Size(125, 20);
             this.tbxRegisterPassword.TabIndex = 3;
             this.tbxRegisterPassword.Text = "Password";
@@ -110,9 +111,11 @@
             // 
             this.tbxRegisterPasswordCheck.Location = new System.Drawing.Point(395, 232);
             this.tbxRegisterPasswordCheck.Name = "tbxRegisterPasswordCheck";
+            this.tbxRegisterPasswordCheck.PasswordChar = '*';
             this.tbxRegisterPasswordCheck.Size = new System.Drawing.Size(125, 20);
             this.tbxRegisterPasswordCheck.TabIndex = 7;
-            this.tbxRegisterPasswordCheck.Text = "Password (Check)";
+            this.tbxRegisterPasswordCheck.Text = "Password";
+            this.tbxRegisterPasswordCheck.TextChanged += new System.EventHandler(this.tbxRegisterPasswordCheck_TextChanged);
             // 
             // lblRegisterPasswordCheck
             // 
