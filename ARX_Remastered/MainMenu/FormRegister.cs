@@ -16,55 +16,50 @@ using MainMenuLib;
 namespace MainMenu
 {
 
-    public partial class FormLogin : Form
+    public partial class FormRegister : Form
     {
         private string mail;
         private string password;
         private string passwordCheck;
-        public Form formLogin;
+        public Form formRegister;
 
-        public FormLogin()
+        public FormRegister()
         {
             InitializeComponent();
         }
 
-        private void btnLoginConnexion_Click(object sender, EventArgs e)
+        private void btnRegisterSignup_Click(object sender, EventArgs e)
         {
-            ///Appelle la méthode permettant de se connecter
+            ///Appelle la méthode permettant de créer un compte
             ///Définit les valeurs de username et password avant envoi
-            mail = tbxLoginMail.Text;
-            password = tbxLoginPassword.Text;
-
-            passwordCheck = "Fill";
+            mail = tbxRegisterMail.Text;
+            password = tbxRegisterPassword.Text;
 
             CheckData logincheck = new CheckData(mail, password, passwordCheck);
 
-            ///Appelle la méthode de vérification de données
+            ///Appelle les métodes de vérifications
             logincheck.CheckLoginField(mail, password, passwordCheck);
+            logincheck.VerifRegister(mail, password, passwordCheck);
 
-            MessageBox.Show(@"Connexion établie");
+            MessageBox.Show(@"Votre compte a été créé");
 
-            ///Appeler la fonction LoginDB pour se connecter
-            Login login = new Login(mail, password);
-            login.LoginDB(login);
+
+            ///Appeler la fonction RegisterDB pour se connecter
+            Register register = new Register(mail, password);
+            register.RegisterInDB(register);
 
             Close();
+            ShowDialog(this);
         }
-
-
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void btnLoginRegister_Click(object sender, EventArgs e)
+        private void btnRegisterCancel_Click(object sender, EventArgs e)
         {
-            FormRegister formRegister = new FormRegister();
-            {
-                formRegister.ShowDialog(this);
-                Close();
-            }
+
         }
     }
 }
