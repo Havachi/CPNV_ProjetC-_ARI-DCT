@@ -17,49 +17,59 @@ namespace ARX_Tests
         {
             /// <summary>
             /// Test if the login form
-            /// First, username and password are initialised
-            /// Then, Test if username or/and password are empty or not
-            /// Next, test if username and password are longer than 8 characters
+            /// First, mail and password are initialised
+            /// Then, Test if mail or/and password are empty or not
+            /// Next, test if mail and password are longer than 8 characters
             /// then the login is tested, with method from MainMenu\CheckData.cs
             /// </summary>
             [TestMethod]
             public void TestLoginFormBothEmpty()
             {
-                string username = "";
+                
+                string mail = "";
                 string password = "";
-                CheckData logincheck = new CheckData(username, password);
-                Assert.IsTrue(username == "" && password == "");
+                string passwordCheck = "";
+                CheckData logincheck = new CheckData(mail, password, passwordCheck);
+                Assert.IsTrue(mail == "" && password == "");
             }
             [TestMethod]
-            public void TestLoginFormUsernameEmpty()
+            public void TestLoginFormMailEmpty()
             {
-                string username = "";
+
+                string mail = "";
                 string password = "12345678";
-                CheckData logincheck = new CheckData(username, password);
-                Assert.IsTrue(username == "");
+                string passwordCheck = "";
+                CheckData logincheck = new CheckData(mail, password, passwordCheck);
+                Assert.IsTrue(mail == "");
             }
             [TestMethod]
             public void TestLoginFormPasswordEmpty()
             {
-                string username = "Gerardine";
+ 
+                string mail = "Gerardine";
                 string password = "";
-                CheckData logincheck = new CheckData(username, password);
-                Assert.IsTrue(password == "" && username == "Gerardine");
+                string passwordCheck = "";
+                CheckData logincheck = new CheckData(mail, password, passwordCheck);
+                Assert.IsTrue(password == "" && mail == "Gerardine");
             }
             [TestMethod]
             public void TestLoginFormUsernameTooshort()
             {
-                string username = "Gerard";
+   
+                string mail = "Gerard";
                 string password = "12345678";
-                CheckData logincheck = new CheckData(username, password);
-                Assert.IsTrue(username.Length < 8);
+                string passwordCheck = "";
+                CheckData logincheck = new CheckData(mail, password, passwordCheck);
+                Assert.IsTrue(mail.Length < 8);
             }
             [TestMethod]
             public void TestLoginFormPasswordTooshort()
             {
-                string username = "Gerardine";
+
+                string mail = "Gerardine";
                 string password = "1234";
-                CheckData logincheck = new CheckData(username, password);
+                string passwordCheck = "";
+                CheckData logincheck = new CheckData(mail, password, passwordCheck);
                 Assert.IsTrue(password.Length < 8);
             }
         }
