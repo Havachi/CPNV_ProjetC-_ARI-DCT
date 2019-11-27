@@ -97,6 +97,27 @@ namespace DBConnectionLib
             throw new InvalidPasswordException();
         }
         /// <summary>
+        /// This method check if the userEmail exist in database
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
+        public bool CheckEmail(string userEmail)
+        {
+            MySqlCommand cmd = connection.CreateCommand();
+            cmd.CommandText = $"SELECT UserID FROM users WHERE UserEmail = \"{userEmail}\"";
+            DbDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    reader.Close();
+                    return true;
+                }
+            }
+
+            throw new UnknownUsernameException();
+        }
+        /// <summary>
         /// Get the UserID from the database with the username
         /// </summary>
         /// <param name="username"></param>

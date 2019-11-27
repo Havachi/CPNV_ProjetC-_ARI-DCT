@@ -33,4 +33,18 @@ namespace DBConnectionLib
 
         }
     }
+
+    [Serializable]
+    public class UnknownUserEmailAddressException : Exception
+    {
+        public UnknownUserEmailAddressException()
+        {
+
+        }
+
+        public UnknownUserEmailAddressException(string message = "Unkown user Email Address") : base(message)
+        {
+
+        }
+    }
 }

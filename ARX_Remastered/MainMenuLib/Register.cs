@@ -15,14 +15,16 @@ namespace MainMenuLib
     {
         private string username;
         private string password;
+        private string userEmail;
 
         /// <summary>
         /// Constructor for the Register Object
         /// </summary>
         /// <param name="username">Username of the user</param>
         /// <param name="password">Password of the user</param>
-        public Register(string username, string password)
+        public Register(string userEmail, string username, string password)
         {
+            this.userEmail = userEmail;
             this.username = username;
             this.password = password;
         }
@@ -43,6 +45,7 @@ namespace MainMenuLib
             }
             else
             {
+
                 dbi.InsertDataInDB(username,password);
                 return true;
             }

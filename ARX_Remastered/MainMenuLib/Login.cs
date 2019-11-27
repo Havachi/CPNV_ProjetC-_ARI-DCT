@@ -16,16 +16,17 @@ namespace MainMenuLib
     /// </summary>
     public class Login
     {
+        private string userEmail;
         private string username;
         private string password;
         /// <summary>
         /// This is the constructor for the Login Object
         /// </summary>
-        /// <param name="username">Username of the user</param>
+        /// <param name="userEmail">Username of the user</param>
         /// <param name="password">Password of the user</param>
-        public Login(string username, string password)
+        public Login(string userEmail, string password)
         {
-            this.username = username;
+            this.userEmail = userEmail;
             this.password = password;
 
         }
@@ -42,8 +43,8 @@ namespace MainMenuLib
             DBInteraction dbi = new DBInteraction();
 
             connection.OpenConnection();
-            ID = dbi.GetUserIDFromUsername(login.username);
-            if (!dbi.CheckUsername(username))
+            ID = dbi.GetUserIDFromUsername(login.userEmail);
+            if (!dbi.CheckEmail(userEmail))
             {
                 throw new UnknownUsernameException();
             }
