@@ -16,6 +16,8 @@ namespace MainMenu
         private string passwordCheck;
         private List<string> illegalChar = new List<string>();
 
+    
+
         /// <summary>
         /// Va chercher les varables necéssaires 
         /// </summary>

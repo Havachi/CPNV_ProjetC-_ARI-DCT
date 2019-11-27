@@ -18,6 +18,7 @@ namespace MainMenu
 
     public partial class FormRegister : Form
     {
+        private string username;
         private string mail;
         private string password;
         private string passwordCheck;
@@ -34,6 +35,7 @@ namespace MainMenu
             ///Définit les valeurs de username et password avant envoi
             mail = tbxRegisterMail.Text;
             password = tbxRegisterPassword.Text;
+            passwordCheck = tbxRegisterPasswordCheck.Text;
 
             CheckData logincheck = new CheckData(mail, password, passwordCheck);
 
@@ -45,7 +47,9 @@ namespace MainMenu
 
 
             ///Appeler la fonction RegisterDB pour se connecter
-            Register register = new Register(mail, password);
+
+            username = (mail.Split('@')[0]);
+            Register register = new Register(mail, username, password);
             register.RegisterInDB(register);
 
             Close();

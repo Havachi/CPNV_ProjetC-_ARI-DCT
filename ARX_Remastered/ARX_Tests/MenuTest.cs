@@ -25,7 +25,6 @@ namespace ARX_Tests
             [TestMethod]
             public void TestLoginFormBothEmpty()
             {
-                
                 string mail = "";
                 string password = "";
                 string passwordCheck = "";
@@ -35,7 +34,6 @@ namespace ARX_Tests
             [TestMethod]
             public void TestLoginFormMailEmpty()
             {
-
                 string mail = "";
                 string password = "12345678";
                 string passwordCheck = "";
@@ -45,32 +43,27 @@ namespace ARX_Tests
             [TestMethod]
             public void TestLoginFormPasswordEmpty()
             {
- 
-                string mail = "Gerardine";
+                string mail = "Gerardine@cpnv.c";
                 string password = "";
                 string passwordCheck = "";
                 CheckData logincheck = new CheckData(mail, password, passwordCheck);
                 Assert.IsTrue(password == "" && mail == "Gerardine");
             }
             [TestMethod]
-            public void TestLoginFormUsernameTooshort()
-            {
-   
-                string mail = "Gerard";
-                string password = "12345678";
-                string passwordCheck = "";
-                CheckData logincheck = new CheckData(mail, password, passwordCheck);
-                Assert.IsTrue(mail.Length < 8);
-            }
-            [TestMethod]
             public void TestLoginFormPasswordTooshort()
             {
-
-                string mail = "Gerardine";
+                string mail = "Gerardine@cpnv.c";
                 string password = "1234";
                 string passwordCheck = "";
                 CheckData logincheck = new CheckData(mail, password, passwordCheck);
                 Assert.IsTrue(password.Length < 8);
+            }
+            [TestMethod]
+            public void TestRegisterFormGenerateUsername()
+            {
+                string mail = "Gerardine@cpnv.ch";
+                string username = (mail.Split('@')[0]);
+                Assert.IsTrue(username == "Gerardine");
             }
         }
     }
