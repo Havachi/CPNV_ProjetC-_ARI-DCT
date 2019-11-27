@@ -68,6 +68,11 @@ namespace GameLib
                 player.Direction = "N";
             }
         }
+        public void Teleport(Player player, int newPosX, int newPosY)
+        {
+            player.Position.PositionX = newPosX;
+            player.Position.PositionY = newPosY;
 
+        }
     }
 }
