@@ -21,7 +21,7 @@ namespace MainMenu
         {
             FormLogin formLogin = new FormLogin();
             {
-                formLogin.ShowDialog(this);
+                Close();
             }
         }
     }

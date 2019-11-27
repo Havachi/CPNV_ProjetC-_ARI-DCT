@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel.DataAnnotations;
 
 namespace MainMenu
 {
@@ -43,6 +44,10 @@ namespace MainMenu
             }
         }
 
+        public bool IsValidEmail(string mail)
+        {
+            return new EmailAddressAttribute().IsValid(mail);
+        }
         /// <summary>
         /// Ajoute dans une liste les caractères interdits
         /// </summary>
@@ -51,6 +56,7 @@ namespace MainMenu
             illegalChar.Add("-- ");
             illegalChar.Add("/*");
             illegalChar.Add("*/");
+            illegalChar.Remove(".");
         }
         /// <summary>
         /// Vérifie que les champs mail et password correspondent aux exigeances (mail && password > 8)
@@ -69,7 +75,9 @@ namespace MainMenu
             else
             {
 
-                populateIllegalChar();
+                IsValidEmail(mail);
+
+                /*populateIllegalChar();
                 foreach (var c in illegalChar)
                 {
                     foreach (var i in illegalChar)
@@ -81,10 +89,9 @@ namespace MainMenu
                             throw e;
                         }
                     }
-                }
+                }*/
 
-                //Ajouter Check si mail
-                //Ajouter génération username depuis mail
+
 
             }
             if (password.Length < 8)

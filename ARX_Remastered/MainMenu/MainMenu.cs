@@ -19,9 +19,9 @@ namespace MainMenu
         
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            using (FormLogin formLogin = new FormLogin());
+            using (FormLogin formLogin = new FormLogin())
             {
-                //formLogin.ShowDialog(this);
+               formLogin.ShowDialog(this);
             }
         }
 
