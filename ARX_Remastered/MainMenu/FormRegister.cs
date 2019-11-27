@@ -53,7 +53,7 @@ namespace MainMenu
             register.RegisterInDB(register);
             MessageBox.Show(@"Votre compte a été créé");
             Close();
-            ShowDialog(this);
+            ShowDialog(this);//Bug Ca fait exploser le programme
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
