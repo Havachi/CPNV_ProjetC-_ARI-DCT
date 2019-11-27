@@ -27,6 +27,10 @@ namespace MainMenu
         {
             InitializeComponent();
         }
+        public string Mail
+        {
+            get { return this.mail; }
+        }
 
         private void btnLoginConnexion_Click(object sender, EventArgs e)
         {
@@ -51,13 +55,6 @@ namespace MainMenu
             Close();
         }
 
-
-
-        private void FormLogin_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnLoginRegister_Click(object sender, EventArgs e)
         {
             FormRegister formRegister = new FormRegister();
@@ -71,5 +68,6 @@ namespace MainMenu
         {
 
         }
+        
     }
 }
