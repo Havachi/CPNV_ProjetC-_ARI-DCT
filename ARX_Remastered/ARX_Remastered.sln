@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLib", "GameLib\GameLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainMenuLib", "MainMenuLib\MainMenuLib.csproj", "{9D508DF8-E330-40BA-BDCD-765E1581E249}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapLib", "MapLib\MapLib.csproj", "{DAB67505-9BB7-4B07-8A04-C3DD029F9E4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9D508DF8-E330-40BA-BDCD-765E1581E249}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D508DF8-E330-40BA-BDCD-765E1581E249}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D508DF8-E330-40BA-BDCD-765E1581E249}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB67505-9BB7-4B07-8A04-C3DD029F9E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB67505-9BB7-4B07-8A04-C3DD029F9E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB67505-9BB7-4B07-8A04-C3DD029F9E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB67505-9BB7-4B07-8A04-C3DD029F9E4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
