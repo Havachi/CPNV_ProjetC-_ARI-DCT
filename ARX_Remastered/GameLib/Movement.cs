@@ -8,14 +8,6 @@ namespace GameLib
 {
     public class Movement
     {
-        private string direction;
-        
-
-        public Movement(string direction)
-        {
-            this.direction = direction;
-        }
-
         public void Move(Player player,string direction)
         {
             switch (direction)
@@ -34,6 +26,47 @@ namespace GameLib
                     break;
             }
             
+        }
+        public void Turn(Player player, string turnDirection)
+        {
+            if (player.Direction == "N" && turnDirection == "left")
+            {
+                player.Direction = "W";             
+            }
+            if (player.Direction == "N" && turnDirection == "right")
+            {
+                player.Direction = "E";
+            }
+
+
+            if (player.Direction == "E" && turnDirection == "left")
+            {
+                player.Direction = "S";
+            }
+            if (player.Direction == "E" && turnDirection == "right")
+            {
+                player.Direction = "N";
+            }
+
+
+            if (player.Direction == "S" && turnDirection == "left")
+            {
+                player.Direction = "E";
+            }
+            if (player.Direction == "S" && turnDirection == "right")
+            {
+                player.Direction = "W";
+            }
+
+
+            if (player.Direction == "W" && turnDirection == "left")
+            {
+                player.Direction = "S";
+            }
+            if (player.Direction == "W" && turnDirection == "right")
+            {
+                player.Direction = "N";
+            }
         }
 
     }
