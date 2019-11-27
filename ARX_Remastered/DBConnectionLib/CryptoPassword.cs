@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,7 @@ namespace ProjetBanque
             var base64Hash = Convert.ToBase64String(hashBytes);
 
             // Format hash with extra information
-            return string.Format("$ARX${0}${1}", iterations, base64Hash);
+            return base64Hash;
         }
 
 
@@ -55,20 +56,16 @@ namespace ProjetBanque
         /// <returns>Could be verified?</returns>
         public bool Verify(string password, string hashedPassword)
         {
-            // Extract iteration and Base64 string
-            var splittedHashString = hashedPassword.Replace("$ARX$", "").Split('$');
-            var iterations = int.Parse(splittedHashString[0]);
-            var base64Hash = splittedHashString[1];
 
             // Get hash bytes
-            var hashBytes = Convert.FromBase64String(base64Hash);
+            var hashBytes = Convert.FromBase64String(hashedPassword);
 
             // Get salt
             var salt = new byte[saltSize];
             Array.Copy(hashBytes, 0, salt, 0, saltSize);
 
             // Create hash with given salt
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations);
+            var pbkdf2 = new Rfc2898DeriveBytes(hashedPassword, salt, iterations);
             byte[] hash = pbkdf2.GetBytes(hashSize);
 
             // Get result
