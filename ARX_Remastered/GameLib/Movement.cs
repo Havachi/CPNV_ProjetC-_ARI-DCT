@@ -6,10 +6,20 @@ using System.Threading.Tasks;
 
 namespace GameLib
 {
+    /// <summary>
+    /// This class contain all method for moving, turning or teleporting the player
+    /// </summary>
     public class Movement
     {
-        public void Move(Player player,string direction)
+        /// <summary>
+        /// This method is used to change player position in X and Y axis
+        /// by 1 depending of the current orentation
+        /// </summary>
+        /// <param name="player">The player object</param>
+        public void Move(Player player)
         {
+            string direction = player.Direction;
+
             switch (direction)
             {           
                 case "N":
@@ -27,11 +37,17 @@ namespace GameLib
             }
             
         }
+        /// <summary>
+        /// This method is used to change the player orientation depending of
+        /// the actual orientation and if either the right or left key is pressed
+        /// </summary>
+        /// <param name="player">The player objet</param>
+        /// <param name="turnDirection">The direction of the turn (left or right)</param> 
         public void Turn(Player player, string turnDirection)
         {
             if (player.Direction == "N" && turnDirection == "left")
             {
-                player.Direction = "W";             
+                player.Direction = "W";
             }
             if (player.Direction == "N" && turnDirection == "right")
             {
@@ -68,11 +84,16 @@ namespace GameLib
                 player.Direction = "N";
             }
         }
+        /// <summary>
+        /// This method is used to teleport the player across the map
+        /// </summary>
+        /// <param name="player">The player objet to teleport</param>
+        /// <param name="newPosX">The new X coordinate</param>
+        /// <param name="newPosY">The new Y coordinate</param>
         public void Teleport(Player player, int newPosX, int newPosY)
         {
             player.Position.PositionX = newPosX;
             player.Position.PositionY = newPosY;
-
         }
     }
 }
