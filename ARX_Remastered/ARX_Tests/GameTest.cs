@@ -8,16 +8,8 @@ namespace ARX_Tests
     public class GameTest
     {
         [TestMethod]
-        public void CreateNewPlayer()
+        public void none()
         {
-            string username = "Havachi";
-            double hp = 100;
-            Position posXY = new Position("0","0");
-            List<Item> Ilist=new List<Item>();
-            Inventory inv = new Inventory(Ilist);
-
-            Player player = new Player(username,hp,posXY,inv);
-
 
         }
     }
