@@ -43,16 +43,16 @@ namespace ARX_Tests
             [TestMethod]
             public void TestLoginFormPasswordEmpty()
             {
-                string mail = "Gerardine@cpnv.c";
+                string mail = "Gerardine@cpnv.ch";
                 string password = "";
                 string passwordCheck = "";
                 CheckData logincheck = new CheckData(mail, password, passwordCheck);
-                Assert.IsTrue(password == "" && mail == "Gerardine");
+                Assert.IsTrue(password == "");
             }
             [TestMethod]
             public void TestLoginFormPasswordTooshort()
             {
-                string mail = "Gerardine@cpnv.c";
+                string mail = "Gerardine@cpnv.ch";
                 string password = "1234";
                 string passwordCheck = "";
                 CheckData logincheck = new CheckData(mail, password, passwordCheck);
