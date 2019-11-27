@@ -43,7 +43,7 @@ namespace MainMenu
             logincheck.CheckLoginField(mail, password, passwordCheck);
             logincheck.VerifRegister(mail, password, passwordCheck);
 
-            MessageBox.Show(@"Votre compte a été créé");
+          
 
 
             ///Appeler la fonction RegisterDB pour créer le compte
@@ -51,7 +51,7 @@ namespace MainMenu
             username = (mail.Split('@')[0]);
             Register register = new Register(mail, username, password);
             register.RegisterInDB(register);
-
+            MessageBox.Show(@"Votre compte a été créé");
             Close();
             ShowDialog(this);
         }
