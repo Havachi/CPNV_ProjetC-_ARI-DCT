@@ -61,8 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryptoPassword.cs" />
     <Compile Include="DBConnection.cs" />
-    <Compile Include="DBInteraction.cs" />
     <Compile Include="Exception.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

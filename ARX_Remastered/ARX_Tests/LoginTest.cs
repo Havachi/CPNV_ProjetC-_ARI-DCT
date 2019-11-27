@@ -22,9 +22,10 @@ namespace ARX_Tests
         [TestMethod]
         public void TestLoginExistingUser()
         {
-            string username = "Havachi";
+            
+            string userEmail = "alessandro.rossi@cpnv.ch";
             string password = "1234";
-            Login l = new Login(username,password);
+            Login l = new Login(userEmail, password);
 
             Assert.IsTrue(l.LoginDB(l));
         }
@@ -38,9 +39,9 @@ namespace ARX_Tests
         [ExpectedException(typeof(DBConnectionLib.UnknownUsernameException))]
         public void TestLoginInvalidUsername()
         {
-            string username = "Oof";
+            string userEmail = "alessandro.rossicpnv.ch";
             string password = "1234";
-            Login login = new Login(username, password);
+            Login login = new Login(userEmail, password);
 
             login.LoginDB(login);
         }
@@ -54,9 +55,9 @@ namespace ARX_Tests
         [ExpectedException(typeof(InvalidPasswordException))]
         public void TestLoginInvalidPassword()
         {
-            string username = "Havachi";
+            string userEmail = "alessandro.rossi@cpnv.ch";
             string password = "4321";
-            Login login = new Login(username, password);
+            Login login = new Login(userEmail, password);
 
             login.LoginDB(login);
         }

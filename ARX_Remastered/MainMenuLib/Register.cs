@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using DBConnectionLib;
+using ProjetBanque;
 
 namespace MainMenuLib
 {
@@ -36,19 +37,20 @@ namespace MainMenuLib
         /// 
         public bool RegisterInDB(Register reg)
         {
+            DBConnection connection = new DBConnection();
             
-            DBInteraction dbi = new DBInteraction();
-
-            if (dbi.CheckIfUsernameExistInDB(username))
+            CryptoPassword c = new CryptoPassword();
+            string hashedPassword = c.Hash(password); ;
+            if (connection.CheckIfUsernameExistInDB(username))
             {
-                throw new UsernameAlreadyExistException();
+                throw new UserEmailAlreadyExistException();
             }
             else
             {
-
-                dbi.InsertDataInDB(username,password);
+                connection.InsertDataInDB(username,userEmail,hashedPassword);
                 return true;
             }
+            
             
         }
 
