@@ -46,7 +46,7 @@ namespace MainMenu
             MessageBox.Show(@"Votre compte a été créé");
 
 
-            ///Appeler la fonction RegisterDB pour se connecter
+            ///Appeler la fonction RegisterDB pour créer le compte
 
             username = (mail.Split('@')[0]);
             Register register = new Register(mail, username, password);
@@ -62,6 +62,11 @@ namespace MainMenu
         }
 
         private void btnRegisterCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void tbxRegisterPassword_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -75,6 +75,7 @@
             this.tbxRegisterPassword.Size = new System.Drawing.Size(125, 20);
             this.tbxRegisterPassword.TabIndex = 3;
             this.tbxRegisterPassword.Text = "Password";
+            this.tbxRegisterPassword.TextChanged += new System.EventHandler(this.tbxRegisterPassword_TextChanged);
             // 
             // lblRegisterMail
             // 
