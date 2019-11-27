@@ -78,6 +78,7 @@
     <Compile Include="MenuTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterTest.cs" />
+    <Compile Include="PlayerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
