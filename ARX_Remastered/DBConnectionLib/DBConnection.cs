@@ -174,7 +174,7 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUsernameException();
+            throw new UnknownUserEmailAddressException();
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUsernameException();
+            throw new UnknownUserEmailAddressException();
         }
 
         public string GetUserIDFromUserEmail(string UserEmail)
