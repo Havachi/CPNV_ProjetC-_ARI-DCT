@@ -28,36 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pbGame = new System.Windows.Forms.PictureBox();
+            this.pbMap = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbGame)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMap)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // pbGame
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(500, 500);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pbGame.Location = new System.Drawing.Point(12, 12);
+            this.pbGame.Name = "pbGame";
+            this.pbGame.Size = new System.Drawing.Size(1280, 720);
+            this.pbGame.TabIndex = 0;
+            this.pbGame.TabStop = false;
+            // 
+            // pbMap
+            // 
+            this.pbMap.Location = new System.Drawing.Point(1349, 12);
+            this.pbMap.Name = "pbMap";
+            this.pbMap.Size = new System.Drawing.Size(500, 500);
+            this.pbMap.TabIndex = 1;
+            this.pbMap.TabStop = false;
             // 
             // frmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1087, 522);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.Controls.Add(this.pbMap);
+            this.Controls.Add(this.pbGame);
             this.Name = "frmGame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ARX_Remaster";
             this.Load += new System.EventHandler(this.frmGame_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbGame)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMap)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbGame;
+        private System.Windows.Forms.PictureBox pbMap;
     }
 }
 
