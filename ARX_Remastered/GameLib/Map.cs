@@ -1,76 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapLib
+namespace GameLib
 {
     public class Map
     {
         private List<Case> mapContent= new List<Case>();
-
+        private int mapSeed;
         public Map()
         {
-
+            mapSeed = GenerateSeed(20);
+            GenerateMap(mapSeed);
         }
         public Map(List<Case> mapContent)
         {
             this.mapContent = mapContent;
         }
 
-        public void generateMap(int levelID)
+        public int GenerateSeed(int seedSize)
         {
-            if (levelID == 0)
+            using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
             {
-                voidCase caseVoid = new voidCase();
-                for (int i = 0; i < 50; i++)
-                {
-                    for (int j = 0; j < 50; j++)
-                    {
-                      mapContent.Add(caseVoid);  
-                    }
-                }
+
+                byte[] rno = new byte[seedSize];
+                rg.GetBytes(rno);
+                int seed = BitConverter.ToInt32(rno, 0);
+                return seed;
             }
+            
+        }
+        public void GenerateMap(int levelSeed)
+        {
+
         }
 
         public List<Case> MapContent
         {
             get { return mapContent; }
         }
-    }
 
-
-    public class Case
-    {
-
-        private string caseType;
-        public Case()
+        public int MapSeed
         {
-        }
-
-        public string CaseType
-        {
-            get { return caseType; }
-            set { caseType = value; }
-        }
-
-    }
-    public class voidCase : Case
-    {
-        public voidCase(string caseType = "void") : base()
-        {
-            this.CaseType = caseType;
+            get { return mapSeed; }
         }
     }
-    public class solidCase : Case
-    {
- 
-        public solidCase(string caseType = "solid") : base()
-        {
-            this.CaseType = caseType;
-        }
-    }
+
+
+
+    
     
 
 
