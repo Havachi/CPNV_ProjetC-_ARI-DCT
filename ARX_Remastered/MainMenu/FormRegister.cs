@@ -23,6 +23,7 @@ namespace MainMenu
         private string password;
         private string passwordCheck;
         public Form formRegister;
+        public FormMainMenu FormMainMenu;
 
         public FormRegister()
         {
@@ -53,7 +54,7 @@ namespace MainMenu
             register.RegisterInDB(register);
             MessageBox.Show(@"Votre compte a été créé");
             Close();
-            ShowDialog(this);
+            //Bug Ca fait exploser le programme
         }
 
         private void FormLogin_Load(object sender, EventArgs e)

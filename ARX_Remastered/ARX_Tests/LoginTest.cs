@@ -23,7 +23,7 @@ namespace ARX_Tests
         public void TestLoginExistingUser()
         {
             
-            string userEmail = "alessandro.rossi@cpnv.ch";
+            string userEmail = "test.Test@test.test";
             string password = "1234";
             Login l = new Login(userEmail, password);
 
