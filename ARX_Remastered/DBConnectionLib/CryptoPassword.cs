@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace ProjetBanque
+namespace DBConnectionLib
 {
     //Source code https://stackoverflow.com/questions/4181198/how-to-hash-a-password/10402129#10402129
     public class CryptoPassword
@@ -65,7 +65,7 @@ namespace ProjetBanque
             Array.Copy(hashBytes, 0, salt, 0, saltSize);
 
             // Create hash with given salt
-            var pbkdf2 = new Rfc2898DeriveBytes(hashedPassword, salt, iterations);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations);
             byte[] hash = pbkdf2.GetBytes(hashSize);
 
             // Get result
