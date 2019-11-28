@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using GameLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,25 +9,28 @@ namespace ARX_Tests
     [TestClass]
     public class MapTest
     {
-        
+        [TestMethod]
         public void GenerateVoidMap()
         {
-           
+            Type Void = new TypeDelegator(typeof(VoidCase));
             Map map = new Map();
-            
-            map.GenerateMap(0);
+            byte[] levelSeedBytes = new byte[20];
+            levelSeedBytes = map.GenerateSeed(20);
+            map.LoadMap(levelSeedBytes);
             List<Case> mapContent = map.MapContent;
+
             foreach (var c in mapContent)
             {
-                Assert.AreEqual("void",c);
+                Assert.IsInstanceOfType(c, Void);
             }
+            
 
         }
         [TestMethod]
-        public void GenerateSeed()
+        public void GenerateSeedTest()
         {
             Map map = new Map();
-            int seed1, seed2;
+            byte[] seed1, seed2;
 
             seed1 = map.GenerateSeed(20);
             seed2 = map.GenerateSeed(20);

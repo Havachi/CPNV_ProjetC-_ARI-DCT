@@ -6,11 +6,6 @@ namespace ARX_Tests
 {
     [TestClass]
     public class GameTest
-    {
-        [TestMethod]
-        public void none()
-        {
-
-        }
+    { 
     }
 }
