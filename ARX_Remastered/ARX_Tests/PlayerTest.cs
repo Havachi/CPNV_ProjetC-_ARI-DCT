@@ -8,14 +8,15 @@ namespace ARX_Tests
     public class PlayerTest
     {
         
-        private static string username = "Havachi";
-        private static double lifepoint = 100.0;
-        private static Position position = new Position(0, 0);
-        private static Inventory inventory = new Inventory();
-        private static string direction = "S";
+        string username = "Havachi";
+        double lifepoint = 100.0;
+        Position position = new Position(0, 0);
+        Inventory inventory = new Inventory();
+        string direction = "S";
         
         private static Movement m = new Movement();
-        
+        [TestInitialize]
+
         [TestMethod]
         public void CreateNewPlayerTest()
         {
@@ -26,6 +27,7 @@ namespace ARX_Tests
             Assert.AreEqual(inventory, p.Inventory);
             Assert.AreEqual(direction, p.Direction);
         }
+
         [TestMethod]
         public void MovePlayerTest()
         {
@@ -51,27 +53,6 @@ namespace ARX_Tests
             Assert.AreEqual(7, p.Position.PositionX);
             Assert.AreEqual(15, p.Position.PositionY);
         }
-        
-        [TestMethod]
-        public void MoveAndTurnTest()
-        {
-            Player p = new Player(username, lifepoint, position, inventory, direction);
-            m.Move(p);
-            m.Move(p);
-            m.Move(p);
 
-            m.Turn(p,"left");
-
-            m.Move(p);
-            m.Move(p);
-            m.Move(p);
-            m.Move(p);
-
-            m.Turn(p,"right");
-
-            Assert.AreEqual("S", p.Direction);
-            Assert.AreEqual(4, p.Position.PositionX);
-            Assert.AreEqual(3, p.Position.PositionY);
-        }
     }
 }

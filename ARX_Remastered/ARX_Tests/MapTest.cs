@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MapLib;
+using GameLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ARX_Tests
@@ -8,31 +8,30 @@ namespace ARX_Tests
     [TestClass]
     public class MapTest
     {
-        [TestMethod]
+        
         public void GenerateVoidMap()
         {
            
             Map map = new Map();
             
-            map.generateMap(0);
+            map.GenerateMap(0);
             List<Case> mapContent = map.MapContent;
             foreach (var c in mapContent)
             {
-                Assert.AreEqual("void",c.CaseType);
+                Assert.AreEqual("void",c);
             }
 
         }
-
-        public void GenerateLevel1()
+        [TestMethod]
+        public void GenerateSeed()
         {
             Map map = new Map();
+            int seed1, seed2;
 
-            map.generateMap(0);
-            List<Case> mapContent = map.MapContent;
-            foreach (var c in mapContent)
-            {
-                Assert.AreEqual("void", c.CaseType);
-            }
+            seed1 = map.GenerateSeed(20);
+            seed2 = map.GenerateSeed(20);
+            Assert.AreNotEqual(seed1,seed2);
+            
         }
     }
 }
