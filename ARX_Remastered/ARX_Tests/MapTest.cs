@@ -8,22 +8,31 @@ namespace ARX_Tests
     [TestClass]
     public class MapTest
     {
-        
-        public void GenerateVoidMap()
+        [TestMethod]
+        public void GenerateVoidMapTest()
         {
            
             Map map = new Map();
-            
-            map.GenerateMap(0);
-            List<Case> mapContent = map.MapContent;
-            foreach (var c in mapContent)
+            foreach (var mapCase in map.MapContent)
             {
-                Assert.AreEqual("void",c);
+                Assert.AreEqual(typeof(VoidCase) , mapCase.GetType());
             }
-
         }
+
         [TestMethod]
-        public void GenerateSeed()
+        public void GenerateBorderTest()
+        {
+
+            Map map = new Map();
+            map.GenerateBorderMap();
+            foreach (var mapCase in map.MapContent)
+            {
+                //todo Write all Case values in a file
+            }
+        }
+
+        [TestMethod]
+        public void GenerateSeedTest()
         {
             Map map = new Map();
             int seed1, seed2;
