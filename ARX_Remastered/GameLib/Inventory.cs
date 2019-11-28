@@ -32,8 +32,8 @@ namespace GameLib
 
         public List<Item> ContentList
         {
-            get { return ContentList; }
-            set { ContentList = value;}
+            get { return contentList; }
+            set { contentList = value;}
         }
     }
 }
