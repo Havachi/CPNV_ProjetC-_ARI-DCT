@@ -46,12 +46,10 @@ namespace MainMenu
             ///Appelle la méthode de vérification de données
             logincheck.CheckLoginField(mail, password, passwordCheck);
 
-            MessageBox.Show(@"Connexion établie");
-
             ///Appeler la fonction LoginDB pour se connecter
             Login login = new Login(mail, password);
             login.LoginDB(login);
-
+            MessageBox.Show(@"Connexion établie");
             Close();
         }
 
@@ -68,6 +66,5 @@ namespace MainMenu
         {
 
         }
-        
     }
 }
