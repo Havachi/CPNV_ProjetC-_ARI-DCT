@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Renci.SshNet;
 
 namespace GameLib
 {
@@ -24,15 +25,15 @@ namespace GameLib
             //GenerateBorder
         }
 
-        public int GenerateSeed(int seedSize)
+        public byte[] GenerateSeed(int seedSize)
         {
             using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
             {
 
-                byte[] rno = new byte[seedSize];
+                byte[] rno = new byte[10];
                 rg.GetBytes(rno);
-                int seed = BitConverter.ToInt32(rno, 0);
-                return seed;
+                //int seed = BitConverter.ToInt32(rno, 0);
+                return rno;
             }
             
         }
@@ -111,9 +112,18 @@ namespace GameLib
             get { return mapContent; }
         }
 
-        public int MapSeed
+        public byte[] MapSeed
         {
             get { return mapSeed; }
+        }
+
+        public int Rows
+        {
+            get { return rows; }
+        }
+        public int Columns
+        {
+            get { return columns; }
         }
     }
 
