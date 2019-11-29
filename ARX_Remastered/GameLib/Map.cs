@@ -22,18 +22,6 @@ namespace GameLib
 
         }
 
-        public byte[] GenerateSeed(int seedSize)
-        {
-            using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
-            {
-
-                byte[] rno = new byte[10];
-                rg.GetBytes(rno);
-                //int seed = BitConverter.ToInt32(rno, 0);
-                return rno;
-            }
-            
-        }
         public void GenerateVoidMap()
         {
             for (int i = 0; i < xMax; i++)
@@ -45,69 +33,9 @@ namespace GameLib
             }
         }
 
-        public void GenerateBorderMap()
-        {
-            int iteration = new int();
 
-            bool isWallNorth = false;
-            bool isWallEast = false;
-            bool isWallSouth = false;
-            bool isWallWest = false;
-            bool collition;
 
-            Random rand = new Random();
 
-            
-
-            foreach (var mapCase in borderMap)
-            {
-                var caseType = rand.Next(0, 5);
-                iteration++;
-                switch (caseType)
-            {
-                //Void
-                case 0:
-
-                    break;
-                //Dead end
-                case 1:
-                    isWallNorth = true;
-                    isWallEast = true;
-                    isWallSouth = false;
-                    isWallWest = true;
-                    break;
-                //Corner
-                case 2:
-                    isWallNorth = true;
-                    isWallEast = false;
-                    isWallSouth = false;
-                    isWallWest = true;
-                    break;
-                //Corridor
-                case 3:
-                    isWallNorth = false;
-                    isWallEast = true;
-                    isWallSouth = false;
-                    isWallWest = true;
-                    break;
-                //T
-                case 4:
-                    isWallNorth = true;
-                    isWallEast = false;
-                    isWallSouth = false;
-                    isWallWest = false;
-                    break;
-            }
-                mapCase.Add(isWallNorth);
-                mapCase.Add(isWallEast);
-                mapCase.Add(isWallSouth);
-                mapCase.Add(isWallWest);
-            }
-        }
-        public Case[,] MapContent
-        {
-            get { return mapContent; }
-        }
 
 
     }
