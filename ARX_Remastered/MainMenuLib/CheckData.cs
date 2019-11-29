@@ -21,7 +21,7 @@ namespace MainMenu
 
 
         /// <summary>
-        /// Va chercher les varables necéssaires 
+        /// Va chercher les variables necéssaires 
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="password"></param>
@@ -54,16 +54,7 @@ namespace MainMenu
         {
             return new EmailAddressAttribute().IsValid(mail);
         }
-        /// <summary>
-        /// Ajoute dans une liste les caractères interdits
-        /// </summary>
-        private void populateIllegalChar()
-        {
-            illegalChar.Add("-- ");
-            illegalChar.Add("/*");
-            illegalChar.Add("*/");
-            illegalChar.Remove(".");
-        }
+
         /// <summary>
         /// Vérifie que les champs mail et password correspondent aux exigeances (mail && password > 8)
         /// </summary>
@@ -78,22 +69,6 @@ namespace MainMenu
             else
             {
                 IsValidEmail(mail);
-
-                /*populateIllegalChar();
-                foreach (var c in illegalChar)
-                {
-                    foreach (var i in illegalChar)
-                    {
-                        if (c.Contains(i))
-                        {
-                            MessageBox.Show("Mail Invalid, don't put special character exept @");
-                            Exception e = new Exception("Invalid mail");
-                            throw e;
-                        }
-                    }
-                }*/
-
-
 
             }
             if (password.Length < 8)
