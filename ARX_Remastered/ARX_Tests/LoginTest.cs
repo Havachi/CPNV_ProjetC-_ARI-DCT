@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DBConnectionLib;
 using MainMenu;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MainMenuLib;
@@ -23,7 +24,7 @@ namespace ARX_Tests
         public void TestLoginExistingUser()
         {
             
-            string userEmail = "alessandro.rossi@cpnv.ch";
+            string userEmail = "test.Test@test.test";
             string password = "1234";
             Login l = new Login(userEmail, password);
 
@@ -36,26 +37,21 @@ namespace ARX_Tests
         /// TBD: The test should catch an exception 
         /// </summary>
         [TestMethod]
-        [ExpectedException(typeof(DBConnectionLib.UnknownUsernameException))]
-        public void TestLoginInvalidUsername()
+        [ExpectedException(typeof(InvalidPasswordException))]
+        public void TestLoginInvalidPassword()
         {
-            string userEmail = "alessandro.rossicpnv.ch";
-            string password = "1234";
+            string userEmail = "test.Test@test.test";
+            string password = "4321";
             Login login = new Login(userEmail, password);
 
             login.LoginDB(login);
         }
 
-        /// <summary>
-        /// Test if the login not work
-        /// The test try to login with an unexisting user username
-        /// TBD: The test should catch an exception 
-        /// </summary>
         [TestMethod]
-        [ExpectedException(typeof(InvalidPasswordException))]
-        public void TestLoginInvalidPassword()
+        [ExpectedException(typeof(UnknownUserEmailAddressException))]
+        public void TestLoginInvalidUserEmail()
         {
-            string userEmail = "alessandro.rossi@cpnv.ch";
+            string userEmail = "non.existing@user.email";
             string password = "4321";
             Login login = new Login(userEmail, password);
 

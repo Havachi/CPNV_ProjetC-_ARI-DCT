@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,8 +10,11 @@ namespace GameLib
     public class Inventory
     {
         
-        private List<Item> contentList;
+        private List<Item> contentList = new List<Item>();
         
+        public Inventory()
+        {
+        }
         public Inventory(List<Item> contentList)
         {
             this.contentList = contentList;
@@ -29,8 +32,8 @@ namespace GameLib
 
         public List<Item> ContentList
         {
-            get { return ContentList; }
-            set { ContentList = value;}
+            get { return contentList; }
+            set { contentList = value;}
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace ProjetBanque
+namespace DBConnectionLib
 {
     //Source code https://stackoverflow.com/questions/4181198/how-to-hash-a-password/10402129#10402129
     public class CryptoPassword
@@ -43,7 +44,7 @@ namespace ProjetBanque
             var base64Hash = Convert.ToBase64String(hashBytes);
 
             // Format hash with extra information
-            return string.Format("$ARX${0}${1}", iterations, base64Hash);
+            return base64Hash;
         }
 
 
@@ -55,13 +56,9 @@ namespace ProjetBanque
         /// <returns>Could be verified?</returns>
         public bool Verify(string password, string hashedPassword)
         {
-            // Extract iteration and Base64 string
-            var splittedHashString = hashedPassword.Replace("$ARX$", "").Split('$');
-            var iterations = int.Parse(splittedHashString[0]);
-            var base64Hash = splittedHashString[1];
 
             // Get hash bytes
-            var hashBytes = Convert.FromBase64String(base64Hash);
+            var hashBytes = Convert.FromBase64String(hashedPassword);
 
             // Get salt
             var salt = new byte[saltSize];

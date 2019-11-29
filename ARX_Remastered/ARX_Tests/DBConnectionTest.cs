@@ -17,16 +17,7 @@ namespace ARX_Tests
             d.OpenConnection();
             d.CloseConnection();
         }
-        /// <summary>
-        /// Try to select the ID of an existing username in database
-        /// </summary>
-        [TestMethod]
-        public void TestSelectInDatabase()
-        {
-            DBConnection d = new DBConnection();
-            
-            Assert.IsTrue(d.CheckIfUsernameExistInDB("Havachi"));
-        }
+ 
 
 
     }

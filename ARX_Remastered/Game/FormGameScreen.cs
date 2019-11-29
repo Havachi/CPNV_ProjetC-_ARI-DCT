@@ -12,9 +12,17 @@ namespace Game
 {
     public partial class frmGame : Form
     {
+
         public frmGame()
         {
             InitializeComponent();
+            
         }
+
+        private void frmGame_Load(object sender, EventArgs e)
+        {
+            
+        }
+
     }
 }

@@ -6,39 +6,78 @@ using System.Threading.Tasks;
 
 namespace GameLib
 {
+    /// <summary>
+    /// This Class contain method for creating and setup Player in the game
+    /// </summary>
     public class Player
     {
-        private string userName;
-        private double lifePoint;
+        
+        private string username;
+        private double lifepoint;
         private Position position;
         private Inventory inventory;
+        private string direction;
 
-        public Player(string userName, double lifePoint, Position position, Inventory inventory)
+        /// <summary>
+        /// Constructor for the player object
+        /// </summary>
+        /// <param name="username">This is the player username (from DB)</param>
+        /// <param name="lifePoint">This is the player lifeppoint (might not be used)</param>
+        /// <param name="position">This is the player current position (X and Y)</param>
+        /// <param name="inventory">This is the player inventory</param>
+        /// <param name="direction">This is the current player orientation (N,E,S,W)</param>
+        public Player(string username, double lifePoint, Position position, Inventory inventory, string direction)
         {
-            this.userName = userName;
-            this.lifePoint = lifePoint;
+            this.username = username;
+            this.lifepoint = lifePoint;
             this.position = position;
             this.inventory = inventory;
+            this.direction = direction;
         }
-        public Player(string userName, Position position, Inventory inventory)
+        /// <summary>
+        /// Accessor for private attribut username
+        /// </summary>
+        public string Username
         {
-            this.userName = userName;
-            this.lifePoint = 100;
-            this.position = position;
-            this.inventory = inventory;
+            get { return username; }
         }
-        public Player(string userName, Inventory inventory)
+        /// <summary>
+        /// Accessor for private attribut lifepoint
+        /// </summary>
+        public double Lifepoint
         {
-            this.userName = userName;
-            this.lifePoint = 100;
-            this.position = position;
-            this.inventory = inventory;
+            get
+            {
+                return lifepoint;
+            }
         }
-        public Player(string userName)
+        /// <summary>
+        /// Accessor for private attribut position
+        /// </summary>
+        public Position Position
         {
-            this.userName = userName;
-            this.lifePoint = 100;
-            
+            get
+            {
+                return position;
+            }
+        }
+        /// <summary>
+        /// Accessor for private attribut inventory
+        /// </summary>
+        public Inventory Inventory
+        {
+            get
+            {
+                return inventory;
+            }
+        }
+        /// <summary>
+        /// Accessor for private attribut dirention
+        /// </summary>
+        public string Direction
+        {
+            get { return direction; }
+            set { direction = value; }
         }
     }
 }
