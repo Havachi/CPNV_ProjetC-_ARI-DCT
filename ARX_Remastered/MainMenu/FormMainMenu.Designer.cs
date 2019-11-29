@@ -62,8 +62,8 @@
             this.lblMainMenuLogged.Size = new System.Drawing.Size(63, 13);
             this.lblMainMenuLogged.TabIndex = 2;
             this.lblMainMenuLogged.Text = "Not Logged";
-
-            // MainMenu
+            // 
+            // FormMainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -71,7 +71,7 @@
             this.Controls.Add(this.lblMainMenuLogged);
             this.Controls.Add(this.lblARXMainMenu);
             this.Controls.Add(this.btnLogin);
-            this.Name = "MainMenu";
+            this.Name = "FormMainMenu";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.ResumeLayout(false);

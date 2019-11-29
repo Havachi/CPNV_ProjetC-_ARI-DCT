@@ -25,13 +25,25 @@ namespace MainMenu
             {
                formLogin.ShowDialog(this);
                lblMainMenuLogged.Text = $"Logged as {formLogin.Mail}";
+               btnLogin.Text = "Play";
+               btnLogin.Click -= (btnLogin_Click);
+               btnLogin.Click += (btnLogin_Play);
             }
+        }
+
+        private void btnLogin_Play(object sender, EventArgs e)
+        {
+            // Appeller le générateur du jeu
+            // Générer les attributs du joueur (Position, inventaire etc)
+            // Appeller les génerateurs d'évenements et item random
+            // Appeller le form Gamescreen avec les paramètres pour l'affichage
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
 
         }
+
 
     }
 }
