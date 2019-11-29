@@ -91,7 +91,7 @@ namespace DBConnectionLib
         /// </summary>
         /// <param name="username"></param>
         /// <returns>String : UserID </returns>
-        public string GetUserIDFromUsername(string username)
+        public int GetUserIDFromUsername(string username)
         {
             OpenConnection();
             MySqlCommand cmd = connection.CreateCommand();
@@ -103,9 +103,10 @@ namespace DBConnectionLib
                 while (reader.Read())
                 {
                     var result = reader.GetString(0);
+                    int ID = Int32.Parse(result);
                     reader.Close();
                     CloseConnection();
-                    return result;
+                    return ID;
                 }
             }
 
@@ -177,6 +178,20 @@ namespace DBConnectionLib
             throw new UnknownUserEmailAddressException("This Email Address doesn\'t exist");
         }
 
+        public void FullDeleteUser(int Id)
+        {
+            OpenConnection();
+            MySqlCommand cmd = connection.CreateCommand();
+            cmd.CommandText = $"DELETE FROM users WHERE UserID =\"{Id}\" ";
+            DbDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    CloseConnection();
+                }
+            }
+        }
         #endregion
     }
 }

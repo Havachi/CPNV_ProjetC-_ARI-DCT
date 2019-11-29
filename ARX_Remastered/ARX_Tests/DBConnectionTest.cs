@@ -60,7 +60,5 @@ namespace ARX_Tests
             Assert.AreEqual("X2wCdhr31aEeQ/hSrxOQ2MWinioteo3v1aupG54OMg8ifV6f", userpassword);
         }
 
-
-
     }
 }

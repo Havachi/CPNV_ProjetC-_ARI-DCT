@@ -20,14 +20,22 @@ namespace ARX_Tests
         /// First the user is created
         /// then the login is tested, with method from MainMenulLib\login.cs
         /// </summary>
+        [TestInitialize]
+        public void Initialize()
+        {
+            string userEmail = "test.Test@test.test";
+            string username = "Test";
+            string password = "12345678";
+
+            Register reg = new Register(userEmail, username, password);
+        }
+
         [TestMethod]
         public void TestLoginExistingUser()
         {
             string userEmail = "test.Test@test.test";
             string username = "Test";
             string password = "12345678";
-            Register reg = new Register(userEmail, username, password);
-            reg.RegisterInDB(reg);
 
             Login l = new Login(userEmail, password);
             Assert.IsTrue(l.LoginDB(l));
@@ -53,7 +61,15 @@ namespace ARX_Tests
             login.LoginDB(login);
         }
 
+        [TestCleanup]
+        public void Cleanup()
+        {
+            DBConnection db= new DBConnection();
+            string userEmail = "test.Test@test.test";
+            string username = "Test";
+            string password = "12345678";
+            db.FullDeleteUser(db.GetUserIDFromUsername(username));
+        }
 
-
-    }
+    } 
 }
