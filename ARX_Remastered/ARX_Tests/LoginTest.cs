@@ -23,38 +23,33 @@ namespace ARX_Tests
         [TestMethod]
         public void TestLoginExistingUser()
         {
-            
             string userEmail = "test.Test@test.test";
-            string password = "1234";
-            Login l = new Login(userEmail, password);
+            string username = "Test";
+            string password = "12345678";
+            Register reg = new Register(userEmail, username, password);
+            reg.RegisterInDB(reg);
 
+            Login l = new Login(userEmail, password);
             Assert.IsTrue(l.LoginDB(l));
         }
 
-        /// <summary>
-        /// Test if the login not work
-        /// The test try to login with an unexisting user username
-        /// TBD: The test should catch an exception 
-        /// </summary>
         [TestMethod]
-        [ExpectedException(typeof(InvalidPasswordException))]
-        public void TestLoginInvalidPassword()
+        [ExpectedException(typeof(EmptyFieldException))]
+        public void TestLoginEmptyField()
         {
-            string userEmail = "test.Test@test.test";
-            string password = "4321";
-            Login login = new Login(userEmail, password);
-
+            string userEmail = "";
+            string password = "";
+            Login login = new Login(userEmail,password);
             login.LoginDB(login);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UnknownUserEmailAddressException))]
-        public void TestLoginInvalidUserEmail()
+        [ExpectedException(typeof(InvalidPasswordException))]
+        public void TestLoginWithWrongPassword()
         {
-            string userEmail = "non.existing@user.email";
-            string password = "4321";
+            string userEmail = "test.Test@test.test";
+            string password = "abcdefgh1234";
             Login login = new Login(userEmail, password);
-
             login.LoginDB(login);
         }
 

@@ -103,4 +103,18 @@ namespace DBConnectionLib
             message = "The password that you have entered is too short, please try again.";
         }
     }
+
+    [Serializable]
+    public class EmptyFieldException : Exception
+    {
+        public EmptyFieldException()
+        {
+
+        }
+
+        public EmptyFieldException(string message):base(message)
+        {
+            message = "Please file the field";
+        }
+    }
 }

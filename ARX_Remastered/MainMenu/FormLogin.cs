@@ -40,16 +40,7 @@ namespace MainMenu
             mail = tbxLoginMail.Text;
             password = tbxLoginPassword.Text;
 
-            passwordCheck = "Fill";
-
-            CheckData logincheck = new CheckData(mail, password, passwordCheck);
-
-            ///Appelle la méthode de vérification de données
-            logincheck.CheckLoginField(mail, password, passwordCheck);
-
-            ///Appeler la fonction LoginDB pour se connecter
             Login login = new Login(mail, password);
-            
             try
             {
                 if (!login.LoginDB(login))

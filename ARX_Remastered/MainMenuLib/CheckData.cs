@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DBConnectionLib;
 
-namespace MainMenu
+namespace MainMenuLib
 {
     /// Cette classe a été faite pour vérifier les données entrée dans "LoginForm" avant de les envoyer au modèle. 
     public class CheckData
@@ -42,11 +36,11 @@ namespace MainMenu
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="password"></param>
-        public void CheckLoginField(string mail, string password, string passwordCheck)
+        public void CheckLoginField(string mail, string password)
         {
             if (mail == "" || password == "")
             {
-                throw new ArgumentNullException();
+                throw new EmptyFieldException("Please fill the field");
             }
         }
 
@@ -64,7 +58,7 @@ namespace MainMenu
         {
             if (mail.Length < 8)
             {
-                throw new EmailTooShortException();
+                throw new EmailTooShortException("The Email Address that you have entered is too short");
             }
             else
             {
@@ -73,7 +67,7 @@ namespace MainMenu
             }
             if (password.Length < 8)
             {
-                throw new PasswordTooShortException();
+                throw new PasswordTooShortException("The password that you have entered is too short");
             }
             else
             {
