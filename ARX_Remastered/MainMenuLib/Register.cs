@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DBConnectionLib;
-using MainMenu;
 using MySql.Data.MySqlClient;
 
 namespace MainMenuLib
@@ -45,6 +44,7 @@ namespace MainMenuLib
             string hashedPassword = c.Hash(password);
             CheckData logincheck = new CheckData();
 
+            //Try to check if the userEmail an password are valid (> 8 char)
             try
             {
                 logincheck.VerifRegister(reg.userEmail, reg.password);
@@ -60,10 +60,10 @@ namespace MainMenuLib
                 throw;
             }
 
-
+            //Try to Check if the userEmail exist in the database
             try
             {
-                connection.CheckIfUsernameExistInDB(username);
+                connection.CheckIfUserEmailExistInDB(userEmail);
             }
             catch (UserEmailAlreadyExistException e)
             {
@@ -71,9 +71,11 @@ namespace MainMenuLib
                 throw;
             }
 
+            //Try to insert the data in the Database
             try
             {
                 connection.InsertDataInDB(username, userEmail, hashedPassword);
+
                 return true;
             }
             catch (MySqlException e)

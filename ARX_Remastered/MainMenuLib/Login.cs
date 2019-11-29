@@ -41,13 +41,21 @@ namespace MainMenuLib
             string hashedPassword = null;
             string userEmail = login.userEmail;
             string password = login.password;
-            
+
+            CheckData logincheck = new CheckData();
             DBConnection connection = new DBConnection();
-            
             CryptoPassword c = new CryptoPassword();
 
-
             
+            try
+            {
+                logincheck.CheckLoginField(login.userEmail, login.password);
+            }
+            catch (EmptyFieldException e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
             
             try
             {
