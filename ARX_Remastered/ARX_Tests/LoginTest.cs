@@ -43,7 +43,15 @@ namespace ARX_Tests
             login.LoginDB(login);
         }
 
-        
+        [TestMethod]
+        [ExpectedException(typeof(InvalidPasswordException))]
+        public void TestLoginWithWrongPassword()
+        {
+            string userEmail = "test.Test@test.test";
+            string password = "abcdefgh1234";
+            Login login = new Login(userEmail, password);
+            login.LoginDB(login);
+        }
 
 
 
