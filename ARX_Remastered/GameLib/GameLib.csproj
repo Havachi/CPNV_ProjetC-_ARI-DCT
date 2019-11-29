@@ -67,6 +67,7 @@
     <Compile Include="Item.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapGraphics.cs" />
+    <Compile Include="Maze.cs" />
     <Compile Include="Movement.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Position.cs" />
