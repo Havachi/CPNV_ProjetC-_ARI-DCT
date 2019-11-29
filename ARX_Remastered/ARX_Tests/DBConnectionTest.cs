@@ -55,7 +55,7 @@ namespace ARX_Tests
             string useremail = "test.Test@test.test";
 
             DBConnection db = new DBConnection();
-           var userpassword= db.GetUserPassword(useremail);
+            var userpassword= db.GetUserPassword(useremail);
 
             Assert.AreEqual("X2wCdhr31aEeQ/hSrxOQ2MWinioteo3v1aupG54OMg8ifV6f", userpassword);
         }
