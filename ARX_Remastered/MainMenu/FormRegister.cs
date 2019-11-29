@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DBConnectionLib;
 using MainMenuLib;
 
 // ReSharper disable All
@@ -51,6 +52,16 @@ namespace MainMenu
 
             username = (mail.Split('@')[0]);
             Register register = new Register(mail, username, password);
+            try
+            {
+
+            }
+            catch (UnknownUserEmailAddressException exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
+
             register.RegisterInDB(register);
             MessageBox.Show(@"Votre compte a été créé");
             Close();

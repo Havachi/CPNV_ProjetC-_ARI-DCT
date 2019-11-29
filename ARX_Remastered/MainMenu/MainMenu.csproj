@@ -119,6 +119,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DBConnectionLib\DBConnectionLib.csproj">
+      <Project>{17299C8A-4E90-4238-A4C2-89973AB358F8}</Project>
+      <Name>DBConnectionLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MainMenuLib\MainMenuLib.csproj">
       <Project>{9d508df8-e330-40ba-bdcd-765e1581e249}</Project>
       <Name>MainMenuLib</Name>
