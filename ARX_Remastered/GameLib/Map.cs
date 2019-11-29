@@ -19,10 +19,7 @@ namespace GameLib
         private int mapSeed;
         public Map()
         {
-            mapSeed = GenerateSeed(20);
-           /// mapContent = GenerateVoidMap();
-            GenerateBorderMap();
-            //GenerateBorder
+
         }
 
         public byte[] GenerateSeed(int seedSize)
@@ -112,19 +109,7 @@ namespace GameLib
             get { return mapContent; }
         }
 
-        public byte[] MapSeed
-        {
-            get { return mapSeed; }
-        }
 
-        public int Rows
-        {
-            get { return rows; }
-        }
-        public int Columns
-        {
-            get { return columns; }
-        }
     }
 
 
