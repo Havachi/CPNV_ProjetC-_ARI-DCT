@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DBConnectionLib;
 using MainMenuLib;
 
 // ReSharper disable All
@@ -48,9 +49,32 @@ namespace MainMenu
 
             ///Appeler la fonction LoginDB pour se connecter
             Login login = new Login(mail, password);
-            login.LoginDB(login);
-            MessageBox.Show(@"Connexion établie");
-            Close();
+            
+            try
+            {
+                if (!login.LoginDB(login))
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show(@"Connexion établie");
+                    Close();
+                }
+
+            }
+            catch (UnknownUserEmailAddressException exception)
+            {
+                MessageBox.Show(exception.Message);
+
+            }
+            catch (InvalidPasswordException exception)
+            {
+                MessageBox.Show(exception.Message);
+
+            }
+
+            
         }
 
         private void btnLoginRegister_Click(object sender, EventArgs e)

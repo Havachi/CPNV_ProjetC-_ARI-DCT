@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using DBConnectionLib;
 using MySql.Data.MySqlClient;
 
@@ -17,7 +18,6 @@ namespace MainMenuLib
     public class Login
     {
         private string userEmail;
-        private string username;
         private string password;
         /// <summary>
         /// This is the constructor for the Login Object
@@ -38,24 +38,48 @@ namespace MainMenuLib
         /// <returns>Exception if not OK</returns>
         public bool LoginDB(Login login)
         {
-            string hashedPassword;
+            string hashedPassword = null;
             string userEmail = login.userEmail;
             string password = login.password;
+            
             DBConnection connection = new DBConnection();
             
             CryptoPassword c = new CryptoPassword();
 
+
+            
+            
+            try
+            {
+                if (!connection.CheckEmail(userEmail))
+                {
+                    return false;
+                }
+
+            }
+            catch (UnknownUserEmailAddressException e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+
             hashedPassword = connection.GetUserPassword(userEmail);
 
-            if (!connection.CheckEmail(userEmail))
+            try
             {
-                throw new UnknownUserEmailAddressException();
+                if (!c.Verify(password, hashedPassword))
+                {
+                    return false;
+                }
+                return true;
             }
-            if (!c.Verify(password, hashedPassword))
+            catch (InvalidPasswordException e)
             {
-                throw new InvalidPasswordException();
+                MessageBox.Show(e.Message);
+                return false;
             }
-            return true;
+            
+            
         }
     } 
 }

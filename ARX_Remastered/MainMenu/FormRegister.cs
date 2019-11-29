@@ -39,40 +39,32 @@ namespace MainMenu
             password = tbxRegisterPassword.Text;
             passwordCheck = tbxRegisterPasswordCheck.Text;
 
-            CheckData logincheck = new CheckData(mail, password, passwordCheck);
-
-            ///Appelle les métodes de vérifications
-            logincheck.CheckLoginField(mail, password, passwordCheck);
-            logincheck.VerifRegister(mail, password, passwordCheck);
-
-          
-
-
             ///Appeler la fonction RegisterDB pour créer le compte
 
             username = (mail.Split('@')[0]);
             Register register = new Register(mail, username, password);
             try
             {
-                register.RegisterInDB(register);
+                if (register.RegisterInDB(register))
+                {
+                    MessageBox.Show(@"Votre compte a été créé");
+                    Close();
+                }
+
             }
             catch (InvalidPasswordException exception)
             {
-                lblError.Text = exception.Message;
+                MessageBox.Show(exception.Message.ToString());
                 throw;
 
 
             }
             catch (UserEmailAlreadyExistException exception)
             {
-                lblError.Text = exception.Message;
+                MessageBox.Show(exception.Message.ToString());
                 throw;
             }
 
-            
-            MessageBox.Show(@"Votre compte a été créé");
-            Close();
-            //Bug Ca fait exploser le programme
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
