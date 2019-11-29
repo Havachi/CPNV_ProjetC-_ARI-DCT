@@ -25,9 +25,12 @@ namespace ARX_Tests
         {
             
             string userEmail = "test.Test@test.test";
-            string password = "1234";
-            Login l = new Login(userEmail, password);
+            string username = "Test";
+            string password = "12345678";
+            Register reg = new Register(userEmail, username, password);
+            reg.RegisterInDB(reg);
 
+            Login l = new Login(userEmail, password);
             Assert.IsTrue(l.LoginDB(l));
         }
 
@@ -55,6 +58,16 @@ namespace ARX_Tests
             string password = "4321";
             Login login = new Login(userEmail, password);
 
+            login.LoginDB(login);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmptyFieldException))]
+        public void TestLoginEmptyField()
+        {
+            string userEmail = "";
+            string password = "";
+            Login login = new Login(userEmail,password);
             login.LoginDB(login);
         }
 
