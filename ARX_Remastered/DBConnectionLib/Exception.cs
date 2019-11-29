@@ -75,4 +75,32 @@ namespace DBConnectionLib
 
         }
     }
+
+    [Serializable]
+    public class EmailTooShortException : Exception
+    {
+        public EmailTooShortException()
+        {
+
+        }
+
+        public EmailTooShortException(string message) : base(message)
+        {
+            message = "This Email Address is too short, please try another Email Address";
+        }
+    }
+
+    [Serializable]
+    public class PasswordTooShortException : Exception
+    {
+        public PasswordTooShortException()
+        {
+
+        }
+
+        public PasswordTooShortException(string message):base(message)
+        {
+            message = "The password that you have entered is too short, please try again.";
+        }
+    }
 }

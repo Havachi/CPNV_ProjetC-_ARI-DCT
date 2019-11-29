@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel.DataAnnotations;
+using DBConnectionLib;
 
 namespace MainMenu
 {
@@ -17,13 +18,18 @@ namespace MainMenu
         private string passwordCheck;
         private List<string> illegalChar = new List<string>();
 
-    
+
 
         /// <summary>
         /// Va chercher les varables necéssaires 
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="password"></param>
+        public CheckData()
+        {
+
+
+        }
         public CheckData(string mail, string password, string passwordCheck)
         {
             this.mail = mail;
@@ -63,18 +69,14 @@ namespace MainMenu
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="password"></param>
-        public void VerifRegister(string mail, string password, string passwordCheck)
+        public void VerifRegister(string mail, string password)
         {
             if (mail.Length < 8)
             {
-                MessageBox.Show("mail too short, minimal 8 character");
-                Exception e = new Exception("mail too short");
-                throw e;
-
+                throw new EmailTooShortException();
             }
             else
             {
-
                 IsValidEmail(mail);
 
                 /*populateIllegalChar();
@@ -96,9 +98,7 @@ namespace MainMenu
             }
             if (password.Length < 8)
             {
-                MessageBox.Show("The password is too short, minimal 8 character");
-                Exception e = new Exception("Password too short");
-                throw e;
+                throw new PasswordTooShortException();
             }
             else
             {

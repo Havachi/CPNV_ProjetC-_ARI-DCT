@@ -174,7 +174,7 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUserEmailAddressException();
+            throw new UnknownUserEmailAddressException("This Email Address doesn\'t exist.");
         }
 
         /// <summary>
@@ -207,8 +207,7 @@ namespace DBConnectionLib
         /// Check if the Username that the user input is already taken
         /// </summary>
         /// <param name="username">User username</param>
-        /// <returns>True : Username is not used</returns>
-        /// <returns>False: Username already taken </returns>
+        /// <returns>False: Username not in use</returns>
         public bool CheckIfUsernameExistInDB(string username)
         {
             OpenConnection();
@@ -218,16 +217,13 @@ namespace DBConnectionLib
 
             MySqlDataReader reader;
             reader = cmd.ExecuteReader();
-            if (reader.HasRows)
+            if (!reader.HasRows)
             {
-                while (reader.Read())
-                {
-                    return true;
-                }
+                CloseConnection();
+                return false;
             }
-
             CloseConnection();
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -242,8 +238,8 @@ namespace DBConnectionLib
             reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-            }
 
+            }
             CloseConnection();
         }
 
@@ -264,7 +260,7 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUserEmailAddressException();
+            throw new UnknownUserEmailAddressException("This Email Address doesn\'t exist");
         }
 
         public string GetUserIDFromUserEmail(string UserEmail)
@@ -284,7 +280,7 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUsernameException();
+            throw new UnknownUsernameException("This Username doesn\'t exist");
         }
 
         #endregion

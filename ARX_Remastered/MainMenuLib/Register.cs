@@ -4,7 +4,10 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using DBConnectionLib;
+using MainMenu;
+using MySql.Data.MySqlClient;
 
 namespace MainMenuLib
 {
@@ -39,17 +42,46 @@ namespace MainMenuLib
             DBConnection connection = new DBConnection();
             
             CryptoPassword c = new CryptoPassword();
-            string hashedPassword = c.Hash(password); ;
-            if (connection.CheckIfUsernameExistInDB(username))
+            string hashedPassword = c.Hash(password);
+            CheckData logincheck = new CheckData();
+
+            try
             {
-                throw new UserEmailAlreadyExistException();
+                logincheck.VerifRegister(reg.userEmail, reg.password);
             }
-            else
+            catch (PasswordTooShortException exception)
             {
-                connection.InsertDataInDB(username,userEmail,hashedPassword);
+                MessageBox.Show(exception.Message);
+                throw;
+            }
+            catch (EmailTooShortException exception)
+            {
+                MessageBox.Show(exception.Message);
+                throw;
+            }
+
+
+            try
+            {
+                connection.CheckIfUsernameExistInDB(username);
+            }
+            catch (UserEmailAlreadyExistException e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
+
+            try
+            {
+                connection.InsertDataInDB(username, userEmail, hashedPassword);
                 return true;
             }
-            
+            catch (MySqlException e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
+
             
         }
 
