@@ -41,9 +41,40 @@ namespace MainMenu
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
+            // Upgrade?
+            if (Properties.Settings.Default.FormMainSize.Width == 0) Properties.Settings.Default.Upgrade();
 
+            if (Properties.Settings.Default.FormMainSize.Width == 0 || Properties.Settings.Default.FormMainSize.Height == 0)
+            {
+
+            }
+            else
+            {
+                this.WindowState = Properties.Settings.Default.FormMainState;
+                if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
+
+                this.Location = Properties.Settings.Default.FormMainLoc;
+                this.Size = Properties.Settings.Default.FormMainSize;
+            }
         }
 
+        private void MainMenu_Closing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.FormMainState = this.WindowState;
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                // Save location and size if the state is normal
+                Properties.Settings.Default.FormMainLoc = this.Location;
+                Properties.Settings.Default.FormMainSize = this.Size;
+            }
+            else
+            {
+                Properties.Settings.Default.FormMainLoc = this.RestoreBounds.Location;
+                Properties.Settings.Default.FormMainSize = this.RestoreBounds.Size;
+            }
 
+            // Save the settings
+            Properties.Settings.Default.Save();
+        }
     }
 }
