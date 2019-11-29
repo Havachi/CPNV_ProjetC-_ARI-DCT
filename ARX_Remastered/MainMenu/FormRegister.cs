@@ -54,15 +54,22 @@ namespace MainMenu
             Register register = new Register(mail, username, password);
             try
             {
+                register.RegisterInDB(register);
+            }
+            catch (InvalidPasswordException exception)
+            {
+                lblError.Text = exception.Message;
+                throw;
+
 
             }
-            catch (UnknownUserEmailAddressException exception)
+            catch (UserEmailAlreadyExistException exception)
             {
-                Console.WriteLine(exception);
+                lblError.Text = exception.Message;
                 throw;
             }
 
-            register.RegisterInDB(register);
+            
             MessageBox.Show(@"Votre compte a été créé");
             Close();
             //Bug Ca fait exploser le programme
