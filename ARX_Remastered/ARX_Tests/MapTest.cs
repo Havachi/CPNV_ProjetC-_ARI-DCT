@@ -10,22 +10,28 @@ namespace ARX_Tests
     public class MapTest
     {
         [TestMethod]
-        public void GenerateVoidMap()
+        public void GenerateVoidMapTest()
         {
             Type Void = new TypeDelegator(typeof(VoidCase));
             Map map = new Map();
-            byte[] levelSeedBytes = new byte[20];
-            levelSeedBytes = map.GenerateSeed(20);
-            map.LoadMap(levelSeedBytes);
-            List<Case> mapContent = map.MapContent;
-
-            foreach (var c in mapContent)
+            foreach (var mapCase in map.MapContent)
             {
-                Assert.IsInstanceOfType(c, Void);
+                Assert.AreEqual(typeof(VoidCase) , mapCase.GetType());
             }
-            
-
         }
+
+        [TestMethod]
+        public void GenerateBorderTest()
+        {
+
+            Map map = new Map();
+            map.GenerateBorderMap();
+            foreach (var mapCase in map.MapContent)
+            {
+                //todo Write all Case values in a file
+            }
+        }
+
         [TestMethod]
         public void GenerateSeedTest()
         {

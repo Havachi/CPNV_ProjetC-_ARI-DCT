@@ -21,7 +21,11 @@ namespace GameLib
     }
     public class TerrainCase : Case
     {
-        protected string orientation; 
+        protected string orientation;
+        protected bool wallNorth = false;
+        protected bool wallEast = false;
+        protected bool wallSouth = false;
+        protected bool wallWest = false;
         public TerrainCase(string orientation)
         {
             this.orientation = orientation;

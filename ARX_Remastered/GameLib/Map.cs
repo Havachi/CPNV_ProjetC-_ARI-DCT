@@ -11,25 +11,18 @@ namespace GameLib
 {
     public class Map
     {
-        private static int columns =10;
-        private static int rows=10 ;
-        private int seedSize;
-
-        private int[,] mapContent = new int[columns,rows];
-        //private List<Case> mapContent = new List<Case>();
+        private static int xMax = 10;
+        private static int yMax = 10;
         private VoidCase voidCase = new VoidCase();
-        private byte[] mapSeed;
-
-
+        private Case[,] mapContent=new Case[xMax, yMax];
+        private List<List<bool>> borderMap = new List<List<bool>>();
+        private int mapSeed;
         public Map()
         {
-            seedSize = columns * rows;
-            mapSeed = GenerateSeed(seedSize);
-            LoadVoidMap();
-        }
-        public Map(int[,] mapContent)
-        {
-            this.mapContent = mapContent;
+            mapSeed = GenerateSeed(20);
+           /// mapContent = GenerateVoidMap();
+            GenerateBorderMap();
+            //GenerateBorder
         }
 
         public byte[] GenerateSeed(int seedSize)
@@ -44,20 +37,77 @@ namespace GameLib
             }
             
         }
-        public void LoadVoidMap()
+        public void GenerateVoidMap()
         {
-            for (int x = 0; x < rows; x++)
+            for (int i = 0; i < xMax; i++)
             {
-                for (int y = 0; y < columns; y++)
+                for (int j = 0; j < yMax; j++)
                 {
-                    mapContent[x,y] = 0;
-
+                    mapContent.SetValue(voidCase,i,j);
                 }
             }
         }
 
+        public void GenerateBorderMap()
+        {
+            int iteration = new int();
 
-        public int[,] MapContent
+            bool isWallNorth = false;
+            bool isWallEast = false;
+            bool isWallSouth = false;
+            bool isWallWest = false;
+            bool collition;
+
+            Random rand = new Random();
+
+            
+
+            foreach (var mapCase in borderMap)
+            {
+                var caseType = rand.Next(0, 5);
+                iteration++;
+                switch (caseType)
+            {
+                //Void
+                case 0:
+
+                    break;
+                //Dead end
+                case 1:
+                    isWallNorth = true;
+                    isWallEast = true;
+                    isWallSouth = false;
+                    isWallWest = true;
+                    break;
+                //Corner
+                case 2:
+                    isWallNorth = true;
+                    isWallEast = false;
+                    isWallSouth = false;
+                    isWallWest = true;
+                    break;
+                //Corridor
+                case 3:
+                    isWallNorth = false;
+                    isWallEast = true;
+                    isWallSouth = false;
+                    isWallWest = true;
+                    break;
+                //T
+                case 4:
+                    isWallNorth = true;
+                    isWallEast = false;
+                    isWallSouth = false;
+                    isWallWest = false;
+                    break;
+            }
+                mapCase.Add(isWallNorth);
+                mapCase.Add(isWallEast);
+                mapCase.Add(isWallSouth);
+                mapCase.Add(isWallWest);
+            }
+        }
+        public Case[,] MapContent
         {
             get { return mapContent; }
         }
