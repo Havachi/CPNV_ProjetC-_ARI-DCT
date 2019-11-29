@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Threading;
 
 //TODO IN THIS FILE: Remove Hardcoded values to connect to the database and replace by a JSON File containing those values
@@ -208,22 +209,27 @@ namespace DBConnectionLib
         /// </summary>
         /// <param name="username">User username</param>
         /// <returns>False: Username not in use</returns>
-        public bool CheckIfUsernameExistInDB(string username)
+        public bool CheckIfUserEmailExistInDB(string userEmail)
         {
-            OpenConnection();
-            string query = $"SELECT UserID FROM users WHERE Username =\"{username}\" ";
+
+            string query = $"SELECT UserID FROM users WHERE UserEmail =\"{userEmail}\" ";
 
             MySqlCommand cmd = new MySqlCommand(query, connection);
 
-            MySqlDataReader reader;
-            reader = cmd.ExecuteReader();
-            if (!reader.HasRows)
+            OpenConnection();
+            MySqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
             {
+                if (dr.HasRows == true)
+                {
+                    CloseConnection();
+                    throw new UserEmailAlreadyExistException("This Email Address is already used.");
+                }
                 CloseConnection();
                 return false;
             }
             CloseConnection();
-            return true;
+            return false;
         }
 
         /// <summary>
