@@ -71,6 +71,7 @@
             this.Controls.Add(this.lblMainMenuLogged);
             this.Controls.Add(this.lblARXMainMenu);
             this.Controls.Add(this.btnLogin);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormMainMenu";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainMenu_Load);

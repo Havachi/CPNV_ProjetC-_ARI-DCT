@@ -140,6 +140,7 @@
             this.Controls.Add(this.tbxRegisterMail);
             this.Controls.Add(this.lblRegisterTitle);
             this.Controls.Add(this.btnRegisterConnexion);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormRegister";
             this.Text = "Register";
             this.Load += new System.EventHandler(this.FormLogin_Load);

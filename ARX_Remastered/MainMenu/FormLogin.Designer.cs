@@ -117,6 +117,7 @@
             this.Controls.Add(this.tbxLoginMail);
             this.Controls.Add(this.lblLoginTitle);
             this.Controls.Add(this.btnLoginConnexion);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormLogin";
             this.Text = "Login";
             this.ResumeLayout(false);
