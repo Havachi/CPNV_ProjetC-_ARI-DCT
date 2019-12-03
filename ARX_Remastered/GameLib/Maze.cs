@@ -8,20 +8,69 @@ using System.Windows;
 
 namespace GameLib
 {
+
+    /// <summary>
+    /// This method contains method for generating new level.
+    /// </summary>
     public class Maze
     {
+        /// <summary>
+        /// The maximum height of the map.
+        /// </summary>
         private int maxHeight = 10;
+        /// <summary>
+        /// The maximum width of the map.
+        /// </summary>
         private int maxWidth = 10;
+        /// <summary>
+        /// The number case that as already been visited by the algorithm (max = max width * max height)
+        /// </summary>
         private int nbOfVisitedCase = 0;
-        
+        /// <summary>
+        /// This list of int array contains all the position of the map.
+        /// </summary>
+        /// <remarks>
+        /// The structure of each array of int should be {posX, posY, visited}
+        /// </remarks>
         private List<int[]> caseInfoList = new List<int[]>();
+        /// <summary>
+        /// This list of array of bool contains infomation about the "walls"
+        /// </summary>
+        /// <remarks>
+        /// The structure of the array of bool should be {wallN, wallE, wallS, wallW}
+        /// </remarks>
         private List<bool[]> caseNearInfo = new List<bool[]>();
+        /// <summary>
+        /// This Stack of Point is used by the algorithm to temporary stock position coordinate.
+        /// </summary>
+        /// <remarks>
+        /// This is used for backtracking because stack have the particularity of Last In, First Out.
+        /// </remarks>
         private Stack<Point> mazeStack=new Stack<Point>();
-        Random rand = new Random();
-        
 
+        /// <summary>
+        ///  Random number.
+        /// </summary>
+        Random rand = new Random();
+
+        /// <summary>
+        /// This is the main part of the algorithm,
+        /// the part that create new path,
+        /// It use other method for backtracking and choosing a new way.
+        /// </summary>
+        /// <remarks>
+        /// The algorithm work like this:
+        /// - todo First We choose a start point randomly on the map.
+        /// - todo Then the algorithm choose between all unvisited case around him
+        /// - todo Then the algorithm stack the last position in <c>mazeStack</c>
+        /// - todo Then the algorithm write the last position and the set the visited case in <c>caseInfoList</c>
+        /// - todo Then it continue until the maximum possible number of case are visited (MaxHeight * MaxWidth),
+        /// - todo We could also choose a number of void case to regulate the difficulty (More void case, less possible way)
+        /// - todo When the maximum void case is reached, the wall calculating process begin <see cref=""/>
+        /// </remarks>
         public void GenerateMaze()
         {
+
             int currentX = 0;
             int currentY = 0;
             int lastX = 0;
@@ -120,26 +169,33 @@ namespace GameLib
             return false;
         }
 
-        public void Backtrack(Stack<Point> stack, List<int[]> gridList)
+        public void BacktrackUntilUnvisited()
         {
 
-            Point backPoint = stack.Pop();
-            var xValue = backPoint.X;
-            var yValue = backPoint.Y;
-            foreach (var gridInfo in gridList)
-            {
-                if (gridInfo[0] == xValue+1)
-                {
-                    
-                }
-            }
+        }
+
+        public void BacktrackStep()
+        {
+
         }
 
         public void CheckFourDirectionVisited() 
         {
 
         }
-
+        
+        /// <summary>
+        /// This is the algorithm part were wall are calculated.
+        /// </summary>
+        /// <remarks>
+        /// The Wall Calculation goes like that:
+        /// - todo First the mazeStack Stack variable is used in a step by step backtrack method, not the BacktrackUntilUnvisited() method
+        /// - todo Then walls are placed if there is no direct link between case if there is a direct link, no wall are placed
+        /// </remarks>
+        public void WallCalculation()
+        {
+             
+        }
         public List<int[]> CaseInfoList
         {
             get { return caseInfoList; }
