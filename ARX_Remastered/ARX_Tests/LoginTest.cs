@@ -71,5 +71,5 @@ namespace ARX_Tests
             db.FullDeleteUser(db.GetUserIDFromUsername(username));
         }
 
-    } 
+    } oce
 }
