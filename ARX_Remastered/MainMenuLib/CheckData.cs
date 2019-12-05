@@ -44,6 +44,16 @@ namespace MainMenuLib
             }
         }
 
+        public bool CheckRegisterField(string mail, string password, string passwordCheck)
+        {
+            if (mail == "" || password == "" || passwordCheck == "")
+            {
+                throw new EmptyFieldException("Please fill the field");
+            }
+
+            return true;
+        }
+
         public bool IsValidEmail(string mail)
         {
             return new EmailAddressAttribute().IsValid(mail);

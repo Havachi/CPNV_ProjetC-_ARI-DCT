@@ -24,7 +24,8 @@ namespace MainMenu
             using (FormLogin formLogin = new FormLogin())
             {
                formLogin.ShowDialog(this);
-               lblMainMenuLogged.Text = $"Logged as {formLogin.Mail}";
+               lblMainMenuLogged.Text = $@"Logged as
+{formLogin.Mail}";
                btnLogin.Text = "Play";
                btnLogin.Click -= (btnLogin_Click);
                btnLogin.Click += (btnLogin_Play);
