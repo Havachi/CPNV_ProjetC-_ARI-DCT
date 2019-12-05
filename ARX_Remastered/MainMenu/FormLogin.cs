@@ -49,7 +49,7 @@ namespace MainMenu
                 }
                 else
                 {
-                    MessageBox.Show(@"Connexion établie");
+                    MessageBox.Show(@"Login Successful");
                     Close();
                 }
 
