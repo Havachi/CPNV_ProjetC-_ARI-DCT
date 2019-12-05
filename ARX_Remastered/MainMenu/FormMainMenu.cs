@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Game;
 
 namespace MainMenu
 {
@@ -21,6 +22,7 @@ namespace MainMenu
         
         private void btnLogin_Click(object sender, EventArgs e)
         {
+
             using (FormLogin formLogin = new FormLogin())
             {
                formLogin.ShowDialog(this);

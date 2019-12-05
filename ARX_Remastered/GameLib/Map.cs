@@ -18,12 +18,4 @@ namespace GameLib
             maze.GenerateMaze();
         }
     }
-
-
-
-    
-    
-
-
-    
 }
