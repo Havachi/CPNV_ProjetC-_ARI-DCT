@@ -54,7 +54,7 @@ namespace MainMenuLib
             catch (EmptyFieldException e)
             {
                 MessageBox.Show(e.Message);
-                throw;
+                
             }
             
             try
