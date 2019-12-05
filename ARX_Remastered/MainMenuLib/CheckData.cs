@@ -83,10 +83,6 @@ namespace MainMenuLib
             {
                 //Password encryption
             }
-
-
-
-
         }
     }
 }
