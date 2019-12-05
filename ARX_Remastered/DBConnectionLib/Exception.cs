@@ -114,7 +114,7 @@ namespace DBConnectionLib
 
         public EmptyFieldException(string message):base(message)
         {
-            message = "Please fill the field";
+            message = "Please file the field";
         }
     }
 }

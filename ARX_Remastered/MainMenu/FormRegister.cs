@@ -33,33 +33,36 @@ namespace MainMenu
 
         private void btnRegisterSignup_Click(object sender, EventArgs e)
         {
-            //Appelle la méthode permettant de créer un compte
-            //Définit les valeurs de username et password avant envoi
+            ///Appelle la méthode permettant de créer un compte
+            ///Définit les valeurs de username et password avant envoi
             mail = tbxRegisterMail.Text;
             password = tbxRegisterPassword.Text;
             passwordCheck = tbxRegisterPasswordCheck.Text;
 
-            //Appeler la fonction RegisterDB pour créer le compte
+            ///Appeler la fonction RegisterDB pour créer le compte
 
             username = (mail.Split('@')[0]);
-            CheckData registerCheckData = new CheckData();
-
-            Register register = new Register(mail, username, password, passwordCheck);
+            Register register = new Register(mail, username, password);
             try
             {
-                if (register.RegisterInDb(register))
+                if (register.RegisterInDB(register))
                 {
-                    MessageBox.Show(@"Your account as been created");
+                    MessageBox.Show(@"Votre compte a été créé");
                     Close();
                 }
+
             }
             catch (InvalidPasswordException exception)
             {
                 MessageBox.Show(exception.Message.ToString());
+                throw;
+
+
             }
             catch (UserEmailAlreadyExistException exception)
             {
                 MessageBox.Show(exception.Message.ToString());
+                throw;
             }
 
         }

@@ -15,24 +15,20 @@ namespace MainMenuLib
     /// </summary>
     public class Register
     {
-        private string userEmail;
         private string username;
         private string password;
-        private string passwordCheck;
-        
-
+        private string userEmail;
 
         /// <summary>
         /// Constructor for the Register Object
         /// </summary>
         /// <param name="username">Username of the user</param>
         /// <param name="password">Password of the user</param>
-        public Register(string userEmail,string username, string password, string passwordCheck)
+        public Register(string userEmail, string username, string password)
         {
             this.userEmail = userEmail;
             this.username = username;
             this.password = password;
-            this.passwordCheck = passwordCheck;
         }
         /// <summary>
         /// Register new users in the database, also check if the username is already used.
@@ -40,40 +36,28 @@ namespace MainMenuLib
         /// <param name="reg">Contains a username and a password</param>
         /// <returns>True: Everything OK</returns>
         /// 
-        public bool RegisterInDb(Register reg)
+        public bool RegisterInDB(Register reg)
         {
             DBConnection connection = new DBConnection();
+            
             CryptoPassword c = new CryptoPassword();
             string hashedPassword = c.Hash(password);
-            CheckData registerCheck = new CheckData();
-
+            CheckData logincheck = new CheckData();
 
             //Try to check if the userEmail an password are valid (> 8 char)
             try
             {
-                if (!registerCheck.CheckRegisterField(reg.userEmail, reg.password, reg.passwordCheck))
-                {
-                    return false;
-                }
-            }
-            catch (EmptyFieldException exception)
-            {
-                MessageBox.Show(exception.Message);
-                return false;
-            }
-            try
-            {
-                registerCheck.VerifRegister(reg.userEmail, reg.password);
+                logincheck.VerifRegister(reg.userEmail, reg.password);
             }
             catch (PasswordTooShortException exception)
             {
                 MessageBox.Show(exception.Message);
-                return false;
+                throw;
             }
             catch (EmailTooShortException exception)
             {
                 MessageBox.Show(exception.Message);
-                return false;
+                throw;
             }
 
             //Try to Check if the userEmail exist in the database
@@ -84,19 +68,20 @@ namespace MainMenuLib
             catch (UserEmailAlreadyExistException e)
             {
                 MessageBox.Show(e.Message);
-                return false;
+                throw;
             }
 
             //Try to insert the data in the Database
             try
             {
                 connection.InsertDataInDB(username, userEmail, hashedPassword);
+
                 return true;
             }
             catch (MySqlException e)
             {
                 MessageBox.Show(e.Message);
-                return false;
+                throw;
             }
 
             

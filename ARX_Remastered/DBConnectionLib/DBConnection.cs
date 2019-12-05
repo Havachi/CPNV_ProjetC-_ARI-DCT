@@ -144,10 +144,10 @@ namespace DBConnectionLib
         /// <summary>
         /// This method insert data in the database
         /// </summary>
-        public void InsertDataInDB(string username, string userEmail, string password)
+        public void InsertDataInDB(string username, string useremail, string password)
         {
             OpenConnection();
-            string query = $"INSERT INTO Users (Username, UserEmail, UserPassword) values (\"{username}\",\"{userEmail}\", \"{password}\")";
+            string query = $"INSERT INTO Users (Username, UserEmail, UserPassword) values (\"{username}\",\"{useremail}\", \"{password}\")";
             MySqlCommand cmd = new MySqlCommand(query, connection);
             MySqlDataReader reader;
             reader = cmd.ExecuteReader();

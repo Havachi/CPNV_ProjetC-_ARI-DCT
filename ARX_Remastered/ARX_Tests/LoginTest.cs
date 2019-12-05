@@ -27,7 +27,7 @@ namespace ARX_Tests
             string username = "Test";
             string password = "12345678";
 
-            Register reg = new Register(userEmail, username, password, password);
+            Register reg = new Register(userEmail, username, password);
         }
 
         [TestMethod]
@@ -61,6 +61,15 @@ namespace ARX_Tests
             login.LoginDB(login);
         }
 
+        [TestCleanup]
+        public void Cleanup()
+        {
+            DBConnection db= new DBConnection();
+            string userEmail = "test.Test@test.test";
+            string username = "Test";
+            string password = "12345678";
+            db.FullDeleteUser(db.GetUserIDFromUsername(username));
+        }
 
     } 
 }
