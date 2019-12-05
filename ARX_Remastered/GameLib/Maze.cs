@@ -166,26 +166,36 @@ namespace GameLib
                 new System.IO.StreamWriter(@"C:\aled.txt", false))
             {
                 file.WriteLine($"{nbOfVisitedCase}");
-                int mavarkitu = 0;
-                int mavartrostile = 0;
+                int unvisitedCasesTotal = 0;
+                int visitedCasesTotal = 0;
                 foreach (var cacase in caseInfoList)
                 {
                     if (cacase.Visited == false)
                     {
-                        mavarkitu++;
+                        unvisitedCasesTotal++;
                     }
                     else
                     {
-                        mavartrostile++;
+                        visitedCasesTotal++;
                     }
 
 
                 }
                 file.WriteLine($"Total :{nbOfVisitedCase} ");
-                file.WriteLine($"Total Unvisited:{mavarkitu} ");
-                file.WriteLine($"Total Visited:{mavartrostile} ");
+                file.WriteLine($"Total Unvisited:{unvisitedCasesTotal} ");
+                file.WriteLine($"Total Visited:{visitedCasesTotal} \n\n\n");
+
                 foreach (var cacase in caseInfoList)
                 {
+                    if (cacase.PosX==9)
+                    {
+                        file.Write(!cacase.Visited ? "*\n" : "#\n");
+                    }
+                    else
+                    {
+                        file.Write(!cacase.Visited ? "*" : "#");
+                    }
+
                     file.WriteLine($"{cacase.PosX},{cacase.PosY},{cacase.Visited}");
                 }
             }
