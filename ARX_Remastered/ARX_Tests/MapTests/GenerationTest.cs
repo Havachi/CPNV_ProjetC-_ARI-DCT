@@ -11,8 +11,6 @@ namespace ARX_Tests
         public void TryGenerateTest()
         {
             var m = new Maze();
-            m.GenerateMaze();
-
         }
     }
 }
