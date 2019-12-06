@@ -19,7 +19,7 @@ namespace MainMenu
 
     public partial class FormLogin : Form
     {
-        private string mail;
+        private string userEmail;
         private string password;
         public Form formLogin;
 
@@ -27,24 +27,25 @@ namespace MainMenu
         {
             InitializeComponent();
         }
-        public string Mail
+        public string UserEmail
         {
-            get { return this.mail; }
+            get { return userEmail; }
         }
 
         private void btnLoginConnexion_Click(object sender, EventArgs e)
         {
             //Appelle la méthode permettant de se connecter
             //Définit les valeurs de username et password avant envoi
-            mail = tbxLoginMail.Text;
+            userEmail = tbxLoginMail.Text;
             password = tbxLoginPassword.Text;
 
-            Login login = new Login(mail, password);
+            Login login = new Login(userEmail, password);
             try
             {
                 if (login.LoginDb(login))
                 {
                     MessageBox.Show(@"Login Successful");
+                    
                     Close();
                 }
             }
@@ -69,6 +70,7 @@ namespace MainMenu
             FormRegister formRegister = new FormRegister();
             {
                 formRegister.ShowDialog(this);
+                userEmail = formRegister.UserEmail;
                 Close();
             }
         }

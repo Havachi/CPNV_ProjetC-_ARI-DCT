@@ -10,6 +10,7 @@ namespace MainMenu
 {
     static class Program
     {
+        public static string userEmail;
         /// <summary>
         /// Entry point of the application
         /// </summary>

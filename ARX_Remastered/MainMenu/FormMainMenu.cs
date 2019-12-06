@@ -17,6 +17,7 @@ namespace MainMenu
     /// </summary>
     public partial class FormMainMenu : Form
     {
+        private string userEmail;
 
         public FormMainMenu()
         {
@@ -32,8 +33,9 @@ namespace MainMenu
             using (FormLogin formLogin = new FormLogin())
             {
                formLogin.ShowDialog(this);
+               userEmail = formLogin.UserEmail;
                lblMainMenuLogged.Text = $@"Logged as
-{formLogin.Mail}";
+{userEmail}";
                btnLogin.Text = @"Play";
                btnLogin.Click -= (btnLogin_Click);
                btnLogin.Click += (btnLogin_Play);
@@ -88,6 +90,12 @@ namespace MainMenu
 
             // Save the settings
             Properties.Settings.Default.Save();
+        }
+
+        public string UserEmail
+        {
+            get { return userEmail; }
+            set { userEmail = value; }
         }
     }
 }

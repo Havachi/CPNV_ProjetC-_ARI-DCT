@@ -66,7 +66,7 @@
             this.tbxRegisterMail.Name = "tbxRegisterMail";
             this.tbxRegisterMail.Size = new System.Drawing.Size(125, 20);
             this.tbxRegisterMail.TabIndex = 2;
-            this.tbxRegisterMail.Text = "Mail";
+            this.tbxRegisterMail.Text = "UserEmail";
             // 
             // tbxRegisterPassword
             // 

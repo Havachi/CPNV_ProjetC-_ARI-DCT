@@ -64,7 +64,7 @@
             this.tbxLoginMail.Name = "tbxLoginMail";
             this.tbxLoginMail.Size = new System.Drawing.Size(125, 20);
             this.tbxLoginMail.TabIndex = 2;
-            this.tbxLoginMail.Text = "Mail";
+            this.tbxLoginMail.Text = "UserEmail";
             // 
             // tbxLoginPassword
             // 

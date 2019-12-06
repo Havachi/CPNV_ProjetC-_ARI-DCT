@@ -20,7 +20,7 @@ namespace MainMenu
     public partial class FormRegister : Form
     {
         private string username;
-        private string mail;
+        private string userEmail;
         private string password;
         private string passwordCheck;
         public Form formRegister;
@@ -33,21 +33,22 @@ namespace MainMenu
 
         private void btnRegisterSignup_Click(object sender, EventArgs e)
         {
-            ///Appelle la méthode permettant de créer un compte
-            ///Définit les valeurs de username et password avant envoi
-            mail = tbxRegisterMail.Text;
+            //Appelle la méthode permettant de créer un compte
+            //Définit les valeurs de username et password avant envoi
+            userEmail = tbxRegisterMail.Text;
             password = tbxRegisterPassword.Text;
             passwordCheck = tbxRegisterPasswordCheck.Text;
 
-            ///Appeler la fonction RegisterDB pour créer le compte
+            //Appeler la fonction RegisterDB pour créer le compte
 
-            username = (mail.Split('@')[0]);
-            Register register = new Register(mail, username, password, passwordCheck);
+            username = (userEmail.Split('@')[0]);
+            Register register = new Register(userEmail, username, password, passwordCheck);
             try
             {
                 if (register.RegisterInDb(register))
                 {
                     MessageBox.Show(@"Votre compte a été créé");
+                    
                     Close();
                 }
 
@@ -85,6 +86,11 @@ namespace MainMenu
         private void tbxRegisterPasswordCheck_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        public string UserEmail
+        {
+            get { return userEmail; }
         }
     }
 }
