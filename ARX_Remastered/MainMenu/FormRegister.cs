@@ -43,25 +43,36 @@ namespace MainMenu
 
             username = (mail.Split('@')[0]);
             CheckData registerCheckData = new CheckData();
-
             Register register = new Register(mail, username, password, passwordCheck);
             try
             {
+                
                 if (register.RegisterInDb(register))
                 {
                     MessageBox.Show(@"Your account as been created");
                     Close();
                 }
+                else
+                {
+                    MessageBox.Show("This Email Address or Password is already in use, please try again");
+                }
             }
-            catch (InvalidPasswordException exception)
+            catch (EmptyFieldException exception)
             {
-                MessageBox.Show(exception.Message.ToString());
+                MessageBox.Show(exception.Message);
+            }
+            catch (PasswordTooShortException exception)
+            {
+                MessageBox.Show(exception.Message);
             }
             catch (UserEmailAlreadyExistException exception)
             {
-                MessageBox.Show(exception.Message.ToString());
+                MessageBox.Show(exception.Message);
             }
-
+            catch (EmailTooShortException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void FormLogin_Load(object sender, EventArgs e)

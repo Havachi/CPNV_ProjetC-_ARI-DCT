@@ -14,15 +14,5 @@ namespace ARX_Tests
             m.GenerateMaze();
 
         }
-
-        [TestMethod]
-        public void TestIsAlreadyVisited()
-        {
-
-            var m = new Maze();
-            m.GenerateMaze();
-            var caseInfoList = m.CaseInfoList;
-            m.IsAlreadyVisited(caseInfoList);
-        }
     }
 }

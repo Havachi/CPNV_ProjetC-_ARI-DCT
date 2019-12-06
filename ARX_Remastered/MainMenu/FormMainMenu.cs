@@ -12,6 +12,9 @@ using Game;
 
 namespace MainMenu
 {
+    /// <summary>
+    /// This is the form for the main menu
+    /// </summary>
     public partial class FormMainMenu : Form
     {
 
@@ -20,6 +23,9 @@ namespace MainMenu
             InitializeComponent();
         }
         
+        /// <summary>
+        /// If the user Click on the login button, the login form appears
+        /// </summary>
         private void btnLogin_Click(object sender, EventArgs e)
         {
             using (FormLogin formLogin = new FormLogin())
@@ -32,7 +38,9 @@ namespace MainMenu
                btnLogin.Click += (btnLogin_Play);
             }
         }
-
+        /// <summary>
+        /// If the player click on the Play button, the game starts
+        /// </summary>
         private void btnLogin_Play(object sender, EventArgs e)
         {
             // Appeller le générateur du jeu

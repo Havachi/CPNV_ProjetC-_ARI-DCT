@@ -3,13 +3,20 @@ using System.Drawing;
 using DBConnectionLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+
 namespace ARX_Tests
 {
+
+
+    /// <summary>
+    /// This is the test class for the DbConnection class and connection with database in general.
+    /// </summary>
+    [TestCategory("DatabaseTests")]
     [TestClass]
     public class DbConnectionTest
     {
         /// <summary>
-        /// Test if it is possible to connect to the database
+        /// Test if it is possible to connect to the database.
         /// </summary>
         [TestMethod]
         public void TestConnectionWithDatabase()
@@ -19,6 +26,9 @@ namespace ARX_Tests
             d.CloseConnection();
         }
 
+        /// <summary>
+        /// Test if the method CheckEmail from DbConnection return an exception if the userEmail doesn't exist
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(UnknownUserEmailAddressException))]
         public void TestCheckEmailException()
@@ -29,15 +39,9 @@ namespace ARX_Tests
             d.CheckEmail(testEmail);
         }
 
-        [TestMethod]
-        public void TestGetUserIDFromUsername()
-        {
-            DbConnection db = new DbConnection();
-            string username = "TestUser1";
-            var result = db.GetUserIdFromUsername(username);
-            Assert.AreEqual("21",result);
-        }
-
+        /// <summary>
+        /// Test if the method for input data in database is working correctly.
+        /// </summary>
         [TestMethod]
         public void TestInsertDataInDB()
         {
@@ -48,16 +52,6 @@ namespace ARX_Tests
 
             DbConnection db = new DbConnection();
             db.InsertDataInDb(username,useremail,password);
-        }
-        [TestMethod]
-        public void TestGetUserPassword()
-        {
-            string useremail = "test.Test@test.test";
-
-            DbConnection db = new DbConnection();
-            var userpassword= db.GetUserPassword(useremail);
-
-            Assert.AreEqual("X2wCdhr31aEeQ/hSrxOQ2MWinioteo3v1aupG54OMg8ifV6f", userpassword);
         }
 
     }

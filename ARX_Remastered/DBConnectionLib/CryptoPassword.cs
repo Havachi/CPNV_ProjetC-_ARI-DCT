@@ -73,7 +73,7 @@ namespace DBConnectionLib
             {
                 if (hashBytes[i + saltSize] != hash[i])
                 {
-                    return false;
+                    throw new InvalidPasswordException(@"Wrong password or Email Address, please try again");
                 }
             }
             return true;

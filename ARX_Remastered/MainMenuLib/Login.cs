@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DBConnectionLib;
-using MySql.Data.MySqlClient;
-using DbConnection = DBConnectionLib.DbConnection;
+﻿using DBConnectionLib;
 
 namespace MainMenuLib
 {
@@ -37,58 +26,24 @@ namespace MainMenuLib
         /// <param name="login"></param>
         /// <returns>True if OK</returns>
         /// <returns>Exception if not OK</returns>
-        public bool LoginDB(Login login)
+        public bool LoginDb(Login login)
         {
-            string hashedPassword = null;
-            string userEmail = login.userEmail;
-            string password = login.password;
-
-            CheckData logincheck = new CheckData();
+            
+            CheckData loginCheck = new CheckData();
             DbConnection connection = new DbConnection();
             CryptoPassword c = new CryptoPassword();
 
-            
-            try
+            //Check if the fields aren't empty
+            loginCheck.CheckLoginField(login.userEmail, login.password);
+            //Check if the userEmail exist in the database
+            if (!connection.CheckEmail(userEmail))
             {
-                logincheck.CheckLoginField(login.userEmail, login.password);
-            }
-            catch (EmptyFieldException e)
-            {
-                MessageBox.Show(e.Message);
-                
-            }
-            
-            try
-            {
-                if (!connection.CheckEmail(userEmail))
-                {
-                    return false;
-                }
-
-            }
-            catch (UnknownUserEmailAddressException e)
-            {
-                MessageBox.Show(e.Message);
                 return false;
             }
-
-            hashedPassword = connection.GetUserPassword(userEmail);
-
-            try
-            {
-                if (!c.Verify(password, hashedPassword))
-                {
-                    return false;
-                }
-                return true;
-            }
-            catch (InvalidPasswordException e)
-            {
-                MessageBox.Show(e.Message);
-                return false;
-            }
-            
-            
+            //Get the password form the database from the validated userEmail
+            var hashedPassword = connection.GetUserPassword(userEmail);
+            //Return true or false if the input password match or not the database password
+            return c.Verify(password, hashedPassword);
         }
     } 
 }

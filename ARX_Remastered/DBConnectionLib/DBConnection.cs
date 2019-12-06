@@ -81,19 +81,19 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUserEmailAddressException("This Email Address doesn\'t exist.");
+            throw new UnknownUserEmailAddressException("Wrong password or Email Address, please try again");
         }
 
         /// <summary>
         /// Get the UserID from the database with the username
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="userEmail"></param>
         /// <returns>String : UserID </returns>
-        public int GetUserIdFromUsername(string username)
+        public int GetUserIdFromUserEmail(string userEmail)
         {
             OpenConnection();
             MySqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = $"SELECT UserID FROM users WHERE Username =\"{username}\" ";
+            cmd.CommandText = $"SELECT UserID FROM users WHERE Username =\"{userEmail}\" ";
             DbDataReader reader = cmd.ExecuteReader();
 
             if (reader.HasRows)
@@ -107,8 +107,7 @@ namespace DBConnectionLib
                     return id;
                 }
             }
-
-            throw new UnknownUsernameException();
+            throw new UnknownUserEmailAddressException();
         }
 
         /// <summary>
@@ -119,7 +118,7 @@ namespace DBConnectionLib
         public bool CheckIfUserEmailExistInDb(string userEmail)
         {
 
-            string query = $"SELECT UserID FROM users WHERE UserEmail =\"{userEmail}\" ";
+            string query = $@"SELECT UserID FROM users WHERE UserEmail ='{userEmail}' ";
 
             MySqlCommand cmd = new MySqlCommand(query, connection);
 
@@ -130,30 +129,14 @@ namespace DBConnectionLib
                 if (dr.HasRows)
                 {
                     CloseConnection();
-                    throw new UserEmailAlreadyExistException("This Email Address is already used.");
+                    return true;
+
                 }
                 CloseConnection();
                 return false;
             }
             CloseConnection();
             return false;
-        }
-
-        /// <summary>
-        /// This method insert data in the database
-        /// </summary>
-        public void InsertDataInDb(string username, string userEmail, string password)
-        {
-            OpenConnection();
-            string query = $"INSERT INTO Users (Username, UserEmail, UserPassword) values (\"{username}\",\"{userEmail}\", \"{password}\")";
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            MySqlDataReader reader;
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-
-            }
-            CloseConnection();
         }
 
         public string GetUserPassword(string userEmail)
@@ -175,6 +158,24 @@ namespace DBConnectionLib
 
             throw new UnknownUserEmailAddressException("This Email Address doesn\'t exist");
         }
+
+        /// <summary>
+        /// This method insert data in the database
+        /// </summary>
+        public void InsertDataInDb(string username, string userEmail, string password)
+        {
+            OpenConnection();
+            string query = $"INSERT INTO Users (Username, UserEmail, UserPassword) values (\"{username}\",\"{userEmail}\", \"{password}\")";
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            MySqlDataReader reader;
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+
+            }
+            CloseConnection();
+        }
+
 
         public void FullDeleteUser(int id)
         {
