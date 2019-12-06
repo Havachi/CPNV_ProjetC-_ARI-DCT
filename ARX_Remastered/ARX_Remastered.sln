@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "View", "View", "{FC672253-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A5839A29-1BE8-4573-A18C-6345EE408A12}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupARX_Remastered", "SetupARX_Remastered\SetupARX_Remastered.vdproj", "{DF44C3ED-8BDA-4171-AD48-D39CCFA12211}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,8 @@ Global
 		{DD2C9E22-3569-4371-8F2E-80F51A1B482A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD2C9E22-3569-4371-8F2E-80F51A1B482A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD2C9E22-3569-4371-8F2E-80F51A1B482A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF44C3ED-8BDA-4171-AD48-D39CCFA12211}.Debug|Any CPU.ActiveCfg = Debug
+		{DF44C3ED-8BDA-4171-AD48-D39CCFA12211}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
