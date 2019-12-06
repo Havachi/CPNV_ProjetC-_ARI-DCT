@@ -15,7 +15,7 @@ var hierarchy =
     ] ],
     [ "MainMenuLib.CheckData", "class_main_menu_lib_1_1_check_data.html", null ],
     [ "DBConnectionLib.CryptoPassword", "class_d_b_connection_lib_1_1_crypto_password.html", null ],
-    [ "DBConnectionLib.DBConnection", "class_d_b_connection_lib_1_1_d_b_connection.html", null ],
+    [ "DBConnectionLib.DbConnection", "class_d_b_connection_lib_1_1_db_connection.html", null ],
     [ "ARX_Tests.DbConnectionTest", "class_a_r_x___tests_1_1_db_connection_test.html", null ],
     [ "Exception", null, [
       [ "DBConnectionLib.EmailTooShortException", "class_d_b_connection_lib_1_1_email_too_short_exception.html", null ],

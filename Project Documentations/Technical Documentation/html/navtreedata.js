@@ -24,7 +24,7 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "ARX_Remastered", "index.html", [
-    [ "The Bouncy Castle Crypto Package For C Sharp", "md__a_r_x__remastered_packages__bouncy_castle_81_88_83_81__r_e_a_d_m_e.html", null ],
+    [ "ARX_Remastered", "md__a_r_x__remastered__r_e_a_d_m_e.html", null ],
     [ "Packages", "namespaces.html", [
       [ "Packages", "namespaces.html", "namespaces_dup" ]
     ] ],
@@ -47,7 +47,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_a_r_x___tests_2_properties_2_assembly_info_8cs_source.html",
-"dir_90b946e43fc417202f2bed34530794e2.html"
+"dir_9b8f9adb46dcc1298278ceceb817f7c2.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

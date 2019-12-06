@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getuseridfromusername',['GetUserIDFromUsername',['../class_d_b_connection_lib_1_1_d_b_connection.html#a1ffe600d87acf3fb963c1de146fed98f',1,'DBConnectionLib::DBConnection']]]
+  ['getuseridfromuseremail',['GetUserIdFromUserEmail',['../class_d_b_connection_lib_1_1_db_connection.html#ae9b03d23ab885a494feda924ea836857',1,'DBConnectionLib::DbConnection']]]
 ];

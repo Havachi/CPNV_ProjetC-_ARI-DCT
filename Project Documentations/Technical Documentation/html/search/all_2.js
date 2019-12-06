@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['dbconnection',['DBConnection',['../class_d_b_connection_lib_1_1_d_b_connection.html',1,'DBConnectionLib.DBConnection'],['../class_d_b_connection_lib_1_1_d_b_connection.html#ad9ccf3dd2252b1f084f0eb7da98fe3bd',1,'DBConnectionLib.DBConnection.DBConnection()']]],
+  ['dbconnection',['DbConnection',['../class_d_b_connection_lib_1_1_db_connection.html',1,'DBConnectionLib.DbConnection'],['../class_d_b_connection_lib_1_1_db_connection.html#ab620a30b00010cd42657b9aabcc8e618',1,'DBConnectionLib.DbConnection.DbConnection()']]],
   ['dbconnectionlib',['DBConnectionLib',['../namespace_d_b_connection_lib.html',1,'']]],
   ['dbconnectiontest',['DbConnectionTest',['../class_a_r_x___tests_1_1_db_connection_test.html',1,'ARX_Tests']]],
   ['deadendterraincase',['DeadEndTerrainCase',['../class_game_lib_1_1_dead_end_terrain_case.html',1,'GameLib']]],
