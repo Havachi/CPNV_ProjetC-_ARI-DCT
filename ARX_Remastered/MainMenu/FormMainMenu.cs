@@ -28,6 +28,7 @@ namespace MainMenu
         /// </summary>
         private void btnLogin_Click(object sender, EventArgs e)
         {
+
             using (FormLogin formLogin = new FormLogin())
             {
                formLogin.ShowDialog(this);

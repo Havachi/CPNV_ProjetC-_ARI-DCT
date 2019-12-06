@@ -8,59 +8,58 @@ namespace GameLib
 {
     public class Case
     {
+        private int posX;
+        private int posY;
+        private bool visited;
+        public Case(int posX,int posY, bool visited = false)
+        {
+            this.posX = posX;
+            this.posY = posY;
+            this.visited = visited;
+        }
 
+        public int PosX
+        {
+            get { return posX; }
+            set { posX = value; }
+        }
+        public int PosY
+        {
+            get { return posY; }
+            set { posY = value; }
+        }
+        public bool Visited
+        {
+            get { return visited; }
+            set { visited = value; }
+        }
     }
 
     public class VoidCase : Case
     {
-        
-        public VoidCase() : base()
+        private int posX;
+        private int posY;
+        private bool visited;
+
+        public VoidCase(int posX, int posY, bool visited) : base(posX, posY, visited)
         {
-            
+            this.posX = posX;
+            this.posY = posY;
+            this.visited = visited;
         }
     }
     public class TerrainCase : Case
     {
-        protected string orientation;
-        protected bool wallNorth = false;
-        protected bool wallEast = false;
-        protected bool wallSouth = false;
-        protected bool wallWest = false;
-        public TerrainCase(string orientation)
+        private int posX;
+        private int posY;
+        private bool visited;
+        public TerrainCase(int posX, int posY, bool visited) : base(posX, posY, visited)
         {
-            this.orientation = orientation;
+            this.posX = posX;
+            this.posY = posY;
+            this.visited = visited;
         }
     }
 
-    public class DeadEndTerrainCase : TerrainCase
-    {
-        public DeadEndTerrainCase(string orientation) : base(orientation)
-        {
-            this.orientation = orientation;
-        }
-    }
-    public class CornerCase : TerrainCase
-    {
-        public CornerCase(string orientation) : base(orientation)
-        {
-            this.orientation = orientation;
-        }
-    }
-
-    public class CorridorCase : TerrainCase
-    {
-        public CorridorCase(string orientation) : base(orientation)
-        {
-            this.orientation = orientation;
-        }
-    }
-
-    public class TShapeCase : TerrainCase
-    {
-        public TShapeCase(string orientation) : base(orientation)
-        {
-            this.orientation = orientation;
-        }
-    }
 }
 
