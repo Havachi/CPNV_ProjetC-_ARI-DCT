@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DBConnectionLib;
 using MySql.Data.MySqlClient;
+using DbConnection = DBConnectionLib.DbConnection;
 
 namespace MainMenuLib
 {
@@ -43,7 +44,7 @@ namespace MainMenuLib
             string password = login.password;
 
             CheckData logincheck = new CheckData();
-            DBConnection connection = new DBConnection();
+            DbConnection connection = new DbConnection();
             CryptoPassword c = new CryptoPassword();
 
             

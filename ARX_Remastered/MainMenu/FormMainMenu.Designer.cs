@@ -35,7 +35,7 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Font = new System.Drawing.Font("Monoton", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogin.Location = new System.Drawing.Point(270, 400);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(250, 60);
@@ -47,10 +47,10 @@
             // lblARXMainMenu
             // 
             this.lblARXMainMenu.AutoSize = true;
-            this.lblARXMainMenu.Font = new System.Drawing.Font("Monoton", 30.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblARXMainMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 30.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblARXMainMenu.Location = new System.Drawing.Point(259, 55);
             this.lblARXMainMenu.Name = "lblARXMainMenu";
-            this.lblARXMainMenu.Size = new System.Drawing.Size(279, 63);
+            this.lblARXMainMenu.Size = new System.Drawing.Size(224, 47);
             this.lblARXMainMenu.TabIndex = 1;
             this.lblARXMainMenu.Text = "Main Menu";
             // 
@@ -73,7 +73,7 @@
             this.Controls.Add(this.btnLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormMainMenu";
-            this.Text = "Form1";
+            this.Text = "ARX_Remastered : Main Menu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainMenu_Closing);
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.ResumeLayout(false);

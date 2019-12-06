@@ -42,7 +42,7 @@ namespace MainMenuLib
         /// 
         public bool RegisterInDb(Register reg)
         {
-            DBConnection connection = new DBConnection();
+            DbConnection connection = new DbConnection();
             CryptoPassword c = new CryptoPassword();
             string hashedPassword = c.Hash(password);
             CheckData registerCheck = new CheckData();
@@ -79,7 +79,7 @@ namespace MainMenuLib
             //Try to Check if the userEmail exist in the database
             try
             {
-                connection.CheckIfUserEmailExistInDB(userEmail);
+                connection.CheckIfUserEmailExistInDb(userEmail);
             }
             catch (UserEmailAlreadyExistException e)
             {
@@ -90,7 +90,7 @@ namespace MainMenuLib
             //Try to insert the data in the Database
             try
             {
-                connection.InsertDataInDB(username, userEmail, hashedPassword);
+                connection.InsertDataInDb(username, userEmail, hashedPassword);
                 return true;
             }
             catch (MySqlException e)

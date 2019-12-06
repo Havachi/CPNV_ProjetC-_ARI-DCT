@@ -14,7 +14,7 @@ namespace ARX_Tests
         [TestMethod]
         public void TestConnectionWithDatabase()
         {
-            DBConnection d = new DBConnection();
+            DbConnection d = new DbConnection();
             d.OpenConnection();
             d.CloseConnection();
         }
@@ -24,7 +24,7 @@ namespace ARX_Tests
         public void TestCheckEmailException()
         {
             string testEmail = "oof@oof.oof";
-            DBConnection d = new DBConnection();
+            DbConnection d = new DbConnection();
 
             d.CheckEmail(testEmail);
         }
@@ -32,9 +32,9 @@ namespace ARX_Tests
         [TestMethod]
         public void TestGetUserIDFromUsername()
         {
-            DBConnection db = new DBConnection();
+            DbConnection db = new DbConnection();
             string username = "TestUser1";
-            var result = db.GetUserIDFromUsername(username);
+            var result = db.GetUserIdFromUsername(username);
             Assert.AreEqual("21",result);
         }
 
@@ -46,15 +46,15 @@ namespace ARX_Tests
             string password = "12345678";
 
 
-            DBConnection db = new DBConnection();
-            db.InsertDataInDB(username,useremail,password);
+            DbConnection db = new DbConnection();
+            db.InsertDataInDb(username,useremail,password);
         }
         [TestMethod]
         public void TestGetUserPassword()
         {
             string useremail = "test.Test@test.test";
 
-            DBConnection db = new DBConnection();
+            DbConnection db = new DbConnection();
             var userpassword= db.GetUserPassword(useremail);
 
             Assert.AreEqual("X2wCdhr31aEeQ/hSrxOQ2MWinioteo3v1aupG54OMg8ifV6f", userpassword);

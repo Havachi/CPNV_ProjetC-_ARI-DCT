@@ -1,8 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data.Common;
-using System.Data.SqlClient;
-using System.Threading;
 
 //TODO IN THIS FILE: Remove Hardcoded values to connect to the database and replace by a JSON File containing those values
 
@@ -12,7 +10,7 @@ namespace DBConnectionLib
     /// This Class contains all method used to connect, disconnect, Inserting to the Database
     /// Also contains some method to check values in the database (E.g. Checking if the username is already used)
     /// </summary>
-    public class DBConnection
+    public class DbConnection
     {
         #region private attibut
 
@@ -40,7 +38,7 @@ namespace DBConnectionLib
         /// <summary>
         /// Constructor for the Object DBConnection
         /// </summary>
-        public DBConnection()
+        public DbConnection()
         {
             InitConnection();
         }
@@ -91,7 +89,7 @@ namespace DBConnectionLib
         /// </summary>
         /// <param name="username"></param>
         /// <returns>String : UserID </returns>
-        public int GetUserIDFromUsername(string username)
+        public int GetUserIdFromUsername(string username)
         {
             OpenConnection();
             MySqlCommand cmd = connection.CreateCommand();
@@ -103,10 +101,10 @@ namespace DBConnectionLib
                 while (reader.Read())
                 {
                     var result = reader.GetString(0);
-                    int ID = Int32.Parse(result);
+                    int id = Int32.Parse(result);
                     reader.Close();
                     CloseConnection();
-                    return ID;
+                    return id;
                 }
             }
 
@@ -116,9 +114,9 @@ namespace DBConnectionLib
         /// <summary>
         /// Check if the Username that the user input is already taken
         /// </summary>
-        /// <param name="username">User username</param>
+        /// <param name="userEmail">User username</param>
         /// <returns>False: Username not in use</returns>
-        public bool CheckIfUserEmailExistInDB(string userEmail)
+        public bool CheckIfUserEmailExistInDb(string userEmail)
         {
 
             string query = $"SELECT UserID FROM users WHERE UserEmail =\"{userEmail}\" ";
@@ -129,7 +127,7 @@ namespace DBConnectionLib
             MySqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
-                if (dr.HasRows == true)
+                if (dr.HasRows)
                 {
                     CloseConnection();
                     throw new UserEmailAlreadyExistException("This Email Address is already used.");
@@ -144,7 +142,7 @@ namespace DBConnectionLib
         /// <summary>
         /// This method insert data in the database
         /// </summary>
-        public void InsertDataInDB(string username, string userEmail, string password)
+        public void InsertDataInDb(string username, string userEmail, string password)
         {
             OpenConnection();
             string query = $"INSERT INTO Users (Username, UserEmail, UserPassword) values (\"{username}\",\"{userEmail}\", \"{password}\")";
@@ -178,11 +176,11 @@ namespace DBConnectionLib
             throw new UnknownUserEmailAddressException("This Email Address doesn\'t exist");
         }
 
-        public void FullDeleteUser(int Id)
+        public void FullDeleteUser(int id)
         {
             OpenConnection();
             MySqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = $"DELETE FROM users WHERE UserID =\"{Id}\" ";
+            cmd.CommandText = $"DELETE FROM users WHERE UserID =\"{id}\" ";
             DbDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
             {

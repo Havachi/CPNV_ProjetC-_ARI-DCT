@@ -63,20 +63,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Case.cs" />
+    <Compile Include="Map Classes\Case.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Inventory.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="Map.cs" />
-    <Compile Include="MapGraphics.cs" />
+    <Compile Include="Player Classes\Inventory.cs" />
+    <Compile Include="Player Classes\Item.cs" />
+    <Compile Include="Map Classes\Map.cs" />
+    <Compile Include="Map Classes\MapGraphics.cs" />
     <Compile Include="Maze.cs" />
-    <Compile Include="Movement.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Position.cs" />
+    <Compile Include="Player Classes\Movement.cs" />
+    <Compile Include="Player Classes\Player.cs" />
+    <Compile Include="Player Classes\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
