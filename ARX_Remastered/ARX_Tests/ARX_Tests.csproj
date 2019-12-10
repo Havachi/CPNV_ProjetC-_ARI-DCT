@@ -81,6 +81,7 @@
     <Compile Include="MainMenuTests\RegisterTest.cs" />
     <Compile Include="PlayerTests\PlayerTest.cs" />
     <Compile Include="MapTests\GenerationTest.cs" />
+    <Compile Include="MapTests\MapGraphicsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
