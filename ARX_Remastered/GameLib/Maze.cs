@@ -60,7 +60,7 @@ namespace GameLib
         /// <summary>
         ///  Random number.
         /// </summary>
-        Random rand = new Random();
+        private Random rand;
 
         /// <summary>
         /// This is the main part of the algorithm,
@@ -99,57 +99,48 @@ namespace GameLib
 
             //Stack the Initial position in the stack
             mazeStack.Push(new Point(currentX, currentY));
+            caseInfoList[0].Visited = true;
             nbOfVisitedCase++;
-            
             
             //The do while end when all case are visited
             do
             {
+                var currentCase = caseInfoList[0];
                 var unvisitedCases = GetFourDirectionVisited(currentX,currentY);
-                 if (unvisitedCases.Count() != 0)
+                if (unvisitedCases.Count() != 0)
                 {
                     lastX = currentX;
                     lastY = currentY;
+                    rand = new Random();
                     r = rand.Next(0, unvisitedCases.Count-1);
+                    
                     switch (r)
                     {
                         case 0:
                             currentX = unvisitedCases[0].PosX;
                             currentY = unvisitedCases[0].PosY;
-                            nbOfVisitedCase++;
                             mazeStack.Push(new Point(currentX, currentY));
                             break;
                         case 1:
                             currentX = unvisitedCases[1].PosX;
                             currentY = unvisitedCases[1].PosY;
-                            nbOfVisitedCase++;
                             mazeStack.Push(new Point(currentX, currentY));
                             break;
                         case 2:
                             currentX = unvisitedCases[2].PosX;
                             currentY = unvisitedCases[2].PosY;
-                            nbOfVisitedCase++;
                             mazeStack.Push(new Point(currentX, currentY));
                             break;
                         case 3:
                             currentX = unvisitedCases[3].PosX;
                             currentY = unvisitedCases[3].PosY;
-                            nbOfVisitedCase++;
                             mazeStack.Push(new Point(currentX, currentY));
                             break;
                     }
-
-                    if (currentX != lastX || currentY != lastY)
-                    {
-                        
-                    }
-                    foreach (var singleCase in caseInfoList)
-                    {
-                        if (singleCase.PosX == currentX && singleCase.PosY == currentY)
-                        {
-                            singleCase.Visited = true;
-                        }
-                    }
+                    currentCase.PosX = currentX;
+                    currentCase.PosY = currentY;
+                    nbOfVisitedCase++;
+                    caseInfoList[GetPositionInList(currentCase.PosX,currentCase.PosY)].Visited = true;
 
                 }
                 else
@@ -163,7 +154,6 @@ namespace GameLib
             using (System.IO.StreamWriter file =
                 new System.IO.StreamWriter(@"C:\aled.txt", false))
             {
-                file.WriteLine($"{nbOfVisitedCase}");
                 int unvisitedCasesTotal = 0;
                 int visitedCasesTotal = 0;
                 foreach (var cacase in caseInfoList)
@@ -176,15 +166,14 @@ namespace GameLib
                     {
                         visitedCasesTotal++;
                     }
-
-
                 }
                 file.WriteLine($"Total :{nbOfVisitedCase} ");
                 file.WriteLine($"Total Unvisited:{unvisitedCasesTotal} ");
                 file.WriteLine($"Total Visited:{visitedCasesTotal} \n\n\n");
-
+                
                 foreach (var cacase in caseInfoList)
                 {
+
                     if (cacase.PosX==9)
                     {
                         file.Write(!cacase.Visited ? "*\n" : "#\n");
@@ -194,7 +183,7 @@ namespace GameLib
                         file.Write(!cacase.Visited ? "*" : "#");
                     }
 
-                    file.WriteLine($"{cacase.PosX},{cacase.PosY},{cacase.Visited}");
+                    //file.WriteLine($"{cacase.PosX},{cacase.PosY},{cacase.Visited}");
                 }
             }
         }
@@ -234,62 +223,221 @@ namespace GameLib
         /// </summary>
         public List<Case> GetFourDirectionVisited(int posX, int posY)
         {
-            var caseToSearch = new Case(posX, posY, false);
-            
+
+            var caseToSearch = new Case(posX,posY);
+
+            Case caseToSearchRight;
+            Case caseToSearchUp;
+            Case caseToSearchBottom;
+            Case caseToSearchLeft;
+
             var listOfUnvisited = new List<Case>();
 
-
-            //Case North
-            
-            if (currentY != 0)
+            //if in top left corner
+            if (currentX == 0 && currentY == 0)
             {
-                caseToSearch.PosY -= 1;
-                if (!caseInfoList.Contains(caseToSearch))
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
                 {
-                    listOfUnvisited.Add(new Case(caseToSearch.PosX,caseToSearch.PosY,caseToSearch.Visited));
+                    listOfUnvisited.Add(caseToSearchRight);
                 }
-                caseToSearch.PosY += 1;
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
             }
-            //Case West
-            if (currentX != 0)
+            //if in top right corner
+            else if (currentX == maxWidth - 1 && currentY == 0)
             {
-                caseToSearch.PosX -= 1;
-
-                if (!caseInfoList.Contains(caseToSearch))
+                caseToSearchLeft = new Case(posX - 1, posY);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
                 {
-                    listOfUnvisited.Add(new Case(caseToSearch.PosX, caseToSearch.PosY, caseToSearch.Visited));
+                    listOfUnvisited.Add(caseToSearchBottom);
                 }
-                caseToSearch.PosX += 1;
-            }
 
-            //Case East
-            if (currentX != maxWidth)
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+
+            }
+            //if in bottom right corner
+            else if (currentX == maxWidth - 1 && currentY == maxHeight - 1)
             {
-                caseToSearch.PosX += 1;
-                if (!caseInfoList.Contains(caseToSearch))
+                caseToSearchUp = new Case(posX, posY - 1);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
                 {
-                    listOfUnvisited.Add(new Case(caseToSearch.PosX, caseToSearch.PosY, caseToSearch.Visited));
+                    listOfUnvisited.Add(caseToSearchUp);
                 }
-                caseToSearch.PosX -= 1;
-            }
+                caseToSearchLeft = new Case(posX - 1, posY);
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
 
-            //Case South
-            if (currentY != maxHeight)
+            }
+            //if in bottom left corner
+            else if (currentX == 0 && currentY == maxHeight - 1)
             {
-
-                caseToSearch.PosY += 1;
-                if (!caseInfoList.Contains(caseToSearch))
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchUp = new Case(posX, posY - 1);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
                 {
-                    listOfUnvisited.Add(new Case(caseToSearch.PosX, caseToSearch.PosY, caseToSearch.Visited));
+                    listOfUnvisited.Add(caseToSearchUp);
                 }
-                caseToSearch.PosY -= 1;
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
             }
+            //if on left border
+            else if (currentX == 0)
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchUp = new Case(posX, posY - 1);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
 
-           
-
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+            }
+            //if on top border
+            else if (currentY == 0)
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                caseToSearchLeft = new Case(posX - 1, posY);
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+            }
+            //if on right border
+            else if (currentX == maxWidth - 1)
+            {
+                caseToSearchUp = new Case(posX, posY - 1);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                caseToSearchLeft = new Case(posX - 1, posY);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+            }
+            //if on bottom border
+            else if (currentY == maxHeight - 1)
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchUp = new Case(posX, posY - 1);
+                caseToSearchLeft = new Case(posX - 1, posY);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+            }
+            //if not on any border
+            else
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchUp = new Case(posX, posY - 1);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                caseToSearchLeft = new Case(posX - 1, posY);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+            }
             return listOfUnvisited;
         }
-         
+
+        public int GetPositionInList(int posX,int posY)
+        {
+            int positionInList = -1;
+            if (posY == 0)
+            {
+                if (posX == 0)
+                {
+                    positionInList = 0;
+                }
+
+                positionInList = posX;
+            }
+            if (posY > 0)
+            {
+                positionInList = (posY * 10) + posX;
+            }
+            return positionInList;
+        }
         /// <summary>
         /// This is the algorithm part were wall are calculated.
         /// </summary>
