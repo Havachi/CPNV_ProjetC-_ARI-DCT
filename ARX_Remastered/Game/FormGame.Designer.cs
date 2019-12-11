@@ -48,6 +48,7 @@
             this.Controls.Add(this.picMap);
             this.Name = "FormGame";
             this.Text = "ARX Remastered";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormGame_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).EndInit();
             this.ResumeLayout(false);
 
