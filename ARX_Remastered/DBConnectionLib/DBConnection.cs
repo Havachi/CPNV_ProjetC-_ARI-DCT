@@ -81,7 +81,7 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUserEmailAddressException("Wrong password or Email Address, please try again");
+            throw new UnknownUserEmailAddressException("Adresse email ou Mot de passe incorrecte");
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUserEmailAddressException("This Email Address doesn\'t exist");
+            throw new UnknownUserEmailAddressException("Adresse email ou Mot de passe incorrecte");
         }
 
         /// <summary>

@@ -57,7 +57,7 @@ namespace MainMenuLib
             //Try to Check if the userEmail exist in the database
             if (connection.CheckIfUserEmailExistInDb(userEmail))
             {
-                throw new UserEmailAlreadyExistException("This Email Address is already used.");
+                throw new UserEmailAlreadyExistException("Cette adresse email est déja utilisée");
             } 
             //insert the data in the Database
             connection.InsertDataInDb(username, userEmail, hashedPassword);
