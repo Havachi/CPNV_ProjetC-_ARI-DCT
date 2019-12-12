@@ -44,26 +44,20 @@ namespace MainMenu
             username = (userEmail.Split('@')[0]);
             Register register = new Register(userEmail, username, password, passwordCheck);
             try
-            {
+            { 
                 if (register.RegisterInDb(register))
                 {
                     MessageBox.Show(@"Votre compte a été créé");
-                    
                     Close();
                 }
-
             }
             catch (InvalidPasswordException exception)
             {
                 MessageBox.Show(exception.Message.ToString());
-                throw;
-
-
             }
             catch (UserEmailAlreadyExistException exception)
             {
                 MessageBox.Show(exception.Message.ToString());
-                throw;
             }
 
         }

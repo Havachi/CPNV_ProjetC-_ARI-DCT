@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnRegisterConnexion = new System.Windows.Forms.Button();
+            this.btnRegisterCancel = new System.Windows.Forms.Button();
             this.lblRegisterTitle = new System.Windows.Forms.Label();
             this.tbxRegisterMail = new System.Windows.Forms.TextBox();
             this.tbxRegisterPassword = new System.Windows.Forms.TextBox();
@@ -39,16 +39,16 @@
             this.lblRegisterPasswordCheck = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // btnRegisterConnexion
+            // btnRegisterCancel
             // 
-            this.btnRegisterConnexion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegisterConnexion.Location = new System.Drawing.Point(126, 302);
-            this.btnRegisterConnexion.Name = "btnRegisterConnexion";
-            this.btnRegisterConnexion.Size = new System.Drawing.Size(250, 60);
-            this.btnRegisterConnexion.TabIndex = 0;
-            this.btnRegisterConnexion.Text = "Annuler";
-            this.btnRegisterConnexion.UseVisualStyleBackColor = true;
-            this.btnRegisterConnexion.Click += new System.EventHandler(this.btnRegisterCancel_Click);
+            this.btnRegisterCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegisterCancel.Location = new System.Drawing.Point(126, 302);
+            this.btnRegisterCancel.Name = "btnRegisterCancel";
+            this.btnRegisterCancel.Size = new System.Drawing.Size(250, 60);
+            this.btnRegisterCancel.TabIndex = 0;
+            this.btnRegisterCancel.Text = "Annuler";
+            this.btnRegisterCancel.UseVisualStyleBackColor = true;
+            this.btnRegisterCancel.Click += new System.EventHandler(this.btnRegisterCancel_Click);
             // 
             // lblRegisterTitle
             // 
@@ -128,8 +128,10 @@
             // 
             // FormRegister
             // 
+            this.AcceptButton = this.btnRegisterRegister;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnRegisterCancel;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.lblRegisterPasswordCheck);
             this.Controls.Add(this.tbxRegisterPasswordCheck);
@@ -139,7 +141,7 @@
             this.Controls.Add(this.tbxRegisterPassword);
             this.Controls.Add(this.tbxRegisterMail);
             this.Controls.Add(this.lblRegisterTitle);
-            this.Controls.Add(this.btnRegisterConnexion);
+            this.Controls.Add(this.btnRegisterCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "FormRegister";
             this.Text = "Register";
@@ -151,7 +153,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnRegisterConnexion;
+        private System.Windows.Forms.Button btnRegisterCancel;
         private System.Windows.Forms.Label lblRegisterTitle;
         private System.Windows.Forms.TextBox tbxRegisterMail;
         private System.Windows.Forms.TextBox tbxRegisterPassword;
