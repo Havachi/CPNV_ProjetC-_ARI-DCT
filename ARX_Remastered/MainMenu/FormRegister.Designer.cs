@@ -46,7 +46,7 @@
             this.btnRegisterConnexion.Name = "btnRegisterConnexion";
             this.btnRegisterConnexion.Size = new System.Drawing.Size(250, 60);
             this.btnRegisterConnexion.TabIndex = 0;
-            this.btnRegisterConnexion.Text = "Cancel";
+            this.btnRegisterConnexion.Text = "Annuler";
             this.btnRegisterConnexion.UseVisualStyleBackColor = true;
             this.btnRegisterConnexion.Click += new System.EventHandler(this.btnRegisterCancel_Click);
             // 
@@ -54,11 +54,11 @@
             // 
             this.lblRegisterTitle.AutoSize = true;
             this.lblRegisterTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegisterTitle.Location = new System.Drawing.Point(315, 39);
+            this.lblRegisterTitle.Location = new System.Drawing.Point(235, 26);
             this.lblRegisterTitle.Name = "lblRegisterTitle";
-            this.lblRegisterTitle.Size = new System.Drawing.Size(168, 46);
+            this.lblRegisterTitle.Size = new System.Drawing.Size(330, 46);
             this.lblRegisterTitle.TabIndex = 1;
-            this.lblRegisterTitle.Text = "Register";
+            this.lblRegisterTitle.Text = "Nouveau Compte";
             // 
             // tbxRegisterMail
             // 
@@ -66,7 +66,7 @@
             this.tbxRegisterMail.Name = "tbxRegisterMail";
             this.tbxRegisterMail.Size = new System.Drawing.Size(125, 20);
             this.tbxRegisterMail.TabIndex = 2;
-            this.tbxRegisterMail.Text = "UserEmail";
+            this.tbxRegisterMail.Text = "Adresse Email";
             // 
             // tbxRegisterPassword
             // 
@@ -81,20 +81,20 @@
             // lblRegisterMail
             // 
             this.lblRegisterMail.AutoSize = true;
-            this.lblRegisterMail.Location = new System.Drawing.Point(270, 158);
+            this.lblRegisterMail.Location = new System.Drawing.Point(275, 158);
             this.lblRegisterMail.Name = "lblRegisterMail";
-            this.lblRegisterMail.Size = new System.Drawing.Size(32, 13);
+            this.lblRegisterMail.Size = new System.Drawing.Size(73, 13);
             this.lblRegisterMail.TabIndex = 4;
-            this.lblRegisterMail.Text = "Email";
+            this.lblRegisterMail.Text = "Adresse Email";
             // 
             // lblRegisterPassword
             // 
             this.lblRegisterPassword.AutoSize = true;
-            this.lblRegisterPassword.Location = new System.Drawing.Point(273, 194);
+            this.lblRegisterPassword.Location = new System.Drawing.Point(275, 194);
             this.lblRegisterPassword.Name = "lblRegisterPassword";
-            this.lblRegisterPassword.Size = new System.Drawing.Size(53, 13);
+            this.lblRegisterPassword.Size = new System.Drawing.Size(71, 13);
             this.lblRegisterPassword.TabIndex = 5;
-            this.lblRegisterPassword.Text = "Password";
+            this.lblRegisterPassword.Text = "Mot de passe";
             // 
             // btnRegisterRegister
             // 
@@ -103,7 +103,7 @@
             this.btnRegisterRegister.Name = "btnRegisterRegister";
             this.btnRegisterRegister.Size = new System.Drawing.Size(250, 60);
             this.btnRegisterRegister.TabIndex = 6;
-            this.btnRegisterRegister.Text = "Create Account";
+            this.btnRegisterRegister.Text = "Créer le compte";
             this.btnRegisterRegister.UseVisualStyleBackColor = true;
             this.btnRegisterRegister.Click += new System.EventHandler(this.btnRegisterSignup_Click);
             // 
@@ -120,11 +120,11 @@
             // lblRegisterPasswordCheck
             // 
             this.lblRegisterPasswordCheck.AutoSize = true;
-            this.lblRegisterPasswordCheck.Location = new System.Drawing.Point(273, 232);
+            this.lblRegisterPasswordCheck.Location = new System.Drawing.Point(206, 232);
             this.lblRegisterPasswordCheck.Name = "lblRegisterPasswordCheck";
-            this.lblRegisterPasswordCheck.Size = new System.Drawing.Size(87, 13);
+            this.lblRegisterPasswordCheck.Size = new System.Drawing.Size(140, 13);
             this.lblRegisterPasswordCheck.TabIndex = 8;
-            this.lblRegisterPasswordCheck.Text = "Password Check";
+            this.lblRegisterPasswordCheck.Text = "Vérification du mot de passe";
             // 
             // FormRegister
             // 

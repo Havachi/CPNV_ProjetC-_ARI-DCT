@@ -36,11 +36,11 @@
             // btnLogin
             // 
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogin.Location = new System.Drawing.Point(270, 400);
+            this.btnLogin.Location = new System.Drawing.Point(247, 380);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(250, 60);
             this.btnLogin.TabIndex = 0;
-            this.btnLogin.Text = "Login";
+            this.btnLogin.Text = "Connexion";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
@@ -48,20 +48,20 @@
             // 
             this.lblARXMainMenu.AutoSize = true;
             this.lblARXMainMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 30.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblARXMainMenu.Location = new System.Drawing.Point(259, 55);
+            this.lblARXMainMenu.Location = new System.Drawing.Point(230, 55);
             this.lblARXMainMenu.Name = "lblARXMainMenu";
-            this.lblARXMainMenu.Size = new System.Drawing.Size(224, 47);
+            this.lblARXMainMenu.Size = new System.Drawing.Size(295, 47);
             this.lblARXMainMenu.TabIndex = 1;
-            this.lblARXMainMenu.Text = "Main Menu";
+            this.lblARXMainMenu.Text = "Menu Principal";
             // 
             // lblMainMenuLogged
             // 
             this.lblMainMenuLogged.AutoSize = true;
             this.lblMainMenuLogged.Location = new System.Drawing.Point(645, 55);
             this.lblMainMenuLogged.Name = "lblMainMenuLogged";
-            this.lblMainMenuLogged.Size = new System.Drawing.Size(63, 13);
+            this.lblMainMenuLogged.Size = new System.Drawing.Size(66, 13);
             this.lblMainMenuLogged.TabIndex = 2;
-            this.lblMainMenuLogged.Text = "Not Logged";
+            this.lblMainMenuLogged.Text = "Déconnecté";
             // 
             // FormMainMenu
             // 

@@ -40,11 +40,11 @@
             // btnLoginConnexion
             // 
             this.btnLoginConnexion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoginConnexion.Location = new System.Drawing.Point(126, 302);
+            this.btnLoginConnexion.Location = new System.Drawing.Point(278, 275);
             this.btnLoginConnexion.Name = "btnLoginConnexion";
             this.btnLoginConnexion.Size = new System.Drawing.Size(250, 60);
             this.btnLoginConnexion.TabIndex = 0;
-            this.btnLoginConnexion.Text = "Sign In";
+            this.btnLoginConnexion.Text = "Se Connecter";
             this.btnLoginConnexion.UseVisualStyleBackColor = true;
             this.btnLoginConnexion.Click += new System.EventHandler(this.btnLoginConnexion_Click);
             // 
@@ -54,9 +54,9 @@
             this.lblLoginTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLoginTitle.Location = new System.Drawing.Point(315, 39);
             this.lblLoginTitle.Name = "lblLoginTitle";
-            this.lblLoginTitle.Size = new System.Drawing.Size(118, 46);
+            this.lblLoginTitle.Size = new System.Drawing.Size(213, 46);
             this.lblLoginTitle.TabIndex = 1;
-            this.lblLoginTitle.Text = "Login";
+            this.lblLoginTitle.Text = "Connexion";
             // 
             // tbxLoginMail
             // 
@@ -64,7 +64,7 @@
             this.tbxLoginMail.Name = "tbxLoginMail";
             this.tbxLoginMail.Size = new System.Drawing.Size(125, 20);
             this.tbxLoginMail.TabIndex = 2;
-            this.tbxLoginMail.Text = "UserEmail";
+            this.tbxLoginMail.Text = "Adresse Email";
             // 
             // tbxLoginPassword
             // 
@@ -81,27 +81,27 @@
             this.lblLoginUsername.AutoSize = true;
             this.lblLoginUsername.Location = new System.Drawing.Point(270, 158);
             this.lblLoginUsername.Name = "lblLoginUsername";
-            this.lblLoginUsername.Size = new System.Drawing.Size(32, 13);
+            this.lblLoginUsername.Size = new System.Drawing.Size(73, 13);
             this.lblLoginUsername.TabIndex = 4;
-            this.lblLoginUsername.Text = "Email";
+            this.lblLoginUsername.Text = "Adresse Email";
             // 
             // lblLoginPassword
             // 
             this.lblLoginPassword.AutoSize = true;
             this.lblLoginPassword.Location = new System.Drawing.Point(270, 213);
             this.lblLoginPassword.Name = "lblLoginPassword";
-            this.lblLoginPassword.Size = new System.Drawing.Size(53, 13);
+            this.lblLoginPassword.Size = new System.Drawing.Size(71, 13);
             this.lblLoginPassword.TabIndex = 5;
-            this.lblLoginPassword.Text = "Password";
+            this.lblLoginPassword.Text = "Mot de passe";
             // 
             // btnLoginRegister
             // 
             this.btnLoginRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoginRegister.Location = new System.Drawing.Point(437, 302);
+            this.btnLoginRegister.Location = new System.Drawing.Point(278, 359);
             this.btnLoginRegister.Name = "btnLoginRegister";
             this.btnLoginRegister.Size = new System.Drawing.Size(250, 60);
             this.btnLoginRegister.TabIndex = 6;
-            this.btnLoginRegister.Text = "Register";
+            this.btnLoginRegister.Text = "Nouveau compte";
             this.btnLoginRegister.UseVisualStyleBackColor = true;
             this.btnLoginRegister.Click += new System.EventHandler(this.btnLoginRegister_Click);
             // 
