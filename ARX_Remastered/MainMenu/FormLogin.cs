@@ -44,7 +44,7 @@ namespace MainMenu
             {
                 if (login.LoginDb(login))
                 {
-                    MessageBox.Show(@"Login Successful");
+                    MessageBox.Show(@"Connexion réussite");
                     
                     Close();
                 }

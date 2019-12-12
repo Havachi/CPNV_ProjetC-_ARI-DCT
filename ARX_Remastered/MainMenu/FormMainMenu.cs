@@ -34,9 +34,9 @@ namespace MainMenu
             {
                formLogin.ShowDialog(this);
                userEmail = formLogin.UserEmail;
-               lblMainMenuLogged.Text = $@"Logged as
+               lblMainMenuLogged.Text = $@"Connecté avec
 {userEmail}";
-               btnLogin.Text = @"Play";
+               btnLogin.Text = @"Jouer";
                btnLogin.Click -= (btnLogin_Click);
                btnLogin.Click += (btnLogin_Play);
             }
