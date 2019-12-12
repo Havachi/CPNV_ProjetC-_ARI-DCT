@@ -34,9 +34,9 @@ namespace MainMenu
             using (FormLogin formLogin = new FormLogin())
             {
                 formLogin.ShowDialog(this);
+                this.isLogged=formLogin.IsLogged;
                 if (isLogged)
                 {
-                    
                     userEmail = formLogin.UserEmail;
                     lblMainMenuLogged.Text = $@"Connecté avec
 {userEmail}";
@@ -101,6 +101,12 @@ namespace MainMenu
         {
             get { return userEmail; }
             set { userEmail = value; }
+        }
+
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
         }
     }
 }

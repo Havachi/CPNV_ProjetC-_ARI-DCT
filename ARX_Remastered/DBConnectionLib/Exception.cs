@@ -35,6 +35,19 @@ namespace DBConnectionLib
     }
 
     [Serializable]
+    public class InvalidEmailAddressException : Exception
+    {
+        public InvalidEmailAddressException()
+        {
+
+        }
+
+        public InvalidEmailAddressException(string message = "Adresse Email Invalid") : base(message)
+        {
+
+        }
+    }
+    [Serializable]
     public class UnknownUserEmailAddressException : Exception
     {
         public UnknownUserEmailAddressException()

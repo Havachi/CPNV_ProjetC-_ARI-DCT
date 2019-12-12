@@ -64,6 +64,11 @@ namespace MainMenuLib
                     return false;
                 }
             }
+            catch(InvalidEmailAddressException e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
             catch (EmptyFieldException e)
             {
                 MessageBox.Show(e.Message);

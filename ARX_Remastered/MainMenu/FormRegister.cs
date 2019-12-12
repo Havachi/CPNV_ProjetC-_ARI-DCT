@@ -23,6 +23,8 @@ namespace MainMenu
         private string userEmail;
         private string password;
         private string passwordCheck;
+        private bool isLogged;
+
         public Form formRegister;
         public FormMainMenu FormMainMenu;
 
@@ -48,7 +50,12 @@ namespace MainMenu
                 if (register.RegisterInDb(register))
                 {
                     MessageBox.Show(@"Votre compte a été créé");
+                    isLogged = true;
                     Close();
+                }
+                else
+                {
+                    MessageBox.Show("Les identifiants que vous avez entré sont invalids.");
                 }
             }
             catch (InvalidPasswordException exception)
@@ -85,6 +92,12 @@ namespace MainMenu
         public string UserEmail
         {
             get { return userEmail; }
+        }
+
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
         }
     }
 }

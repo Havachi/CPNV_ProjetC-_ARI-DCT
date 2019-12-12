@@ -110,14 +110,17 @@ namespace MainMenuLib
         {
             if (mail.Length < 8)
             {
-                throw new EmailTooShortException("The Email Address that you have entered is too short");
+                throw new EmailTooShortException("L'adresse Email que vous avez entré est trop courte");
             }
 
-            IsValidEmail(mail);
+            if (!IsValidEmail(mail))
+            {
+                throw new InvalidEmailAddressException("L'adresse email que vous avez entré n'est pas valide ");
+            }
 
             if (password.Length < 8)
             {
-                throw new PasswordTooShortException("The password that you have entered is too short");
+                throw new PasswordTooShortException("Le mot de passe que vous avez entré est trop court");
             }
             else
             {

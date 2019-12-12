@@ -21,6 +21,7 @@ namespace MainMenu
     {
         private string userEmail;
         private string password;
+        private bool isLogged;
         public Form formLogin;
 
         public FormLogin()
@@ -45,7 +46,7 @@ namespace MainMenu
                 if (login.LoginDb(login))
                 {
                     MessageBox.Show(@"Connexion réussite");
-                    
+                    isLogged = true;
                     Close();
                 }
             }
@@ -71,6 +72,7 @@ namespace MainMenu
             {
                 formRegister.ShowDialog(this);
                 userEmail = formRegister.UserEmail;
+                this.isLogged = formRegister.IsLogged;
                 Close();
             }
         }
@@ -78,6 +80,11 @@ namespace MainMenu
         private void tbxLoginPassword_TextChanged(object sender, EventArgs e)
         {
 
+        }
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
         }
     }
 }
