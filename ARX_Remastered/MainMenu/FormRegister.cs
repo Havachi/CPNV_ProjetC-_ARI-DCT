@@ -55,7 +55,7 @@ namespace MainMenu
                 }
                 else
                 {
-                    MessageBox.Show("Les identifiants que vous avez entré sont invalids.");
+                    MessageBox.Show("Erreur lors de la création du compte.","Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (InvalidPasswordException exception)

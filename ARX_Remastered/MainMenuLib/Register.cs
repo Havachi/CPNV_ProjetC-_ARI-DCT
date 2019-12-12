@@ -53,13 +53,16 @@ namespace MainMenuLib
                     return false;
                 }
 
-                registerCheck.VerifRegister(reg.userEmail, reg.password);
-                if (!connection.CheckIfUserEmailExistInDb(userEmail))
+                if (!registerCheck.VerifRegister(reg.userEmail, reg.password))
+                {
+                    return false;
+                }
+                if (connection.CheckIfUserEmailExistInDb(userEmail))
                 {
                     return false;
                 }
 
-                if (connection.InsertDataInDb(username, userEmail, hashedPassword))
+                if (!connection.InsertDataInDb(username, userEmail, hashedPassword))
                 {
                     return false;
                 }

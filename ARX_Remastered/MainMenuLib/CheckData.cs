@@ -43,7 +43,7 @@ namespace MainMenuLib
         {
             if (mail == "" || password == "")
             {
-                throw new EmptyFieldException("Please fill the field");
+                throw new EmptyFieldException("Veuillez remplir tous les champs");
             }
         }
 
@@ -51,7 +51,7 @@ namespace MainMenuLib
         {
             if (mail == "" || password == "" || passwordCheck == "")
             {
-                throw new EmptyFieldException("Please fill the field");
+                throw new EmptyFieldException("Veuillez remplir tous les champs");
             }
             return true;
         }
@@ -106,7 +106,7 @@ namespace MainMenuLib
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="password"></param>
-        public void VerifRegister(string mail, string password)
+        public bool VerifRegister(string mail, string password)
         {
             if (mail.Length < 8)
             {
@@ -122,10 +122,8 @@ namespace MainMenuLib
             {
                 throw new PasswordTooShortException("Le mot de passe que vous avez entré est trop court");
             }
-            else
-            {
-                //Password encryption
-            }
+
+            return true;
         }
     }
 }
