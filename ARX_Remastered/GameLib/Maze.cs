@@ -43,7 +43,7 @@ namespace GameLib
         /// </remarks>
         private List<Case> caseInfoList = new List<Case>();
         /// <summary>
-        /// This list of array of bool contains infomation about the "walls"
+        /// This list of array of bool contains information about the "walls"
         /// </summary>
         /// <remarks>
         /// The structure of the array of bool should be {wallN, wallE, wallS, wallW}
@@ -111,34 +111,32 @@ namespace GameLib
                     lastX = currentX;
                     lastY = currentY;
                     r = rand.Next(0, unvisitedCases.Count-1);
-                    if (r == 0)
+                    switch (r)
                     {
-                        currentX = unvisitedCases[0].PosX;
-                        currentY = unvisitedCases[0].PosY;
-                        nbOfVisitedCase++;
-                        mazeStack.Push(new Point(currentX, currentY));
-                    }
-                    else if (r == 1)
-                    {
-                        currentX = unvisitedCases[1].PosX;
-                        currentY = unvisitedCases[1].PosY;
-                        nbOfVisitedCase++;
-                        mazeStack.Push(new Point(currentX, currentY));
-                    }
-                    else if (r == 2)
-                    {
-                        currentX = unvisitedCases[2].PosX;
-                        currentY = unvisitedCases[2].PosY;
-                        nbOfVisitedCase++;
-                        mazeStack.Push(new Point(currentX, currentY));
-                    }
-                    else if (r == 3)
-                    {
-                        currentX = unvisitedCases[3].PosX;
-                        currentY = unvisitedCases[3].PosY;
-                        nbOfVisitedCase++;
-                        mazeStack.Push(new Point(currentX, currentY));
-                        
+                        case 0:
+                            currentX = unvisitedCases[0].PosX;
+                            currentY = unvisitedCases[0].PosY;
+                            nbOfVisitedCase++;
+                            mazeStack.Push(new Point(currentX, currentY));
+                            break;
+                        case 1:
+                            currentX = unvisitedCases[1].PosX;
+                            currentY = unvisitedCases[1].PosY;
+                            nbOfVisitedCase++;
+                            mazeStack.Push(new Point(currentX, currentY));
+                            break;
+                        case 2:
+                            currentX = unvisitedCases[2].PosX;
+                            currentY = unvisitedCases[2].PosY;
+                            nbOfVisitedCase++;
+                            mazeStack.Push(new Point(currentX, currentY));
+                            break;
+                        case 3:
+                            currentX = unvisitedCases[3].PosX;
+                            currentY = unvisitedCases[3].PosY;
+                            nbOfVisitedCase++;
+                            mazeStack.Push(new Point(currentX, currentY));
+                            break;
                     }
 
                     if (currentX != lastX || currentY != lastY)
@@ -161,7 +159,7 @@ namespace GameLib
                 
             } while (nbOfVisitedCase != MaxVisitedCase);
 
-
+            //This is just for debugging purpose
             using (System.IO.StreamWriter file =
                 new System.IO.StreamWriter(@"C:\aled.txt", false))
             {
@@ -213,7 +211,9 @@ namespace GameLib
             }
             return false;
         }
-
+        /// <summary>
+        /// This method is used by the algorithm when in an dead-end
+        /// </summary>
         public void Backtrack()
         {
             var actualPoint = new Point();
