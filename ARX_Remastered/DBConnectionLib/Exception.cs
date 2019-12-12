@@ -14,7 +14,7 @@ namespace DBConnectionLib
 
         }
 
-        public UnknownUsernameException(string message = "Unkown Username") : base(message)
+        public UnknownUsernameException(string message = "Ce nom d'utilisateur n'existe pas") : base(message)
         {
 
         }
@@ -28,7 +28,7 @@ namespace DBConnectionLib
 
         }
 
-        public InvalidPasswordException(string message = "Wrong Password") : base(message)
+        public InvalidPasswordException(string message = "Mot de passe incorrect") : base(message)
         {
 
         }
@@ -42,7 +42,7 @@ namespace DBConnectionLib
 
         }
 
-        public UnknownUserEmailAddressException(string message = "Unkown user Email Address") : base(message)
+        public UnknownUserEmailAddressException(string message = "Ce compte n'existe pas") : base(message)
         {
 
         }
@@ -56,7 +56,7 @@ namespace DBConnectionLib
 
         }
 
-        public UserEmailAlreadyExistException(string message = "Email Address already in use") : base(message)
+        public UserEmailAlreadyExistException(string message = "Cette adresse Email est déjà utilisée") : base(message)
         {
 
         }
@@ -70,7 +70,7 @@ namespace DBConnectionLib
 
         }
 
-        public UsernameAlreadyExistException(string message = "Username already in use") : base(message)
+        public UsernameAlreadyExistException(string message = "Ce nom d'utilisateur est déja utilisé") : base(message)
         {
 
         }
@@ -86,7 +86,7 @@ namespace DBConnectionLib
 
         public EmailTooShortException(string message) : base(message)
         {
-            message = "This Email Address is too short, please try another Email Address";
+            message = "L'adresse Email que vous avez utilisé n'est pas valide";
         }
     }
 
@@ -100,7 +100,7 @@ namespace DBConnectionLib
 
         public PasswordTooShortException(string message):base(message)
         {
-            message = "The password that you have entered is too short, please try again.";
+            message = "Le mot de passe que vous avez utilisé n'est pas valide";
         }
     }
 
@@ -114,7 +114,7 @@ namespace DBConnectionLib
 
         public EmptyFieldException(string message):base(message)
         {
-            message = "Please fill the field";
+            message = "Veuillez remplir les champs";
         }
     }
 }
