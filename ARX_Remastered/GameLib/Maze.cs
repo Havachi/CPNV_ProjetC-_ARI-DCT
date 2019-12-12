@@ -154,6 +154,7 @@ namespace GameLib
             using (System.IO.StreamWriter file =
                 new System.IO.StreamWriter(@"C:\aled.txt", false))
             {
+                file.WriteLine($"Debug Report of ARX Remastered Map Generation(DRARMG):");
                 int unvisitedCasesTotal = 0;
                 int visitedCasesTotal = 0;
                 foreach (var cacase in caseInfoList)
@@ -171,34 +172,35 @@ namespace GameLib
                 file.WriteLine($"Total Unvisited:{unvisitedCasesTotal} ");
                 file.WriteLine($"Total Visited:{visitedCasesTotal} \n\n\n");
                 
-                foreach (var cacase in caseInfoList)
+                for (int i = 0; i < maxHeight; i++)
                 {
-
-                    if (cacase.PosX==9)
+                    for (int j = 0; j < maxWidth; j++)
                     {
-                        file.Write(!cacase.Visited ? "*\n" : "#\n");
+                        file.Write($@"[{j};{i}]");
+                    }
+                    file.Write("\n");
+                }
+                file.Write("\n\n");
+                file.WriteLine("\nmazeStack:");
+                file.WriteLine($"Amount of cases in mazeStack : {mazeStack.Count}");
+                int horizontalLength = 0;
+                foreach (var point in mazeStack)
+                {
+                    
+                    if (point.X == 9)
+                    {
+                        file.Write($"[{point.X};{point.Y}]");
+                        file.Write("\n");
+                        horizontalLength = 0;
                     }
                     else
                     {
-                        file.Write(!cacase.Visited ? "*" : "#");
+                        file.Write($"[{point.X};{point.Y}]");
+                        horizontalLength++;
                     }
-
-                    //file.WriteLine($"{cacase.PosX},{cacase.PosY},{cacase.Visited}");
+                   
                 }
             }
-        }
-
-        /// <summary>
-        /// This method check if the case is already visited
-        /// </summary>
-        public bool IsAlreadyVisited(int posX, int posY)
-        {
-            var c = new Case(posX,posY,true);
-            if (caseInfoList.Contains(c))
-            {
-                return true;
-            }
-            return false;
         }
         /// <summary>
         /// This method is used by the algorithm when in an dead-end
@@ -216,8 +218,6 @@ namespace GameLib
             currentX = actualPoint.X;
             currentY = actualPoint.Y;
         }
-
-        
         /// <summary>
         /// This method check in the 4 direction to see if the case has already been visited
         /// </summary>
@@ -419,7 +419,12 @@ namespace GameLib
             }
             return listOfUnvisited;
         }
-
+        /// <summary>
+        /// This method return the position of a case in caseInfoList
+        /// </summary>
+        /// <param name="posX"></param>
+        /// <param name="posY"></param>
+        /// <returns>The position of a case in caseInfoList</returns>
         public int GetPositionInList(int posX,int posY)
         {
             int positionInList = -1;

@@ -17,12 +17,12 @@ namespace GameLib
         private static int maxHeight = 10;
         private static int maxWidth = 10;
         private int caseToDraw = maxHeight * maxWidth;
-
         public void DrawMap()
         {
-            Bitmap mapBitmap = new Bitmap(500, 500);
+            Bitmap mapBitmap = new Bitmap(200, 200);
             Graphics flagGraphics = Graphics.FromImage(mapBitmap);
             mapBitmap.Save(@"C:\oscourmek.bmp");
+
         }
     }
 }
