@@ -50,7 +50,6 @@ namespace MainMenuLib
             {
                 throw new EmptyFieldException("Please fill the field");
             }
-
             return true;
         }
 
