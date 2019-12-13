@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
+using Google.Protobuf.WellKnownTypes;
 
 namespace GameLib
 {
@@ -48,7 +51,7 @@ namespace GameLib
         /// <remarks>
         /// The structure of the array of bool should be {wallN, wallE, wallS, wallW}
         /// </remarks>
-        private List<bool[]> caseNearInfo = new List<bool[]>();
+        private List<bool[]> casesWallsInfos = new List<bool[]>();
         /// <summary>
         /// This Stack of Point is used by the algorithm to temporary stock position coordinate.
         /// </summary>
@@ -87,7 +90,11 @@ namespace GameLib
             nbOfVisitedCase = 0;
             //The random number for the generation
             int r = 0;
-
+            //The last iteration random number
+            int lastR = 0; 
+            int randomX = 0;
+            int randomY = 0;
+            int rand = 0; 
             //Fullify the Maze with unvisited Case 
             for (int i = 0; i < maxWidth; i++)
             {
@@ -97,126 +104,122 @@ namespace GameLib
                 }
             }
 
+            //Generate random starting point
+            randomX = GenerateRandom(maxWidth -1);
+            randomY = GenerateRandom(maxHeight - 1);
+            currentX = randomX;
+            currentY = randomY;
+
             //Stack the Initial position in the stack
             mazeStack.Push(new Point(currentX, currentY));
             caseInfoList[0].Visited = true;
             nbOfVisitedCase++;
-            
+            var unvisitedCases = new List<Case>();
+
             //The do while end when all case are visited
             do
             {
                 var currentCase = caseInfoList[0];
-                var unvisitedCases = GetFourDirectionVisited(currentX,currentY);
+                if (unvisitedCases.Count == 0)
+                {
+                    unvisitedCases = GetFourDirectionVisited(currentX, currentY);
+                }
+
+                lastX = currentX;
+                lastY = currentY;
                 if (unvisitedCases.Count() != 0)
                 {
-                    lastX = currentX;
-                    lastY = currentY;
-                    rand = new Random();
-                    r = rand.Next(0, unvisitedCases.Count-1);
-                    
-                    switch (r)
+
+                    rand = GenerateRandom(unvisitedCases.Count);
+                    switch (rand)
                     {
                         case 0:
                             currentX = unvisitedCases[0].PosX;
                             currentY = unvisitedCases[0].PosY;
-                            mazeStack.Push(new Point(currentX, currentY));
                             break;
                         case 1:
                             currentX = unvisitedCases[1].PosX;
                             currentY = unvisitedCases[1].PosY;
-                            mazeStack.Push(new Point(currentX, currentY));
                             break;
                         case 2:
                             currentX = unvisitedCases[2].PosX;
                             currentY = unvisitedCases[2].PosY;
-                            mazeStack.Push(new Point(currentX, currentY));
                             break;
                         case 3:
                             currentX = unvisitedCases[3].PosX;
                             currentY = unvisitedCases[3].PosY;
-                            mazeStack.Push(new Point(currentX, currentY));
                             break;
                     }
+
+                    mazeStack.Push(new Point(currentX, currentY));
                     currentCase.PosX = currentX;
                     currentCase.PosY = currentY;
                     nbOfVisitedCase++;
                     caseInfoList[GetPositionInList(currentCase.PosX,currentCase.PosY)].Visited = true;
-
+                    unvisitedCases.Clear();
                 }
                 else
                 {
-                    Backtrack();
+                    try
+                    {
+                        do
+                        {
+                            if (mazeStack.Count != 0)
+                            {
+                                unvisitedCases = Backtrack();
+                                if (unvisitedCases == null)
+                                {
+                                    unvisitedCases = Backtrack();
+                                }
+                            }
+                        } while (lastX == currentX && lastY == currentY && mazeStack.Count > 0);
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        MessageBox.Show($"Error at {nbOfVisitedCase} iteration.");
+                    }
+
                 }
-                
             } while (nbOfVisitedCase != MaxVisitedCase);
 
-            //This is just for debugging purpose
-            using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(@"C:\aled.txt", false))
-            {
-                file.WriteLine($"Debug Report of ARX Remastered Map Generation(DRARMG):");
-                int unvisitedCasesTotal = 0;
-                int visitedCasesTotal = 0;
-                foreach (var cacase in caseInfoList)
-                {
-                    if (cacase.Visited == false)
-                    {
-                        unvisitedCasesTotal++;
-                    }
-                    else
-                    {
-                        visitedCasesTotal++;
-                    }
-                }
-                file.WriteLine($"Total :{nbOfVisitedCase} ");
-                file.WriteLine($"Total Unvisited:{unvisitedCasesTotal} ");
-                file.WriteLine($"Total Visited:{visitedCasesTotal} \n\n\n");
-                
-                for (int i = 0; i < maxHeight; i++)
-                {
-                    for (int j = 0; j < maxWidth; j++)
-                    {
-                        file.Write($@"[{j};{i}]");
-                    }
-                    file.Write("\n");
-                }
-                file.Write("\n\n");
-                file.WriteLine("\nmazeStack:");
-                file.WriteLine($"Amount of cases in mazeStack : {mazeStack.Count}");
-                int horizontalLength = 0;
-                foreach (var point in mazeStack)
-                {
-                    
-                    if (point.X == 9)
-                    {
-                        file.Write($"[{point.X};{point.Y}]");
-                        file.Write("\n");
-                        horizontalLength = 0;
-                    }
-                    else
-                    {
-                        file.Write($"[{point.X};{point.Y}]");
-                        horizontalLength++;
-                    }
-                   
-                }
-            }
+            GenerateReport();
+        }
+
+        /// <summary>
+        /// This method is used by the algorithm when in an dead-end
+        /// </summary>
+        public List<Case> Backtrack()
+        {
+            return Backtrack(currentX,currentY);
         }
         /// <summary>
         /// This method is used by the algorithm when in an dead-end
         /// </summary>
-        public void Backtrack()
+        public List<Case> Backtrack(int posX,int posY)
         {
-            var actualPoint = new Point();
-            var listOfUnvisitedCases = new List<Case>();
-            do
+            var backtrackUnvisitedCases = new List<Case>();
+            var backtrackPoint = new Point();
+            if (mazeStack.Count != 0)
             {
-                actualPoint = mazeStack.Pop();
-                listOfUnvisitedCases = GetFourDirectionVisited(actualPoint.X, actualPoint.Y);
+                backtrackPoint = mazeStack.Pop();
+                currentX = backtrackPoint.X;
+                currentY = backtrackPoint.Y;
+                backtrackUnvisitedCases = GetFourDirectionVisited(currentX, currentY);
+                if (backtrackUnvisitedCases.Count == 0)
+                {
+                    Backtrack(currentX,currentY);
+                }
+                else
+                {
+                    return backtrackUnvisitedCases;
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
 
-            } while (listOfUnvisitedCases != null);
-            currentX = actualPoint.X;
-            currentY = actualPoint.Y;
+            return backtrackUnvisitedCases;
         }
         /// <summary>
         /// This method check in the 4 direction to see if the case has already been visited
@@ -390,12 +393,13 @@ namespace GameLib
                 }
             }
             //if not on any border
-            else
+           else
             {
                 caseToSearchRight = new Case(posX + 1, posY);
                 caseToSearchUp = new Case(posX, posY - 1);
                 caseToSearchBottom = new Case(posX, posY + 1);
                 caseToSearchLeft = new Case(posX - 1, posY);
+
                 //up
                 if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
                 {
@@ -453,8 +457,89 @@ namespace GameLib
         /// </remarks>
         public void WallCalculation()
         {
-             
+            
+            while (mazeStack.Count > 0)
+            {
+                
+            }
         }
 
+        public void GenerateReport()
+        {
+            //This is just for debugging purpose
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter(@"C:\aled.txt", false))
+            {
+
+
+                file.WriteLine($"Debug Report of ARX Remastered Map Generation(DRARMG):");
+                file.WriteLine(new DateTime());
+                int unvisitedCasesTotal = 0;
+                int visitedCasesTotal = 0;
+                foreach (var cacase in caseInfoList)
+                {
+                    if (cacase.Visited == false)
+                    {
+                        unvisitedCasesTotal++;
+                    }
+                    else
+                    {
+                        visitedCasesTotal++;
+                    }
+                }
+                file.WriteLine($"Total :{nbOfVisitedCase} ");
+                file.WriteLine($"Total Unvisited:{unvisitedCasesTotal} ");
+                file.WriteLine($"Total Visited:{visitedCasesTotal} \n\n\n");
+
+                for (int i = 0; i < maxHeight; i++)
+                {
+                    for (int j = 0; j < maxWidth; j++)
+                    {
+                        file.Write($@"[{j};{i}]");
+                    }
+                    file.Write("\n");
+                }
+                file.Write("\n\n");
+                file.WriteLine("mazeStack:");
+                file.WriteLine($"Amount of cases in mazeStack : {mazeStack.Count}");
+                int horizontalLength = 0;
+                foreach (var point in mazeStack)
+                {
+
+                    if (point.X == 9)
+                    {
+                        file.Write($"[{point.X};{point.Y}]");
+                        file.Write("\n");
+                        horizontalLength = 0;
+                    }
+                    else
+                    {
+                        file.Write($"[{point.X};{point.Y}]");
+                        horizontalLength++;
+                    }
+
+                }
+            }
+        }
+
+        public int GenerateRandom(int max)
+        {
+            byte[] randomBytes = new byte[100];
+            int result = 0;
+            RandomNumberGenerator random = new RNGCryptoServiceProvider();
+            random.GetBytes(randomBytes, 1, 99);
+            foreach (var randomByte in randomBytes)
+            {
+                result += randomByte;
+                result %= max;
+            }
+
+            if (result > max)
+            {
+                result %= max;
+            }
+
+            return result;
+        }
     }
 }
