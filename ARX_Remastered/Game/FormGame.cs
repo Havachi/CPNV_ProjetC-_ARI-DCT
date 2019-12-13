@@ -26,6 +26,10 @@ namespace Game
             InitializeComponent();
             inGame = true;
             pbx_FormGameGame.Load("Pics/X.PNG");
+            
+            //Faire un bouton pour quitter le jeu sur le Mainmenu, le bouton jouer et un bouton d'aide affichant les touches de contrôle et les règles dj jeu.
+            //peut-être faire un background pour le main menu et pour chawue bouton avec la typo prometeus.
+            
         }
             private void FormGame_KeyPress(object sender, KeyPressEventArgs e)
             {
