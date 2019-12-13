@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Map Classes\Case.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Map Classes\Wall.cs" />
     <Compile Include="Player Classes\Inventory.cs" />
     <Compile Include="Player Classes\Item.cs" />
     <Compile Include="Map Classes\Map.cs" />

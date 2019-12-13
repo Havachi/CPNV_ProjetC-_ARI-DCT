@@ -51,7 +51,7 @@ namespace GameLib
         /// <remarks>
         /// The structure of the array of bool should be {wallN, wallE, wallS, wallW}
         /// </remarks>
-        private List<bool[]> casesWallsInfos = new List<bool[]>();
+        private List<Wall> casesWallsInfos = new List<Wall>();
         /// <summary>
         /// This Stack of Point is used by the algorithm to temporary stock position coordinate.
         /// </summary>
