@@ -68,7 +68,16 @@ namespace Game
                         {
                             // déplace la selection de l'inventaire vers la gauche
                         }
+
+                        //  Gestion de flag
+                        if (inGame == true)
+                        {
+                        }
+                        if (inInventory == true)
+                        {
+                        }
                         break;
+
 
                     // Left arrow
                     case (char)37:
@@ -193,27 +202,41 @@ namespace Game
                     case (char)105: 
                         if (inInventory == true)
                         {
+                            // Ferme l'inventaire et revient au jeu
+                        }
+                        if (inGame == true)
+                        {
+                            // Ouvre l'inventaire
+                        }
+
+                        //Gestion de flag
+                        if (inInventory == true)
+                        {
                             inInventory = false;
                             inGame = true;
-                            // Ferme l'inventaire et revient au jeu
                         }
                         if (inGame == true)
                         {
                             inInventory = true;
                             inGame = false;
-                            // Ouvre l'inventaire
                         }
-                      break;
+                        break;
 
                     // C  
                     case (char)99:
                         if (inMenu == true)
                         {
                             pbx_FormGameGame.Load("Pics/CMD.PNG");
+                        }
+
+                        //Gestion de flag
+
+                        if (inMenu == true)
+                        {
                             inMenu = false;
                             inMenuCommands = true;
                         }
-                      break;
+                        break;
 
                     // Esc  
                     case (char)27:
@@ -238,7 +261,7 @@ namespace Game
                             // Ferme le menu de commande et revient au menu
                         }
 
-                        // Définir les flags après 
+                        // Gestion de flag
                         if (inInventory == true)
                         {
                             inInventory = false;
