@@ -52,15 +52,13 @@
             // 
             // FormGame
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1920, 1061);
             this.Controls.Add(this.pbx_FormGameGame);
             this.Controls.Add(this.pbx_FormGameMap);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormGame";
             this.Text = "ARX Remastered";
-            this.TopMost = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormGame_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.pbx_FormGameMap)).EndInit();
