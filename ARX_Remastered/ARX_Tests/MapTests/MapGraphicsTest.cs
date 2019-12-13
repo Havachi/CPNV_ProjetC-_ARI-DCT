@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GameLib;
 namespace ARX_Tests
@@ -10,7 +11,7 @@ namespace ARX_Tests
         public void TryGenerateAnMapImage()
         {
             MapGraphics map = new MapGraphics();
-            map.DrawMap();
+            map.DrawMap(new List<Wall>());
         }
     }
 }
