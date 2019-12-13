@@ -23,6 +23,8 @@ namespace MainMenu
         private string userEmail;
         private string password;
         private string passwordCheck;
+        private bool isLogged;
+
         public Form formRegister;
         public FormMainMenu FormMainMenu;
 
@@ -44,26 +46,25 @@ namespace MainMenu
             username = (userEmail.Split('@')[0]);
             Register register = new Register(userEmail, username, password, passwordCheck);
             try
-            {
+            { 
                 if (register.RegisterInDb(register))
                 {
                     MessageBox.Show(@"Votre compte a été créé");
-                    
+                    isLogged = true;
                     Close();
                 }
-
+                else
+                {
+                    MessageBox.Show("Erreur lors de la création du compte.","Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (InvalidPasswordException exception)
             {
                 MessageBox.Show(exception.Message.ToString());
-                throw;
-
-
             }
             catch (UserEmailAlreadyExistException exception)
             {
                 MessageBox.Show(exception.Message.ToString());
-                throw;
             }
 
         }
@@ -91,6 +92,12 @@ namespace MainMenu
         public string UserEmail
         {
             get { return userEmail; }
+        }
+
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
         }
     }
 }

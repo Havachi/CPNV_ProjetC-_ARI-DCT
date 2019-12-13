@@ -18,10 +18,11 @@ namespace MainMenu
     public partial class FormMainMenu : Form
     {
         private string userEmail;
-
+        private bool isLogged;
         public FormMainMenu()
         {
             InitializeComponent();
+            this.Tag = isLogged;
         }
         
         /// <summary>
@@ -32,13 +33,17 @@ namespace MainMenu
 
             using (FormLogin formLogin = new FormLogin())
             {
-               formLogin.ShowDialog(this);
-               userEmail = formLogin.UserEmail;
-               lblMainMenuLogged.Text = $@"Logged as
+                formLogin.ShowDialog(this);
+                this.isLogged=formLogin.IsLogged;
+                if (isLogged)
+                {
+                    userEmail = formLogin.UserEmail;
+                    lblMainMenuLogged.Text = $@"Connecté avec
 {userEmail}";
-               btnLogin.Text = @"Play";
-               btnLogin.Click -= (btnLogin_Click);
-               btnLogin.Click += (btnLogin_Play);
+                    btnLogin.Text = @"Jouer";
+                    btnLogin.Click -= (btnLogin_Click);
+                    btnLogin.Click += (btnLogin_Play);
+                }
             }
         }
         /// <summary>
@@ -96,6 +101,12 @@ namespace MainMenu
         {
             get { return userEmail; }
             set { userEmail = value; }
+        }
+
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
         }
     }
 }
