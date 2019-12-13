@@ -17,6 +17,8 @@ namespace GameLib
     /// </summary>
     public class Maze
     {
+        private MapGraphics mapGraphics = new MapGraphics();
+
         private int currentX = 0;
         private int currentY = 0;
         /// <summary>
@@ -46,18 +48,12 @@ namespace GameLib
         /// </remarks>
         private List<Case> caseInfoList = new List<Case>();
         /// <summary>
-        /// This list of array of bool contains information about the "walls"
-        /// </summary>
-        /// <remarks>
-        /// The structure of the array of bool should be {wallN, wallE, wallS, wallW}
-        /// </remarks>
-        private List<Wall> casesWallsInfos = new List<Wall>();
-        /// <summary>
         /// This Stack of Point is used by the algorithm to temporary stock position coordinate.
         /// </summary>
         /// <remarks>
         /// This is used for backtracking because stack have the particularity of Last In, First Out.
         /// </remarks>
+        private List<Wall> wallsInfoList = new List<Wall>();
         private Stack<Point> mazeStack=new Stack<Point>();
 
         /// <summary>
@@ -182,6 +178,8 @@ namespace GameLib
                 }
             } while (nbOfVisitedCase != MaxVisitedCase);
 
+            wallsInfoList = WallCalculation();
+            mapGraphics.DrawMap(wallsInfoList);
             GenerateReport();
         }
 
@@ -455,13 +453,125 @@ namespace GameLib
         /// - todo First the mazeStack Stack variable is used in a step by step backtrack method, not the BacktrackUntilUnvisited() method
         /// - todo Then walls are placed if there is no direct link between case if there is a direct link, no wall are placed
         /// </remarks>
-        public void WallCalculation()
+        public List<Wall> WallCalculation()
         {
-            
+            List<Wall> casesWallsInfos = new List<Wall>();
+            Wall wall;
+            Point lastPoint = new Point();
+            bool isWallNorth = false;
+            bool isWallEast = false;
+            bool isWallSouth = false;
+            bool isWallWest = false;
+            //Represent where ther is no wall, 1 = N, 2 = E, 3 = S, 4 = W
+            int lastOpenWall = 0;
+            int lastX = 0;
+            int lastY = 0;
             while (mazeStack.Count > 0)
             {
-                
+                lastPoint = mazeStack.Pop();
+                //if it is the first iteration
+                if (casesWallsInfos.Count == 0)
+                {
+                    //last point up
+                    if (lastPoint.Y > currentY)
+                    {
+                        isWallNorth = false;
+                        isWallEast = true;
+                        isWallSouth = true;
+                        isWallWest = true;
+                        lastOpenWall = 1;
+                    }
+                    //last point on the right
+                    else if (lastPoint.X > currentX)
+                    {
+                        isWallNorth = true;
+                        isWallEast = false;
+                        isWallSouth = true;
+                        isWallWest = true;
+                        lastOpenWall = 2;
+                    }
+                    // last point down
+                    else if (lastPoint.Y < currentY)
+                    {
+                        isWallNorth = true;
+                        isWallEast = true;
+                        isWallSouth = false;
+                        isWallWest = true;
+                        lastOpenWall = 3;
+                    }
+                    //last point on the left
+                    else if (lastPoint.X < currentX)
+                    {
+                        isWallNorth = true;
+                        isWallEast = true;
+                        isWallSouth = true;
+                        isWallWest = false;
+                        lastOpenWall = 4;
+                    }
+                }
+                else
+                {
+                    //last point up
+                    if (lastPoint.Y > currentY)
+                    {
+                        isWallNorth = false;
+                        isWallEast = true;
+                        isWallSouth = true;
+                        isWallWest = true;
+                        lastOpenWall = 1;
+                    }
+                    //last point on the right
+                    else if (lastPoint.X > currentX)
+                    {
+                        isWallNorth = true;
+                        isWallEast = false;
+                        isWallSouth = true;
+                        isWallWest = true;
+                        lastOpenWall = 2;
+                    }
+                    // last point down
+                    else if (lastPoint.Y < currentY)
+                    {
+                        isWallNorth = true;
+                        isWallEast = true;
+                        isWallSouth = false;
+                        isWallWest = true;
+                        lastOpenWall = 3;
+                    }
+                    //last point on the left
+                    else if (lastPoint.X < currentX)
+                    {
+                        isWallNorth = true;
+                        isWallEast = true;
+                        isWallSouth = true;
+                        isWallWest = false;
+                        lastOpenWall = 4;
+                    }
+
+                    switch (lastOpenWall)
+                    {
+                        case 1:
+                            isWallNorth = false;
+                            break;
+                        case 2:
+                            isWallEast = false;
+                            break;
+                        case 3:
+                            isWallSouth = false;
+                            break;
+                        case 4:
+                            isWallWest = false;
+                            break;
+                    }
+                }
+                wall = new Wall(isWallNorth, isWallEast, isWallSouth, isWallWest, currentX, currentY);
+                casesWallsInfos.Add(wall);
+                lastX = currentX;
+                lastY = currentY;
+                currentX = lastPoint.X;
+                currentY = lastPoint.Y;
             }
+            return casesWallsInfos;
         }
 
         public void GenerateReport()
