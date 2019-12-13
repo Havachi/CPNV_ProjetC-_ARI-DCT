@@ -28,51 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.picMap = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pbx_FormGameMap = new System.Windows.Forms.PictureBox();
+            this.pbx_FormGameGame = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbx_FormGameMap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbx_FormGameGame)).BeginInit();
             this.SuspendLayout();
             // 
-            // picMap
+            // pbx_FormGameMap
             // 
-            this.picMap.Location = new System.Drawing.Point(1328, 12);
-            this.picMap.Name = "picMap";
-            this.picMap.Size = new System.Drawing.Size(563, 632);
-            this.picMap.TabIndex = 0;
-            this.picMap.TabStop = false;
+            this.pbx_FormGameMap.Location = new System.Drawing.Point(1299, 12);
+            this.pbx_FormGameMap.Name = "pbx_FormGameMap";
+            this.pbx_FormGameMap.Size = new System.Drawing.Size(600, 600);
+            this.pbx_FormGameMap.TabIndex = 0;
+            this.pbx_FormGameMap.TabStop = false;
             // 
-            // pictureBox1
+            // pbx_FormGameGame
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(13, 13);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1280, 720);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.pbx_FormGameGame.Location = new System.Drawing.Point(13, 13);
+            this.pbx_FormGameGame.Name = "pbx_FormGameGame";
+            this.pbx_FormGameGame.Size = new System.Drawing.Size(1280, 720);
+            this.pbx_FormGameGame.TabIndex = 1;
+            this.pbx_FormGameGame.TabStop = false;
             // 
             // FormGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.picMap);
+            this.Controls.Add(this.pbx_FormGameGame);
+            this.Controls.Add(this.pbx_FormGameMap);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormGame";
             this.Text = "ARX Remastered";
             this.TopMost = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormGame_KeyPress);
-            ((System.ComponentModel.ISupportInitialize)(this.picMap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbx_FormGameMap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbx_FormGameGame)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox picMap;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbx_FormGameMap;
+        private System.Windows.Forms.PictureBox pbx_FormGameGame;
     }
 }
 

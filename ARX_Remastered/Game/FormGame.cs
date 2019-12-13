@@ -23,6 +23,8 @@ namespace Game
         public FormGame()
         {
             InitializeComponent();
+            inGame = true;
+            pbx_FormGameGame.Image = Image.FromFile("X.PNG");
         }
 
         private void FormGame_KeyPress(object sender, KeyPressEventArgs e)
@@ -33,6 +35,7 @@ namespace Game
                 case (char)87:
                     if (inGame == true)
                     {
+                        pbx_FormGameGame.Image = Image.FromFile("../Pics/X.jpg");
                         // Fait avancer le joueur
                     }
                     if (inInventory == true)
@@ -45,6 +48,7 @@ namespace Game
                 case (char)38:
                     if (inGame == true)
                     {
+                        pbx_FormGameGame.Image = Image.FromFile("../Pics/I.jpg");
                         // Fait avancer le joueur
                     }
                     if (inInventory == true)

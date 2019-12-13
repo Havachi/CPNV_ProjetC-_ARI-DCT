@@ -50,8 +50,8 @@ namespace MainMenu
             // Générer les attributs du joueur (Position, inventaire etc)
             // Appeller les génerateurs d'évenements et item random
             // Appeller le form Gamescreen avec les paramètres pour l'affichage
-            frmGame frmGame = new frmGame();
-            frmGame.Show();
+            //frmGame frmGame = new frmGame();
+            //frmGame.Show();
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
