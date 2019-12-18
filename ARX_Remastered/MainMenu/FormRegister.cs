@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DBConnectionLib;
 using MainMenuLib;
@@ -16,30 +7,34 @@ using MainMenuLib;
 
 namespace MainMenu
 {
-
     public partial class FormRegister : Form
     {
-        private string username;
-        private string userEmail;
+        public FormMainMenu FormMainMenu;
+        public Form formRegister;
         private string password;
         private string passwordCheck;
-        public Form formRegister;
-        public FormMainMenu FormMainMenu;
+        private string userEmail;
+        private string username;
 
         public FormRegister()
         {
             InitializeComponent();
         }
 
+        public string UserEmail
+        {
+            get { return userEmail; }
+        }
+
         private void btnRegisterSignup_Click(object sender, EventArgs e)
         {
-            //Appelle la méthode permettant de créer un compte
-            //Définit les valeurs de username et password avant envoi
+            /// Call Register method
+            /// Define username and password data before throw
             userEmail = tbxRegisterMail.Text;
             password = tbxRegisterPassword.Text;
             passwordCheck = tbxRegisterPasswordCheck.Text;
 
-            //Appeler la fonction RegisterDB pour créer le compte
+            /// Call RegisterDB to create the new account
 
             username = (userEmail.Split('@')[0]);
             Register register = new Register(userEmail, username, password, passwordCheck);
@@ -48,29 +43,24 @@ namespace MainMenu
                 if (register.RegisterInDb(register))
                 {
                     MessageBox.Show(@"Votre compte a été créé");
-                    
+
                     Close();
                 }
-
             }
             catch (InvalidPasswordException exception)
             {
                 MessageBox.Show(exception.Message.ToString());
                 throw;
-
-
             }
             catch (UserEmailAlreadyExistException exception)
             {
                 MessageBox.Show(exception.Message.ToString());
                 throw;
             }
-
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnRegisterCancel_Click(object sender, EventArgs e)
@@ -80,17 +70,10 @@ namespace MainMenu
 
         private void tbxRegisterPassword_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void tbxRegisterPasswordCheck_TextChanged(object sender, EventArgs e)
         {
-
-        }
-
-        public string UserEmail
-        {
-            get { return userEmail; }
         }
     }
 }
