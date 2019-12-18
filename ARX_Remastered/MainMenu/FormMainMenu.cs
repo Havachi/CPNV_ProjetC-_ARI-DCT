@@ -46,12 +46,12 @@ namespace MainMenu
         /// </summary>
         private void btnLogin_Play(object sender, EventArgs e)
         {
-            // Appeller le générateur du jeu
-            // Générer les attributs du joueur (Position, inventaire etc)
-            // Appeller les génerateurs d'évenements et item random
-            // Appeller le form Gamescreen avec les paramètres pour l'affichage
-            //frmGame frmGame = new frmGame();
-            //frmGame.Show();
+            // TODO Appeller le générateur du jeu
+            // TODO Générer les attributs du joueur (Position, inventaire etc)
+            // TODO Appeller les génerateurs d'évenements et item random
+            // TODO Appeller le form Gamescreen avec les paramètres pour l'affichage
+            // TODO frmGame frmGame = new frmGame();
+            // TODO frmGame.Show();
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -78,7 +78,7 @@ namespace MainMenu
             Properties.Settings.Default.FormMainState = this.WindowState;
             if (this.WindowState == FormWindowState.Normal)
             {
-                // Save location and size if the state is normal
+                /// Save location and size if the state is normal
                 Properties.Settings.Default.FormMainLoc = this.Location;
                 Properties.Settings.Default.FormMainSize = this.Size;
             }
@@ -88,7 +88,7 @@ namespace MainMenu
                 Properties.Settings.Default.FormMainSize = this.RestoreBounds.Size;
             }
 
-            // Save the settings
+            /// Save the settings
             Properties.Settings.Default.Save();
         }
 

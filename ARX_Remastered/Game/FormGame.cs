@@ -1,303 +1,304 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Game
 {
     public partial class FormGame : Form
     {
-        private bool inGame;
+        private bool actionEvent;
+        private bool actionPossible;
         private bool backToGame;
-        private bool inMenu;
+        private bool inGame;
         private bool inInventory;
+        private bool inMenu;
         private bool inMenuCommands;
         private bool mapFound;
-        private bool actionPossible;
-        private bool actionEvent;
 
         public FormGame()
         {
             InitializeComponent();
             inGame = true;
             pbx_FormGameGame.Load("Pics/X.PNG");
-            
-            //Faire un bouton pour quitter le jeu sur le Mainmenu, le bouton jouer et un bouton d'aide affichant les touches de contrôle et les règles dj jeu.
-            //peut-être faire un background pour le main menu et pour chawue bouton avec la typo prometeus.
-            
+
+            //TODO Faire un bouton pour quitter le jeu sur le Mainmenu, le bouton jouer et un bouton d'aide affichant les touches de contrôle et les règles du jeu.
+            //TEMP peut-être faire un background pour le main menu et pour chawue bouton avec la typo prometeus.
         }
-            private void FormGame_KeyPress(object sender, KeyPressEventArgs e)
+
+        private void FormGame_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            switch (e.KeyChar)
             {
-                switch (e.KeyChar)
-                {
-                    // W
-                    case (char)119:
-                        if (inGame == true)
-                        {
-                            pbx_FormGameGame.Load("Pics/X.PNG");
-                            // Fait avancer le joueur
-                        }
-                        if (inInventory == true)
-                        {
-                            // déplace la selection de l'inventaire vers le haut
-                        }
-                        break;
+                /// W
+                case (char) 119:
+                    if (inGame)
 
-                    // Up arrow
-                    case (char)8:
-                        if (inGame == true)
-                        {
-                            pbx_FormGameGame.Load("Pics/I.PNG");
-                            // Fait avancer le joueur
-                        }
-                        if (inInventory == true)
-                        {
-                            // déplace la selection de l'inventaire vers le haut
-                        }
-                        break;
+                        //TEMP
+                        pbx_FormGameGame.Load("Pics/X.PNG");
 
-                    // A  
-                    case (char)97:
-                        if (inGame == true)
-                        {
-                             pbx_FormGameGame.Load("Pics/I.PNG");
-                             // Fait tourner le joueur vers la gauche
+                    ///TODO Move the player - forward  
+                    if (inInventory)
+                    {
+                        ///TODO  Move the inventory cursor's - up
                     }
-                        if (inInventory == true)
-                        {
-                            // déplace la selection de l'inventaire vers la gauche
-                        }
+                    break;
 
-                        //  Gestion de flag
-                        if (inGame == true)
-                        {
-                        }
-                        if (inInventory == true)
-                        {
-                        }
-                        break;
-
-
-                    // Left arrow
-                    case (char)37:
-                        if (inGame == true)
-                        {
-                            // Fait tourner le joueur vers la gauche
-                        }
-                        if (inInventory == true)
-                        {
-                            // déplace la selection de l'inventaire vers la gauche
-                        }
-                        break;
-
-                    // S
-                    case (char)115:
-                        if (inGame == true)
-                        {
-                            // Déplace le joueur vers l'arrière
-                        }
-                        if (inInventory == true)
-                        {
-                            // déplace la selection de l'inventaire vers le bas
-                        }
-                        break;
-
-                    // Down arrow
-                    case (char)40:
-                        if (inGame == true)
-                        {
-                            // Déplace le joueur vers l'arrière
-                        }
-                        if (inInventory == true)
-                        {
-                            // déplace la selection de l'inventaire vers le bas
-                        }
-                        break;
-
-                    // D
-                    case (char)100:
-                        if (inGame == true)
-                        {
-                            // Fait tourner le joueur vers la droite
-                        }
-                        if (inInventory == true)
-                        {
-                            // déplace la selection de l'inventaire vers la droite
-                        }
-                        break;
-
-                    // Right arrow
-                    case (char)39:
-                        if (inGame == true)
-                        {
-                            // Fait tourner le joueur vers la droite
-                        }
-                        if (inInventory == true)
-                        {
-                            // déplace la selection de l'inventaire vers la droite
-                        }
-                        break;
-
-                    // M
-                    case (char)109:
-                        if (inGame == true)
-                        {
-                            if (mapFound == true) 
-                            {
-                                // Fait un zoom sur la map
-                            }
-                        }
-                        break;
-
-                    // +
-                    case (char)107:
-                        if (inGame == true)
-                        {
-                            if (mapFound == true)
-                            {
-                                // Fait un zoom sur la map
-                            }
-                        }
-                        break;
-
-                    // N
-                    case (char)110:
-                        if (inGame == true)
-                        {
-                            if (mapFound == true)
-                            {
-                                // Fait un dezoom sur la map
-                            }
-                        }
-                        break;
-
-                    // -  
-                    case (char)0:
-                        if (inGame == true)
-                        {
-                            if (mapFound == true)
-                            {
-                                // Fait un dezoom sur la map
-                            }
-                        }
-                        break;
-
-                    // E
-                    case (char)101:
-                        if (actionEvent == true)
-                        {
-                            if (actionPossible == true)
-                            {
-                                // Effectue une action sur l'événement si l'objet séléctionné correspond
-                            }
-                            if (actionPossible == false)
-                            {
-                                // Affcihe un message "Je ne peux pas utiliser cela bla bla bla
-                            }
-                        }
-                        break;
-
-                    // I
-                    case (char)105: 
-                        if (inInventory == true)
-                        {
-                            // Ferme l'inventaire et revient au jeu
-                        }
-                        if (inGame == true)
-                        {
-                            // Ouvre l'inventaire
-                        }
-
-                        //Gestion de flag
-                        if (inInventory == true)
-                        {
-                            inInventory = false;
-                            inGame = true;
-                        }
-                        if (inGame == true)
-                        {
-                            inInventory = true;
-                            inGame = false;
-                        }
-                        break;
-
-                    // C  
-                    case (char)99:
-                        if (inMenu == true)
-                        {
-                            pbx_FormGameGame.Load("Pics/CMD.PNG");
-                        }
-
-                        //Gestion de flag
-
-                        if (inMenu == true)
-                        {
-                            inMenu = false;
-                            inMenuCommands = true;
-                        }
-                        break;
-
-                    // Esc  
-                    case (char)27:
-                        if (inInventory == true)
-                        {
-                            // Ferme l'inventaire et revient au jeu
-                        }
-                        if (inMenu == true)
-                        {
-                            pbx_FormGameGame.Load("Pics/X.PNG");
+                /// Up arrow
+                case (char) 8:
+                    if (inGame) 
                         
-                            // Ferme le menu et revient au jeu
-                        }
-                        if (inGame == true)
-                        {
-                            pbx_FormGameGame.Load("Pics/Menu.PNG");
-                            // Ouvre le menu
-                        }
-                        if (inMenuCommands == true)
-                        {
-                            pbx_FormGameGame.Load("Pics/Menu.PNG");
-                            // Ferme le menu de commande et revient au menu
-                        }
+                        //TEMP
+                        pbx_FormGameGame.Load("Pics/I.PNG");
 
-                        // Gestion de flag
-                        if (inInventory == true)
+                    ///TODO Move the player forward 
+                    if (inInventory)
+                    {
+                        ///TODO  Move the inventory cursor's - up
+                    }
+
+                    break;
+
+                /// A  
+                case (char) 97:
+                    if (inGame)
+
+                        //TEMP
+                        pbx_FormGameGame.Load("Pics/I.PNG");
+
+                    /// TODO Move the player - Left
+                    if (inInventory)
+                    {
+                        /// TODO  Move the inventory cursor's - Left
+                        // TEMP IF déjà à gauche, ne bouge pas
+                    }
+                    break;
+
+                /// Left arrow
+                case (char) 37:
+                    if (inGame)
+                    {
+                        /// TODO Move the player - Left
+                    }
+
+                    if (inInventory)
+                    {
+                        /// TODO  Move the inventory cursor's - Left
+                        // TEMP IF déjà à gauche, ne bouge pas
+                    }
+
+                    break;
+
+                /// S
+                case (char) 115:
+                    if (inGame)
+                    {
+                        /// TODO  Move the inventory cursor's - Down
+                    }
+
+                    if (inInventory)
+                    {
+                        /// TODO  Move the inventory cursor's - Down
+                        // TEMP IF déjà en bas, ne bouge pas
+                    }
+
+                    break;
+
+                /// Down arrow
+                case (char) 40:
+                    if (inGame)
+                    {
+                        /// TODO  Move the inventory cursor's - Down
+                    }
+
+                    if (inInventory)
+                    {
+                        /// TODO  Move the inventory cursor's - Down
+                        // TEMP IF déjà en bas, ne bouge pas
+                    }
+
+                    break;
+
+                /// D
+                case (char) 100:
+                    if (inGame)
+                    {
+                        /// TODO  Move the inventory cursor's - Right
+                    }
+
+                    if (inInventory)
+                    {
+                        /// TODO  Move the inventory cursor's - Right
+                        // TEMP IF déjà à droite, ne bouge pas
+                    }
+
+                    break;
+
+                /// Right arrow
+                case (char) 39:
+                    if (inGame)
+                    {
+                        /// TODO  Move the inventory cursor's - Right
+                    }
+
+                    if (inInventory)
+                    {
+                        /// TODO  Move the inventory cursor's - Right
+                        // TEMP IF déjà à droite, ne bouge pas
+                    }
+
+                    break;
+
+                /// M
+                case (char) 109:
+                    if (inGame)
+                        if (mapFound)
                         {
-                            inInventory = false;
-                            inGame = true;
-                        }
-                        if (inMenu == true)
-                        {
-                            inMenu = false;
-                            backToGame = true;
-                        }
-                        if (inGame == true)
-                        { 
-                            inGame = false;
-                            inMenu = true;
-                        }
-                        if (inMenuCommands == true)
-                        {
-                            inMenuCommands = false;
-                            inMenu = true;
-                        }
-                        if (backToGame == true)
-                        {
-                            inGame = true;
-                            backToGame = false;
+                            /// TODO Zoom on the map
                         }
 
                     break;
 
-                    // Counts all other keys.
-                    default:
+                /// +
+                case (char) 107:
+                    if (inGame)
+                        if (mapFound)
+                        {
+                            /// TODO Zoom on the map
+                        }
 
-                        break;
+                    break;
+
+                /// N
+                case (char) 110:
+                    if (inGame)
+                        if (mapFound)
+                        {
+                            /// TODO Unzoom on the map
+                        }
+
+                    break;
+
+                /// -  
+                case (char) 0:
+                    if (inGame)
+                        if (mapFound)
+                        {
+                            /// TODO Unzoom on the map
+                        }
+
+                    break;
+
+                /// E
+                case (char) 101:
+                    if (actionEvent)
+                    {
+                        if (actionPossible)
+                        {
+                            /// TODO Check if the player as requirement (object or event) to interract
+                        }
+
+                        if (actionPossible == false)
+                        {
+                            /// TODO Display a message "You can't do this bla bla bla"
+                        }
+                    }
+
+                    break;
+
+                /// I
+                case (char) 105:
+                    if (inInventory)
+                    {
+                        /// TODO Quit the inventory and go back to game
+                    }
+
+                    if (inGame)
+                    {
+                        /// TODO Open Inventory
+                    }
+
+                    /// Flag's gestion
+                    if (inInventory)
+                    {
+                        inInventory = false;
+                        inGame = true;
+                    }
+
+                    if (inGame)
+                    {
+                        inInventory = true;
+                        inGame = false;
+                    }
+
+                    break;
+
+                /// C  
+                case (char) 99:
+                    if (inMenu) pbx_FormGameGame.Load("Pics/Menucmd.PNG");
+
+                    /// Flag's gestion
+
+                    if (inMenu)
+                    {
+                        inMenu = false;
+                        inMenuCommands = true;
+                    }
+
+                    break;
+
+                /// Q
+                case (char) 113:
+                    if (inMenu) Close();
+                    break;
+
+                /// Esc  
+                case (char) 27:
+                    if (inInventory)
+                    {
+                        ///TODO quit inventory an go back to game
+                    }
+
+                    if (inMenu)
+                        pbx_FormGameGame.Load("Pics/X.PNG");
+
+                    /// Quit menu and go back to game
+                    if (inGame)
+                        pbx_FormGameGame.Load("Pics/Menu.PNG");
+
+                    /// Quit CMD Menu and go back to Menu
+                    if (inMenuCommands)
+                        pbx_FormGameGame.Load("Pics/Menu.PNG");
+                    
+                    /// Flag's gestion
+                    if (inInventory)
+                    {
+                        inInventory = false;
+                        inGame = true;
+                    }
+
+                    if (inMenu)
+                    {
+                        inMenu = false;
+                        backToGame = true;
+                    }
+
+                    if (inGame)
+                    {
+                        inGame = false;
+                        inMenu = true;
+                    }
+
+                    if (inMenuCommands)
+                    {
+                        inMenuCommands = false;
+                        inMenu = true;
+                    }
+
+                    if (backToGame)
+                    {
+                        inGame = true;
+                        backToGame = false;
+                    }
+
+                    break;
             }
         }
     }
