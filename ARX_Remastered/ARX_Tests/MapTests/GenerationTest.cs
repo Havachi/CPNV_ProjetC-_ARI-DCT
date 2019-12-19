@@ -43,15 +43,6 @@ namespace ARX_Tests
             for (int i = 0; i < 10; i++)
             {
                 board.BoardContent.Add(listCase);
-                listCase.Reverse();
-                listCase.Sort();
-                listCase.Reverse();
-                listCase.Sort();
-                listCase.Reverse();
-                listCase.Sort();
-                listCase.Reverse();
-                
-                
             }
 
             mapdrawer.DrawMap(board);
