@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GameLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,23 +15,32 @@ namespace ARX_Tests
         }
 
         [TestMethod]
-        public void TryGenerateRandom()
+        public void TryGenerateImage()
         {
-            var m = new Maze();
-            int iteration = 0;
-            using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(@"C:\random.txt", false))
+            var terrainCase = new TerrainCase();
+            var wallCase = new WallCase();
+            var mapdrawer = new MapDrawer();
+            var board = new Board(10,10);
+            var listCase = new List<Case>()
             {
-                for (int i = 0; i < 50; i++)
-                {
-                    for (int j = 0; j < 50; j++)
-                    {
-                        int randomNumber = m.GenerateRandom(4);
-                        iteration++;
-                        file.WriteLine($"Iteration: {iteration}\nRandom number: {randomNumber}\n");
-                    }
-                }
+                terrainCase,
+                wallCase,
+                terrainCase,
+                wallCase,
+                terrainCase,
+                wallCase,
+                terrainCase,
+                wallCase,
+                terrainCase,
+                wallCase
+            };
+            for (int i = 0; i < 10; i++)
+            {
+                board.BoardContent.Add(listCase);
             }
+
+            mapdrawer.DrawMap(board);
+
         }
     }
 

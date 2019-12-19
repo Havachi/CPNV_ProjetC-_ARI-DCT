@@ -20,7 +20,7 @@ namespace GameLib
         /// </summary>
         public Game()
         {
-            player = new Player();
+            //player = new Player();
             map = new Map();
         }
         /// <summary>
@@ -28,8 +28,8 @@ namespace GameLib
         /// </summary>
         public Game(Player player)
         {
+            this.player = player;
             map = new Map();
-
         }
 
         public Player Player

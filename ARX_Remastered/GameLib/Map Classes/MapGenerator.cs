@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,11 @@ namespace GameLib
     public class MapGenerator
     {
         private Board board;
+        private List<List<Case>> boardContent;
         private TerrainCase terrainCase;
         private WallCase wallCase;
         private VoidCase voidCase;
 
-        private List<Case> lineOfCases;
 
        public MapGenerator()
        {
@@ -22,6 +23,7 @@ namespace GameLib
            wallCase = new WallCase();
            voidCase = new VoidCase();
            board = new Board(10,10);
+           boardContent = new List<List<Case>>();
        }
 
        public Board Generate()
@@ -32,46 +34,52 @@ namespace GameLib
         /// read a .txt file that contain chars to create an map
         /// </summary>
         /// <returns></returns>
-       public Board ReadMap()
+       public List<List<Case>> ReadMap()
         {
-            char[,] mapchars = new char[10, 10];
+            char[,] mapchars = new char[10, 12];
             string tempString;
+            int counter = 0;
             List<Case> lineList = new List<Case>();
-
-            using (System.IO.StreamReader file =
-                new System.IO.StreamReader(@"C:\CPNV_Project\CSharp\CPNV_ProjetC#_ARI+DCT\ARX_Remastered\TestMap\Map1.txt"))
+            string directory = @"C:\CPNV_Project\CSharp\CPNV_ProjetC#_ARI+DCT\ARX_Remastered\TestMap\Map1.txt";
+            for (int i = 0; i < mapchars.GetLength(0); i++)
             {
-                for (int i = 0; i < 10; i++)
+                for (int j = 0; j < mapchars.GetLength(1); j++)
                 {
-                    tempString = file.ReadLine();
-                    for (int j = 0; j < 10; j++)
-                    {
-                        if (tempString != null) mapchars[i, j] = tempString[j];
-                    }
+                    //mapchars[i, j] = (Char)File.ReadAllBytes(directory)[counter];
+                    mapchars[i, j] = (Char) File.ReadAllText(directory)[counter];
+                    ++counter;
                 }
             }
-            for (int i = 0; i < 10; i++)
+
+            counter = 0;
+            List<Case> mapLine = new List<Case>();
+
+            for (int i = 0; i < mapchars.GetUpperBound(0); i++)
             {
-                    for (int j = 0; j < 10; j++)
+                for (int j = 0; j < mapchars.GetUpperBound(1); j++)
+                {
+                    if (mapchars[i,j] == '#')
                     {
-                        if (mapchars[i, j] == '#')
-                        {
-                            lineList.Add(wallCase);
-                        }
-                        else if (mapchars[i, j] == '-')
-                        {
-                            lineList.Add(terrainCase);
-                        }
-                        else
-                        {
-                            lineList.Add(voidCase);
-                        }
+                        mapLine.Add(wallCase);
                     }
-                    board.BoardContent.Add(lineList);
+                    else if (mapchars[i,j] == '-')
+                    {
+                        mapLine.Add(terrainCase);
+                    }
+                    else
+                    {
+                        mapLine.Add(voidCase);
+                    }
+                }
+                boardContent.Add(mapLine);
+                mapLine.Clear();
             }
-            
-            return board;
+            return boardContent;
         }
 
+       public Board GenerateMap()
+       {
+            throw new NotImplementedException();
+       }
     }
 }

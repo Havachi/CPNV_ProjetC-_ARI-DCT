@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Renci.SshNet;
 
 namespace GameLib
@@ -24,8 +25,9 @@ namespace GameLib
             mapGenerator = new MapGenerator();
             mapDrawer = new MapDrawer();
             board = new Board();
-            board = mapGenerator.Generate();
+            board.BoardContent = mapGenerator.ReadMap();
             mapImage = mapDrawer.DrawMap(board);
+            
         }
     }
 }

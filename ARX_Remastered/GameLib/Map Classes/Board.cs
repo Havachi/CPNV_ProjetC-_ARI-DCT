@@ -39,6 +39,7 @@ namespace GameLib
         public List<List<Case>> BoardContent
         {
             get { return boardContent; }
+            set => boardContent = value;
         }
     }
 }
