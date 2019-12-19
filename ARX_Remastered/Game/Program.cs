@@ -9,7 +9,7 @@ namespace Game
     static class Program
     {
         /// <summary>
-        /// Point d'entrée principal de l'application.
+        /// Entry point for the game.
         /// </summary>
         [STAThread]
         static void Main()

@@ -20,8 +20,9 @@ namespace Game
         {
             InitializeComponent();
             inFirstMenu = true;
-            lblUsername = @"Logged as : " + lblUsername;
-
+            
+            lblGameUserLogged.Text = @"Logged as : " + lblUsername;
+            Refresh();
 
             pbx_FormGameGame.Load("Pics/FirstMenu.PNG");
 
@@ -40,10 +41,14 @@ namespace Game
                         //TEMP
                         pbx_FormGameGame.Load("Pics/X.PNG");
 
-                    ///TODO Move the player - forward  
+                    ///TODO Move the player - forward
+
+
                     if (inInventory)
                     {
+
                         ///TODO  Move the inventory cursor's - up
+
                     }
                     break;
 
@@ -55,24 +60,31 @@ namespace Game
                         pbx_FormGameGame.Load("Pics/I.PNG");
 
                     /// TODO Move the player - Left
+
                     if (inInventory)
                     {
+
                         /// TODO  Move the inventory cursor's - Left
                         // TEMP IF déjà à gauche, ne bouge pas
                     }
+
                     break;
 
                 /// S
                 case (char) 115:
                     if (inGame)
                     {
+
                         /// TODO  Move the inventory cursor's - Down
+
                     }
 
                     if (inInventory)
                     {
+
                         /// TODO  Move the inventory cursor's - Down
                         // TEMP IF déjà en bas, ne bouge pas
+
                     }
 
                     break;
@@ -81,13 +93,17 @@ namespace Game
                 case (char) 100:
                     if (inGame)
                     {
+
                         /// TODO  Move the inventory cursor's - Right
+
                     }
 
                     if (inInventory)
                     {
+
                         /// TODO  Move the inventory cursor's - Right
                         // TEMP IF déjà à droite, ne bouge pas
+
                     }
 
                     break;
@@ -97,7 +113,9 @@ namespace Game
                     if (inGame)
                         if (mapFound)
                         {
+
                             /// TODO Zoom on the map
+
                         }
 
                     break;
@@ -107,7 +125,9 @@ namespace Game
                     if (inGame)
                         if (mapFound)
                         {
+
                             /// TODO Unzoom on the map
+
                         }
 
                     break;
@@ -118,12 +138,16 @@ namespace Game
                     {
                         if (actionPossible)
                         {
+
                             /// TODO Check if the player as requirement (object or event) to interract
+
                         }
 
                         if (actionPossible == false)
                         {
+
                             /// TODO Display a message "You can't do this bla bla bla"
+
                         }
                     }
 
@@ -133,16 +157,18 @@ namespace Game
                 case (char) 105:
                     if (inInventory)
                     {
+
                         /// TODO Quit the inventory and go back to game
-                        /// 
+                        
                         inInventory = false;
                         inGame = true;
                     }
 
                     if (inGame)
                     {
+
                         /// TODO Open Inventory
-                        /// 
+                        
                         inInventory = true;
                         inGame = false;
                     }
@@ -188,6 +214,7 @@ namespace Game
                     {
 
                         //TODO pbx_FormGameGame.Load("Même image que en metant menu");
+
                         pbx_FormGameGame.Load("Pics/X.PNG");
                         inMenu = false;
                         backToGame = true;
@@ -203,6 +230,7 @@ namespace Game
                     if (inFirstMenu)
                     {
                         // TODO pbx_FormGameGame.Load("spawn");
+
                         pbx_FormGameGame.Load("Pics/X.PNG");
                         inFirstMenu = false;
                         backToFirstMenu = false;

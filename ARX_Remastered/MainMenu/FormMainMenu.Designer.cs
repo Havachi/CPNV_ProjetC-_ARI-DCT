@@ -29,36 +29,27 @@
         private void InitializeComponent()
         {
             this.btnLogin = new System.Windows.Forms.Button();
-            this.lblARXMainMenu = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnLogin
             // 
-            this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogin.BackgroundImage = global::MainMenu.Properties.Resources.btnLogin;
+            this.btnLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLogin.Font = new System.Drawing.Font("PROMETHEUS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogin.Location = new System.Drawing.Point(270, 400);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(250, 60);
-            this.btnLogin.TabIndex = 0;
-            this.btnLogin.Text = "Login";
+            this.btnLogin.TabIndex = 1;
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-            // 
-            // lblARXMainMenu
-            // 
-            this.lblARXMainMenu.AutoSize = true;
-            this.lblARXMainMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 30.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblARXMainMenu.Location = new System.Drawing.Point(259, 55);
-            this.lblARXMainMenu.Name = "lblARXMainMenu";
-            this.lblARXMainMenu.Size = new System.Drawing.Size(224, 47);
-            this.lblARXMainMenu.TabIndex = 1;
-            this.lblARXMainMenu.Text = "Main Menu";
             // 
             // FormMainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::MainMenu.Properties.Resources.BCK_Menu;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.lblARXMainMenu);
             this.Controls.Add(this.btnLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormMainMenu";
@@ -66,14 +57,12 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainMenu_Closing);
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.Label lblARXMainMenu;
     }
 }
 
