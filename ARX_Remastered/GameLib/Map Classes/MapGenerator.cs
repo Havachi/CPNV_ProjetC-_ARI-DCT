@@ -54,6 +54,8 @@ namespace GameLib
             counter = 0;
             List<Case> mapLine = new List<Case>();
 
+
+
             for (int i = 0; i < mapchars.GetUpperBound(0); i++)
             {
                 for (int j = 0; j < mapchars.GetUpperBound(1); j++)

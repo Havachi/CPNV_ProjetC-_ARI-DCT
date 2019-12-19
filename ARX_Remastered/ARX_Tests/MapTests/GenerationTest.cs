@@ -20,23 +20,38 @@ namespace ARX_Tests
             var terrainCase = new TerrainCase();
             var wallCase = new WallCase();
             var mapdrawer = new MapDrawer();
-            var board = new Board(10,10);
+   
             var listCase = new List<Case>()
             {
                 terrainCase,
-                wallCase,
                 terrainCase,
                 wallCase,
                 terrainCase,
                 wallCase,
                 terrainCase,
-                wallCase,
                 terrainCase,
+                wallCase,
+                wallCase,
                 wallCase
             };
+            var board = new Board(10, 10);
+
+
+
+
+
             for (int i = 0; i < 10; i++)
             {
                 board.BoardContent.Add(listCase);
+                listCase.Reverse();
+                listCase.Sort();
+                listCase.Reverse();
+                listCase.Sort();
+                listCase.Reverse();
+                listCase.Sort();
+                listCase.Reverse();
+                
+                
             }
 
             mapdrawer.DrawMap(board);
