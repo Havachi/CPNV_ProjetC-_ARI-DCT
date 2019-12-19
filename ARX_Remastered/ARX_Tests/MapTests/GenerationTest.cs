@@ -10,8 +10,7 @@ namespace ARX_Tests
         [TestMethod]
         public void TryGenerateTest()
         {
-            var m = new Maze();
-            m.GenerateMaze();
+            var map = new Map();
         }
 
         [TestMethod]

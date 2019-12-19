@@ -6,58 +6,43 @@ using System.Threading.Tasks;
 
 namespace GameLib
 {
+
     public class Case
     {
-        private int posX;
-        private int posY;
-        private bool visited;
-        public Case(int posX,int posY, bool visited = false)
+        public Case()
         {
-            this.posX = posX;
-            this.posY = posY;
-            this.visited = visited;
+    
         }
 
-        public int PosX
-        {
-            get { return posX; }
-            set { posX = value; }
-        }
-        public int PosY
-        {
-            get { return posY; }
-            set { posY = value; }
-        }
-        public bool Visited
-        {
-            get { return visited; }
-            set { visited = value; }
-        }
     }
-
+    /// <summary>
+    /// Represent an empty case
+    /// </summary>
     public class VoidCase : Case
     {
-        private int posX;
-        private int posY;
-        private bool visited;
-
-        public VoidCase(int posX, int posY, bool visited) : base(posX, posY, visited)
+        public VoidCase() : base()
         {
-            this.posX = posX;
-            this.posY = posY;
-            this.visited = visited;
+
         }
     }
+    /// <summary>
+    /// Represent a case where the player can pass
+    /// </summary>
     public class TerrainCase : Case
     {
-        private int posX;
-        private int posY;
-        private bool visited;
-        public TerrainCase(int posX, int posY, bool visited) : base(posX, posY, visited)
+        public TerrainCase() : base()
         {
-            this.posX = posX;
-            this.posY = posY;
-            this.visited = visited;
+
+        }
+    }
+    /// <summary>
+    /// Represent a case that is a wall
+    /// </summary>
+    public class WallCase : Case
+    {
+        public WallCase() : base()
+        {
+
         }
     }
 
