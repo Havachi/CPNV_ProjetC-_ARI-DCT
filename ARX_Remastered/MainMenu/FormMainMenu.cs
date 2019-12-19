@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Game;
 using MainMenu.Properties;
 
 // Resharper disable all
@@ -32,28 +33,18 @@ namespace MainMenu
             using (FormLogin formLogin = new FormLogin())
             {
                 formLogin.ShowDialog(this);
-                userEmail = formLogin.UserEmail;
-                lblMainMenuLogged.Text = $@"Logged as
-{userEmail}";
-                btnLogin.Text = @"Play";
-                btnLogin.Click -= (btnLogin_Click);
-                btnLogin.Click += (btnLogin_Play);
+                string lblUsername = formLogin.UserEmail;
+
+                /// TODO Call game generator
+                /// TODO Generate player's attributes (Pos, inventory and so on)
+                /// TODO Call event and item generator
+
+                FormGame frmGame = new FormGame(lblUsername);
+                Show(); 
             }
         }
 
-        /// <summary>
-        ///     If the player click on the Play button, the game starts
-        /// </summary>
-        private void btnLogin_Play(object sender, EventArgs e)
-        {
-            /// TODO Call game generator
-            /// TODO Generate player's attributes (Pos, inventory and so on)
-            /// TODO Call event and item generator
-            /// TODO frmGame frmGame = new frmGame();
-            /// TODO frmGame.Show();
-        }
-
-        private void MainMenu_Load(object sender, EventArgs e)
+            private void MainMenu_Load(object sender, EventArgs e)
         {
             if (Settings.Default.FormMainSize.Width == 0) Settings.Default.Upgrade();
 

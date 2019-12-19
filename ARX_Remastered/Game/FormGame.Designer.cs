@@ -30,6 +30,7 @@
         {
             this.pbx_FormGameMap = new System.Windows.Forms.PictureBox();
             this.pbx_FormGameGame = new System.Windows.Forms.PictureBox();
+            this.lblUsername = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbx_FormGameMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbx_FormGameGame)).BeginInit();
             this.SuspendLayout();
@@ -50,10 +51,20 @@
             this.pbx_FormGameGame.TabIndex = 1;
             this.pbx_FormGameGame.TabStop = false;
             // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Location = new System.Drawing.Point(1584, 1021);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(66, 13);
+            this.lblUsername.TabIndex = 2;
+            this.lblUsername.Text = "Logged as : ";
+            // 
             // FormGame
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1920, 1061);
+            this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.pbx_FormGameGame);
             this.Controls.Add(this.pbx_FormGameMap);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -64,6 +75,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbx_FormGameMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbx_FormGameGame)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -71,6 +83,7 @@
 
         private System.Windows.Forms.PictureBox pbx_FormGameMap;
         private System.Windows.Forms.PictureBox pbx_FormGameGame;
+        private System.Windows.Forms.Label lblUsername;
     }
 }
 
