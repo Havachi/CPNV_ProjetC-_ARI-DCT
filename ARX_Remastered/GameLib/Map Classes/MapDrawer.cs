@@ -23,30 +23,36 @@ namespace GameLib
 
         public MapDrawer(Board board)
         {
-           mapImage = DrawMap(board);
+            mapImage = new MapImage(board.Height * 100 ,board.Width * 100 );
+            graphics = Graphics.FromImage(mapImage.MapBitmap);
+            mapImage = DrawMap(board);
         }
 
         public MapImage DrawMap(Board board)
         {
             int posX = 0;
             int posY = 0;
-            graphics.FillRectangle(Brushes.White,0,0,500,500);
+            int caseWidth = 48;
+            int caseHeight = 48;
+            graphics.FillRectangle(Brushes.White,posX,posY,mapImage.ImageWidth,mapImage.ImageHeight);
 
             foreach (var boardLine in board.BoardContent)
             {
-                for (int i = 0; i < boardLine.Count; i++)
+                foreach (var lineCase in boardLine.LineContent)
                 {
-                    if (boardLine[i].GetType() == typeof(WallCase))
+                    if (lineCase.GetType() == typeof(WallCase))
                     {
-                        graphics.FillRectangle(Brushes.Black,posX,posY,49,49);
+                        graphics.FillRectangle(Brushes.Black,posX,posY, caseWidth, caseHeight);
+                    }
+                    else if (lineCase.GetType() == typeof(TerrainCase))
+                    {
+                        graphics.FillRectangle(Brushes.WhiteSmoke, posX, posY, caseWidth, caseHeight);
                     }
                     posX += 50;
                 }
-
                 posX = 0;
                 posY += 50;
             }
-
             mapImage.MapBitmap.Save("C:\\cmieux.bmp");
             return mapImage;
         }

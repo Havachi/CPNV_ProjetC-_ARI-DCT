@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Forms;
 using GameLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Renci.SshNet.Messages;
 
 namespace ARX_Tests
 {
@@ -9,7 +12,18 @@ namespace ARX_Tests
     public class GenerationTest
     {
         [TestMethod]
-        public void TryGenerateTest()
+        public void GenerateNewMapThenShowMapImage()
+        {
+            var map = new Map();
+
+            //open the image
+            Process photoViewer = new Process();
+            photoViewer.StartInfo.FileName = @"C:\WINDOWS\system32\mspaint.exe";
+            photoViewer.StartInfo.Arguments = @"C:\cmieux.bmp";
+            photoViewer.Start();
+        }
+        [TestMethod]
+        public void GenerateNewMap()
         {
             var map = new Map();
         }
@@ -20,32 +34,48 @@ namespace ARX_Tests
             var terrainCase = new TerrainCase();
             var wallCase = new WallCase();
             var mapdrawer = new MapDrawer();
-   
-            var listCase = new List<Case>()
-            {
-                terrainCase,
-                terrainCase,
-                wallCase,
-                terrainCase,
-                wallCase,
-                terrainCase,
-                terrainCase,
-                wallCase,
-                wallCase,
-                wallCase
-            };
             var board = new Board(10, 10);
-
-
-
-
-
-            for (int i = 0; i < 10; i++)
+            var line = new List<Case>()
             {
-                board.BoardContent.Add(listCase);
+                terrainCase,
+                wallCase,
+                terrainCase,
+                wallCase,
+                terrainCase,
+                wallCase,
+                terrainCase,
+                wallCase,
+                terrainCase
+            };
+            var boardLine = new BoardLine(line);
+            for (int i = 0; i < board.Width; i++)
+            {
+                board.BoardContent.Add(boardLine);
+                boardLine.LineContent.Reverse();
             }
+            var rand = new Random();
+            int r;
+
 
             mapdrawer.DrawMap(board);
+
+        }
+        [TestMethod]
+        public void SpamGenerateAndShow()
+        {
+            
+            int counter = 0;
+            do
+            {
+                var map = new Map();
+                Process photoViewer = new Process();
+                photoViewer.StartInfo.FileName = @"C:\WINDOWS\system32\mspaint.exe";
+                photoViewer.StartInfo.Arguments = @"C:\cmieux.bmp";
+                photoViewer.Start();
+                photoViewer.WaitForExit();
+                counter++;
+            } while (counter <= 10);
+            //open the image
 
         }
     }

@@ -17,17 +17,16 @@ namespace GameLib
     {
         private MapGenerator mapGenerator;
         private MapDrawer mapDrawer;
-        private MapImage mapImage;
-        private Board board;
-
         public Map()
         {
             mapGenerator = new MapGenerator();
-            mapDrawer = new MapDrawer();
-            board = new Board();
-            board.BoardContent = mapGenerator.ReadMap();
-            mapImage = mapDrawer.DrawMap(board);
-            
+            mapDrawer = new MapDrawer(mapGenerator.Board);
+        }
+
+        public Map(int mapMaxHeight, int mapMaxWidth)
+        {
+            mapGenerator = new MapGenerator(mapMaxHeight,mapMaxWidth);
+            mapDrawer = new MapDrawer(mapGenerator.Board);
         }
     }
 }

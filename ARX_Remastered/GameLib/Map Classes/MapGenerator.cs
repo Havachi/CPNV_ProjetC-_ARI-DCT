@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GameLib;
 
@@ -11,77 +12,149 @@ namespace GameLib
     public class MapGenerator
     {
         private Board board;
-        private List<List<Case>> boardContent;
-        private TerrainCase terrainCase;
-        private WallCase wallCase;
-        private VoidCase voidCase;
 
-
-       public MapGenerator()
-       {
-           terrainCase = new TerrainCase();
-           wallCase = new WallCase();
-           voidCase = new VoidCase();
-           board = new Board(10,10);
-           boardContent = new List<List<Case>>();
-       }
-
-       public Board Generate()
-       {
-           return board;
-       }
-        /// <summary>
-        /// read a .txt file that contain chars to create an map
-        /// </summary>
-        /// <returns></returns>
-       public List<List<Case>> ReadMap()
+        public MapGenerator()
         {
-            char[,] mapchars = new char[10, 12];
-            string tempString;
-            int counter = 0;
-            List<Case> lineList = new List<Case>();
-            string directory = @"C:\CPNV_Project\CSharp\CPNV_ProjetC#_ARI+DCT\ARX_Remastered\TestMap\Map1.txt";
-            for (int i = 0; i < mapchars.GetLength(0); i++)
-            {
-                for (int j = 0; j < mapchars.GetLength(1); j++)
-                {
-                    //mapchars[i, j] = (Char)File.ReadAllBytes(directory)[counter];
-                    mapchars[i, j] = (Char) File.ReadAllText(directory)[counter];
-                    ++counter;
-                }
-            }
+           board = new Board(10,10);
+           board = GenerateFixedMap();
+           board = ValidateMap();
+        }
+        public MapGenerator(int maxHeight, int maxWidth)
+        {
+            board = new Board(maxHeight, maxWidth);
+            board = GenerateFixedMap();
+            board = ValidateMap();
 
-            counter = 0;
-            List<Case> mapLine = new List<Case>();
-
-
-
-            for (int i = 0; i < mapchars.GetUpperBound(0); i++)
-            {
-                for (int j = 0; j < mapchars.GetUpperBound(1); j++)
-                {
-                    if (mapchars[i,j] == '#')
-                    {
-                        mapLine.Add(wallCase);
-                    }
-                    else if (mapchars[i,j] == '-')
-                    {
-                        mapLine.Add(terrainCase);
-                    }
-                    else
-                    {
-                        mapLine.Add(voidCase);
-                    }
-                }
-                boardContent.Add(mapLine);
-                mapLine.Clear();
-            }
-            return boardContent;
         }
 
-       public Board GenerateMap()
-       {
-            throw new NotImplementedException();
-       }
+        
+               /// <summary>
+                /// read a .txt file that contain chars to create an map
+                /// </summary>
+                /// <returns></returns>
+       public Board GenerateFixedMap()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                board.BoardContent.Add(new BoardLine(10));
+            }
+            Case terrainCase = new TerrainCase();
+            Case wallCase = new WallCase();
+            BoardLine boardLine = new BoardLine();
+            board.BoardContent[0] = new BoardLine(new List<Case>()
+            {
+                wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase
+            });
+            board.BoardContent[1] = new BoardLine(new List<Case>()
+            {
+                wallCase,terrainCase,wallCase,terrainCase,terrainCase,terrainCase,wallCase,terrainCase,terrainCase,wallCase
+            });
+            board.BoardContent[2] = new BoardLine(new List<Case>()
+            {
+                wallCase,terrainCase,wallCase,terrainCase,wallCase,terrainCase,wallCase,wallCase,terrainCase,wallCase
+            });
+            board.BoardContent[3] = new BoardLine(new List<Case>()
+            {
+                wallCase,terrainCase,wallCase,terrainCase,wallCase,terrainCase,terrainCase,terrainCase,terrainCase,wallCase
+            });
+            board.BoardContent[4] = new BoardLine(new List<Case>()
+            {
+                wallCase,terrainCase,wallCase,terrainCase,wallCase,terrainCase,wallCase,wallCase,terrainCase,wallCase
+            });
+            board.BoardContent[5] = new BoardLine(new List<Case>()
+            {
+                wallCase,terrainCase,wallCase,wallCase,wallCase,terrainCase,terrainCase,wallCase,terrainCase,wallCase
+            });
+            board.BoardContent[6] = new BoardLine(new List<Case>()
+            {
+                wallCase,terrainCase,terrainCase,terrainCase,terrainCase,terrainCase,wallCase,wallCase,terrainCase,wallCase
+            });
+            board.BoardContent[7] = new BoardLine(new List<Case>()
+            {
+                wallCase,terrainCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,terrainCase,wallCase
+            });
+            board.BoardContent[8] = new BoardLine(new List<Case>()
+            {
+                wallCase,terrainCase,wallCase,terrainCase,terrainCase,terrainCase,terrainCase,terrainCase,terrainCase,wallCase
+            });
+            board.BoardContent[9] = new BoardLine(new List<Case>()
+            {
+                wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase
+            });
+            return board;
+        }
+                
+        public Board GenerateMap()
+        {
+            for (int i = 0; i < board.Height; i++) 
+            {
+                board.BoardContent.Add(new BoardLine(board.Width));
+            }
+
+            //generate top border
+            for (int i = 0; i < board.BoardContent[0].LineContent.Capacity; i++)
+            {
+                board.BoardContent[0].LineContent.Add(new WallCase());
+            }
+            for (int i = 0; i < board.BoardContent[0].LineContent.Capacity; i++)
+            {
+                board.BoardContent[9].LineContent.Add(new WallCase());
+            }
+
+
+            Random random = new Random();
+            int rand = 0;
+            int actualline = 0;
+            foreach (var boardLine in board.BoardContent)
+            {
+                if (boardLine.LineContent.Capacity > boardLine.LineContent.Count)
+                {
+                    for (int i = 0; i < boardLine.LineContent.Capacity; i++)
+                    {
+                        if (i > 0 && i < boardLine.LineContent.Capacity-1)
+                        {
+                            rand = random.Next() % 4;
+                            if (rand <= 0)
+                            {
+                                boardLine.LineContent.Add(new WallCase());
+                            }
+                            else
+                            {
+                                boardLine.LineContent.Add(new TerrainCase());
+                            }
+                        }
+                        else if(i <= 0 || i == boardLine.LineContent.Capacity)
+                        {
+                            boardLine.LineContent.Add(new WallCase());
+                        }
+                    }
+
+                    board.BoardContent[actualline].LineContent = boardLine.LineContent;
+                    actualline++;
+                }
+                else
+                {
+                    actualline++;
+                }
+            }
+            
+
+            
+            
+
+            return board;
+        }
+
+        public Board ValidateMap()
+        {
+
+            
+            return board;
+        }
+
+        public Board Board
+        {
+            get { return board; }
+        }
     }
 }

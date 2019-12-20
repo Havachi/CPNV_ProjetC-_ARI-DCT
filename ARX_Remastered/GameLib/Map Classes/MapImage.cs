@@ -12,32 +12,32 @@ namespace GameLib
     /// </summary>
     public class MapImage
     {
-        private int horizontalSize;
-        private int verticalSize;
+        private int imageWidth;
+        private int imageHeight;
         private Bitmap mapBitmap;
         private Board board;
         public MapImage()
         {
             mapBitmap = new Bitmap(500, 500);
-            this.horizontalSize = 500;
-            this.verticalSize = 500;
+            this.imageWidth = 500;
+            this.imageHeight = 500;
         }
 
-        public MapImage(int horizontalSize, int verticalSize)
+        public MapImage(int height, int width)
         {
-            mapBitmap = new Bitmap(HorizontalSize, VerticalSize);
-            this.horizontalSize = horizontalSize;
-            this.verticalSize = verticalSize;
+            mapBitmap = new Bitmap(width, height);
+            this.imageWidth = width;
+            this.imageHeight = width;
         }
 
-        public int HorizontalSize
+        public int ImageWidth
         {
-            get { return horizontalSize; }
+            get { return imageWidth; }
         }
 
-        public int VerticalSize
+        public int ImageHeight
         {
-            get { return verticalSize; }
+            get { return imageHeight; }
         }
 
         public Bitmap MapBitmap

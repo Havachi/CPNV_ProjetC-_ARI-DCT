@@ -10,22 +10,23 @@ namespace GameLib
 
     public class Case
     {
-        private Color caseColor;
         public Case()
         {
-            caseColor = Color.White;
         }
-
     }
     /// <summary>
     /// Represent an empty case
     /// </summary>
     public class VoidCase : Case
     {
-        private Color caseColor;
+        private Brush caseColor;
         public VoidCase() : base()
         {
-            caseColor = Color.Yellow;
+            caseColor = Brushes.Yellow;
+        }
+        public Brush CaseColor
+        {
+            get { return caseColor; }
         }
     }
     /// <summary>
@@ -33,10 +34,14 @@ namespace GameLib
     /// </summary>
     public class TerrainCase : Case
     {
-        private Color caseColor;
+        private Brush caseColor;
         public TerrainCase() : base()
         {
-            caseColor = Color.Red;
+            caseColor = Brushes.Red;
+        }
+        public Brush CaseColor
+        {
+            get { return caseColor; }
         }
     }
     /// <summary>
@@ -44,10 +49,14 @@ namespace GameLib
     /// </summary>
     public class WallCase : Case
     {
-        private Color caseColor;
+        private Brush caseColor;
         public WallCase() : base()
         {
-            caseColor = Color.Black;
+            caseColor = Brushes.Black;
+        }
+        public Brush CaseColor
+        {
+            get { return caseColor; }
         }
     }
 

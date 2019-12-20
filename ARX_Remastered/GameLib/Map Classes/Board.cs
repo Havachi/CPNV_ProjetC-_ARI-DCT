@@ -11,21 +11,26 @@ namespace GameLib
     {
         private int height;
         private int width;
-        private List<List<Case>> boardContent;
+        private List<BoardLine> boardContent;
 
         public Board()
         {
             this.height = 10;
             this.width = 10;
-            boardContent = new List<List<Case>>();
+            boardContent = new List<BoardLine>();
         }
+
         public Board(int height, int width)
         {
             this.height = height;
             this.width = width;
-            boardContent = new List<List<Case>>();
+            boardContent = new List<BoardLine>();
         }
 
+        public void SetToBorder()
+        {
+
+        }
         public int Height
         {
             get { return height; }
@@ -36,10 +41,11 @@ namespace GameLib
             get { return width; }
         }
 
-        public List<List<Case>> BoardContent
+        public List<BoardLine> BoardContent
         {
             get { return boardContent; }
-            set => boardContent = value;
+            set { boardContent = value; } 
         }
+
     }
 }
