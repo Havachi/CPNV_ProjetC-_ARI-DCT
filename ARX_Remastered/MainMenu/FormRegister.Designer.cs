@@ -38,7 +38,6 @@
             // btnRegisterConnexion
             // 
             this.btnRegisterConnexion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegisterConnexion.Font = new System.Drawing.Font("PROMETHEUS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegisterConnexion.Image = global::MainMenu.Properties.Resources.btnCancel;
             this.btnRegisterConnexion.Location = new System.Drawing.Point(123, 432);
             this.btnRegisterConnexion.Name = "btnRegisterConnexion";
@@ -67,7 +66,6 @@
             // btnRegisterRegister
             // 
             this.btnRegisterRegister.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegisterRegister.Font = new System.Drawing.Font("PROMETHEUS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegisterRegister.Image = global::MainMenu.Properties.Resources.btnSignup;
             this.btnRegisterRegister.Location = new System.Drawing.Point(434, 432);
             this.btnRegisterRegister.Name = "btnRegisterRegister";

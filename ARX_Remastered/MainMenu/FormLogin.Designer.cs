@@ -38,7 +38,6 @@
             // 
             this.btnLoginConnexion.BackgroundImage = global::MainMenu.Properties.Resources.btnSignin;
             this.btnLoginConnexion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLoginConnexion.Font = new System.Drawing.Font("PROMETHEUS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginConnexion.Location = new System.Drawing.Point(114, 438);
             this.btnLoginConnexion.Name = "btnLoginConnexion";
             this.btnLoginConnexion.Size = new System.Drawing.Size(250, 60);
@@ -67,7 +66,6 @@
             // btnLoginRegister
             // 
             this.btnLoginRegister.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLoginRegister.Font = new System.Drawing.Font("PROMETHEUS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginRegister.Image = global::MainMenu.Properties.Resources.btnRegister;
             this.btnLoginRegister.Location = new System.Drawing.Point(425, 438);
             this.btnLoginRegister.Name = "btnLoginRegister";
