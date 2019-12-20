@@ -48,6 +48,17 @@ namespace GameLib
                     {
                         graphics.FillRectangle(Brushes.WhiteSmoke, posX, posY, caseWidth, caseHeight);
                     }
+                    else if (lineCase.GetType() == typeof(StartCase))
+                    {
+                        graphics.FillRectangle(Brushes.DarkRed, posX, posY, caseWidth, caseHeight);
+                        graphics.FillRectangle(Brushes.Red, posX+5, posY+5, caseWidth-10, caseHeight-10);
+                        graphics.FillRectangle(Brushes.DarkRed, posX+10, posY+10, caseWidth-20, caseHeight-20);
+                    }
+                    else if (lineCase.GetType() == typeof(EndCase))
+                    {
+                        graphics.FillRectangle(Brushes.Green, posX, posY, caseWidth, caseHeight);
+                    }
+
                     posX += 50;
                 }
                 posX = 0;

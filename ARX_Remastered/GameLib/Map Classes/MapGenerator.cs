@@ -40,6 +40,8 @@ namespace GameLib
             }
             Case terrainCase = new TerrainCase();
             Case wallCase = new WallCase();
+            Case startCase = new StartCase();
+            Case endCase = new EndCase();
             BoardLine boardLine = new BoardLine();
             board.BoardContent[0] = new BoardLine(new List<Case>()
             {
@@ -47,7 +49,7 @@ namespace GameLib
             });
             board.BoardContent[1] = new BoardLine(new List<Case>()
             {
-                wallCase,terrainCase,wallCase,terrainCase,terrainCase,terrainCase,wallCase,terrainCase,terrainCase,wallCase
+                wallCase,terrainCase,terrainCase,terrainCase,wallCase,terrainCase,wallCase,terrainCase,terrainCase,wallCase
             });
             board.BoardContent[2] = new BoardLine(new List<Case>()
             {
@@ -71,11 +73,11 @@ namespace GameLib
             });
             board.BoardContent[7] = new BoardLine(new List<Case>()
             {
-                wallCase,terrainCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,terrainCase,wallCase
+                wallCase,terrainCase,wallCase,wallCase,wallCase,terrainCase,terrainCase,wallCase,terrainCase,wallCase
             });
             board.BoardContent[8] = new BoardLine(new List<Case>()
             {
-                wallCase,terrainCase,wallCase,terrainCase,terrainCase,terrainCase,terrainCase,terrainCase,terrainCase,wallCase
+                wallCase,startCase,wallCase,terrainCase,terrainCase,terrainCase,wallCase,endCase,terrainCase,wallCase
             });
             board.BoardContent[9] = new BoardLine(new List<Case>()
             {

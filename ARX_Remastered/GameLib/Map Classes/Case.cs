@@ -34,16 +34,27 @@ namespace GameLib
     /// </summary>
     public class TerrainCase : Case
     {
-        private Brush caseColor;
         public TerrainCase() : base()
         {
-            caseColor = Brushes.Red;
-        }
-        public Brush CaseColor
-        {
-            get { return caseColor; }
+            
         }
     }
+
+    public class StartCase : TerrainCase
+    {
+        public StartCase() : base()
+        {
+
+        }
+    }
+    public class EndCase : TerrainCase
+    {
+        public EndCase() : base()
+        {
+
+        }
+    }
+
     /// <summary>
     /// Represent a case that is a wall
     /// </summary>
