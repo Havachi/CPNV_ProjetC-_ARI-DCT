@@ -1,4 +1,8 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+using GameLib;
 
 namespace Game
 {
@@ -15,20 +19,58 @@ namespace Game
         private bool disableFirstMenu;
         private bool inMenuCommands;
         private bool mapFound;
+        private bool isSelected;
+        private Color testPixel;
+        private Color selectedPixelColor;
+        private static readonly Image notSelectedImage = Properties.Resources.NotSelected;
+        private static readonly Image selectedImage = Properties.Resources.Selected;
+        private string key;
+
 
         public FormGame(string lblUsername)
         {
             InitializeComponent();
             inFirstMenu = true;
-            
+            selectedPixelColor = Properties.Resources.Selected.GetPixel(50, 50);
             lblGameUserLogged.Text = @"Logged as : " + lblUsername;
             Refresh();
 
-            pbx_FormGameGame.Load("Pics/FirstMenu.PNG");
+            //temp
+            pbxFormgameInventory1.BackgroundImage = Game.Properties.Resources.NotSelected;
+            pbxFormgameInventory6.BackgroundImage = Game.Properties.Resources.Selected;
 
-            //TODO Faire un bouton pour quitter le jeu sur le Mainmenu, le bouton jouer et un bouton d'aide affichant les touches de contrôle et les règles du jeu.
-            //TEMP peut-être faire un background pour le main menu et pour chawue bouton avec la typo prometeus.
-        }
+            /// Initialize picturebox -> foreach
+            var matches = new PictureBox[]
+            {
+                pbxFormgameInventory1,
+                pbxFormgameInventory2,
+                pbxFormgameInventory3,
+                pbxFormgameInventory4,
+                pbxFormgameInventory5,
+                pbxFormgameInventory6,
+                pbxFormgameInventory7,
+                pbxFormgameInventory8,
+                pbxFormgameInventory9,
+                pbxFormgameInventory10,
+            };
+            Console.WriteLine(matches[0].BackgroundImage);
+
+            //TEMP PERMET  DE SAVOIR QUEL PBX EST ACTIF
+            foreach (var match in matches)
+            {
+                Bitmap testPixel = new Bitmap(match.BackgroundImage);
+                this.testPixel = testPixel.GetPixel(50, 50);
+
+                if (this.testPixel == selectedPixelColor)
+                {
+                    Console.WriteLine(match.Name);
+                }
+            }
+            pbxFormgameInventory1.Tag = isSelected;
+
+
+            pbxFormGameGame.Load("Pics/FirstMenu.PNG");
+            }
 
         private void FormGame_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -39,15 +81,17 @@ namespace Game
                     if (inGame)
 
                         //TEMP
-                        pbx_FormGameGame.Load("Pics/X.PNG");
+                        pbxFormGameGame.Load("Pics/X.PNG");
 
                     ///TODO Move the player - forward
-
 
                     if (inInventory)
                     {
 
                         ///TODO  Move the inventory cursor's - up
+
+                        key = "W";
+                        Inventory inventoryMovement = new Inventory(key, selectedPixelColor, testPixel);
 
                     }
                     break;
@@ -57,7 +101,7 @@ namespace Game
                     if (inGame)
 
                         //TEMP
-                        pbx_FormGameGame.Load("Pics/I.PNG");
+                        pbxFormGameGame.Load("Pics/I.PNG");
 
                     /// TODO Move the player - Left
 
@@ -81,9 +125,6 @@ namespace Game
 
                     if (inInventory)
                     {
-
-                        /// TODO  Move the inventory cursor's - Down
-                        // TEMP IF déjà en bas, ne bouge pas
 
                     }
 
@@ -178,14 +219,14 @@ namespace Game
                 case (char) 99:
                     if (inMenu)
                     {
-                        pbx_FormGameGame.Load("Pics/Menucmd.PNG");
+                        pbxFormGameGame.Load("Pics/Menucmd.PNG");
                         inMenu = false;
                         inMenuCommands = true;
                     }
 
                     if (inFirstMenu)
                     {
-                        pbx_FormGameGame.Load("Pics/Menucmd.PNG");
+                        pbxFormGameGame.Load("Pics/Menucmd.PNG");
                         inFirstMenu = false;
                         backToFirstMenu = true;
                         inMenuCommands = true;
@@ -215,14 +256,14 @@ namespace Game
 
                         //TODO pbx_FormGameGame.Load("Même image que en metant menu");
 
-                        pbx_FormGameGame.Load("Pics/X.PNG");
+                        pbxFormGameGame.Load("Pics/X.PNG");
                         inMenu = false;
                         backToGame = true;
                     }
 
                     if (inGame)
                     {
-                        pbx_FormGameGame.Load("Pics/Menu.PNG");
+                        pbxFormGameGame.Load("Pics/Menu.PNG");
                         inGame = false;
                         inMenu = true;
                     }
@@ -231,7 +272,7 @@ namespace Game
                     {
                         // TODO pbx_FormGameGame.Load("spawn");
 
-                        pbx_FormGameGame.Load("Pics/X.PNG");
+                        pbxFormGameGame.Load("Pics/X.PNG");
                         inFirstMenu = false;
                         backToFirstMenu = false;
                         inGame = true;
@@ -241,14 +282,14 @@ namespace Game
                     {
                         if (backToFirstMenu)
                         {
-                            pbx_FormGameGame.Load("Pics/FirstMenu.PNG");
+                            pbxFormGameGame.Load("Pics/FirstMenu.PNG");
                             inMenuCommands = false;
                             inFirstMenu = true;
                         }
 
                         if (backToFirstMenu == false)
                         {
-                            pbx_FormGameGame.Load("Pics/Menu.PNG");
+                            pbxFormGameGame.Load("Pics/Menu.PNG");
                             inMenuCommands = false;
                             inMenu = true;
                         }

@@ -1,19 +1,32 @@
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using Org.BouncyCastle.Math.EC.Multiplier;
 
 namespace GameLib
 {
     public class Inventory
     {
-        
+
         private List<Item> contentList = new List<Item>();
-        
-        public Inventory()
+
+        public Inventory(string key, Color selectedPixelColor, Color TestPixel)
         {
+            switch (key)
+            {
+                case "W":
+
+                    break;
+                case "A":
+
+                    break;
+                case "S":
+
+                    break;
+                case "D":
+
+                    break;
+
+            }
         }
         public Inventory(List<Item> contentList)
         {
