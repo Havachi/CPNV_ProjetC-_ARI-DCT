@@ -27,12 +27,12 @@ namespace GameLib
 
         }
 
-        
-               /// <summary>
-                /// read a .txt file that contain chars to create an map
-                /// </summary>
-                /// <returns></returns>
-       public Board GenerateFixedMap()
+
+        /// <summary>
+        /// Generate a map that is always the same
+        /// </summary>
+        /// <returns>The board of the map</returns>
+        public Board GenerateFixedMap()
         {
             for (int i = 0; i < 10; i++)
             {
@@ -85,9 +85,17 @@ namespace GameLib
             });
             return board;
         }
-                
+
+        /// <summary>
+        /// Generate a random map everytime
+        /// </summary>
+        /// <returns>The board of the map</returns>
         public Board GenerateMap()
         {
+            //todo generate borders
+            //todo create rules to make the map playable
+
+
             for (int i = 0; i < board.Height; i++) 
             {
                 board.BoardContent.Add(new BoardLine(board.Width));
