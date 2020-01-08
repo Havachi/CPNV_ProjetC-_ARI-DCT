@@ -14,7 +14,7 @@ namespace ARX_Tests
         [TestMethod]
         public void GenerateNewMapThenShowMapImage()
         {
-            var map = new Map();
+            var map = new Map(20,20);
 
             //open the image
             Process photoViewer = new Process();

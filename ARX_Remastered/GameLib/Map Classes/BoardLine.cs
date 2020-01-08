@@ -24,6 +24,11 @@ namespace GameLib
         {
             this.lineContent = content;
         }
+
+        public void AddCase(Case cCase)
+        {
+            lineContent.Add(cCase);
+        }
         public List<Case> LineContent
         {
             get { return lineContent; }

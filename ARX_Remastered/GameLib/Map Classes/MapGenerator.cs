@@ -113,14 +113,17 @@ namespace GameLib
         {
             //todo generate borders
             //todo create rules to make the map playable
+            BoardLine tempboardLine = new BoardLine();
 
             //Generate an empty board with void case
-            for (int i = 0; i < board.Height; i++)
+            for (int i = 0; i < board.Height-1; i++)
             {
-                for (int j = 0; j < board.Width; j++)
+                for (int j = 0; j < board.Width-1; j++)
                 {
-                    board.BoardContent[i].LineContent[j] = new Case(i,j);
+                    tempboardLine.AddCase(new Case(i, j));
                 }
+
+                board.AddLine(tempboardLine);
             }
 
             //Choose a random Starting point
@@ -159,12 +162,6 @@ namespace GameLib
                         {
                             Self().Direction = Direction.Left;
                             currentPosition.PositionX -= 1;
-                        }
-
-                        if (NextCase().State == State.Void)
-                        {
-                            
-
                         }
 
                     }
@@ -310,11 +307,6 @@ namespace GameLib
                         return true;
                     }
                 }
-                else if (TopCase().State == State.Void)
-                {
-                    //todo Choose the right state for a void case
-                    
-                }
 
                 return false;
             }
@@ -368,10 +360,34 @@ namespace GameLib
         }
         public bool CanGoDown()
         {
+            if ((Self().State == State.CrossWay) || (Self().State == State.DeadEnd && Self().Direction == Direction.Up) || (Self().State == State.Corner && (Self().Direction == Direction.Up || Self().Direction == Direction.Right)) || (Self().State == State.Corridor && Self().Direction == Direction.Up) || (Self().State == State.TShape && (Self().Direction == Direction.Up || Self().Direction == Direction.Right || Self().Direction == Direction.Left)))
+            {
+                if (BottomCase().State == State.Corner)
+                {
+                    if (BottomCase().Direction == Direction.Down || BottomCase().Direction == Direction.Left)
+                    {
+                        return true;
+                    }
+                }
+                if (BottomCase().State == State.DeadEnd && BottomCase().Direction == Direction.Down)
+                {
+                    return true;
+                }
+                if (BottomCase().State == State.CrossWay) return true;
+                if (BottomCase().State == State.Corridor && BottomCase().Direction == Direction.Up)
+                {
+                    return true;
+                }
+                if (BottomCase().State == State.TShape && (BottomCase().Direction == Direction.Right || BottomCase().Direction == Direction.Down || BottomCase().Direction == Direction.Left))
+                {
+                    return true;
+                }
+            }
             return false;
         }
         public bool CanGoLeft()
         {
+
             return false;
         }
 

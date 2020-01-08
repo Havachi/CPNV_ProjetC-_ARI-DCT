@@ -27,9 +27,9 @@ namespace GameLib
             boardContent = new List<BoardLine>();
         }
 
-        public void SetToBorder()
+        public void AddLine(BoardLine boardLine)
         {
-
+            boardContent.Add(boardLine);
         }
         public int Height
         {

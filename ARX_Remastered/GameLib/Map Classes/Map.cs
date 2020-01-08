@@ -17,7 +17,7 @@ namespace GameLib
     {
         private MapGenerator mapGenerator;
         private MapDrawer mapDrawer;
-        private bool randomGeneration =true;
+        private bool randomGeneration = true;
         public Map()
         {
             mapGenerator = new MapGenerator(randomGeneration);
