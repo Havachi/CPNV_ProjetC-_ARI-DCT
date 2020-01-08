@@ -17,16 +17,18 @@ namespace GameLib
     {
         private MapGenerator mapGenerator;
         private MapDrawer mapDrawer;
+        private bool randomGeneration =true;
         public Map()
         {
-            mapGenerator = new MapGenerator();
+            mapGenerator = new MapGenerator(randomGeneration);
             mapDrawer = new MapDrawer(mapGenerator.Board);
         }
 
         public Map(int mapMaxHeight, int mapMaxWidth)
         {
-            mapGenerator = new MapGenerator(mapMaxHeight,mapMaxWidth);
+            mapGenerator = new MapGenerator(mapMaxHeight, mapMaxWidth, randomGeneration);
             mapDrawer = new MapDrawer(mapGenerator.Board);
         }
+
     }
 }
