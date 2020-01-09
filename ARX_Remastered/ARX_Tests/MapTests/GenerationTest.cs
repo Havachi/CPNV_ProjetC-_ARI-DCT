@@ -31,8 +31,8 @@ namespace ARX_Tests
         [TestMethod]
         public void TryGenerateImage()
         {
-            var terrainCase = new TerrainCase();
-            var wallCase = new WallCase();
+            var terrainCase = new TerrainCase(0,0);
+            var wallCase = new WallCase(0,0);
             var mapdrawer = new MapDrawer();
             var board = new Board(10, 10);
             var line = new List<Case>()

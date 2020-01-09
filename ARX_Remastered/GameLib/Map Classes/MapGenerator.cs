@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GameLib;
+using Org.BouncyCastle.Asn1.X509.Qualified;
 
 namespace GameLib
 {
@@ -25,7 +26,6 @@ namespace GameLib
             if (randomGeneration)
             {
                 board = GenerateMap();
-                board = ValidateMap();
             }
             else
             {
@@ -39,7 +39,6 @@ namespace GameLib
             if (randomGeneration)
             {
                 board = GenerateMap();
-                board = ValidateMap();
             }
             else
             {
@@ -57,10 +56,10 @@ namespace GameLib
             {
                 board.BoardContent.Add(new BoardLine(10));
             }
-            Case terrainCase = new TerrainCase();
-            Case wallCase = new WallCase();
-            Case startCase = new StartCase();
-            Case endCase = new EndCase();
+            Case terrainCase = new TerrainCase(0,0);
+            Case wallCase = new WallCase(0,0);
+            Case startCase = new StartCase(0,0);
+            Case endCase = new EndCase(0,0);
             BoardLine boardLine = new BoardLine();
             board.BoardContent[0] = new BoardLine(new List<Case>()
             {
@@ -120,7 +119,7 @@ namespace GameLib
             {
                 for (int j = 0; j < board.Width-1; j++)
                 {
-                    tempboardLine.AddCase(new Case(i, j));
+                    tempboardLine.AddCase(new VoidCase(i,j));
                 }
 
                 board.AddLine(tempboardLine);
@@ -132,54 +131,71 @@ namespace GameLib
             int randY = random.Next(board.Height);
             Position startPosition = new Position(randX,randY);
             currentPosition = startPosition;
-            nbVisitedCases++;
-            while (nbVisitedCases < board.Height*board.Width)
-            {
-                foreach (var boardLine in board.BoardContent)
-                {
-                    foreach (var lineCase in boardLine.LineContent)
-                    {
-                        //check if up is possible
-                        if (CanGoUp())
-                        {
-                            Self().Direction = Direction.Up;
-                            currentPosition.PositionY -= 1;
-                        }
-                        //check if right is possible
-                        if (CanGoRight())
-                        {
-                            Self().Direction = Direction.Right;
-                            currentPosition.PositionX += 1;
-                        }
-                        //check if down is possible
-                        if (CanGoDown())
-                        {
-                            Self().Direction = Direction.Down;
-                            currentPosition.PositionY += 1;
-                        }
-                        //check if left is possible
-                        if (CanGoLeft())
-                        {
-                            Self().Direction = Direction.Left;
-                            currentPosition.PositionX -= 1;
-                        }
 
-                    }
+
+            Stack<int> activeCases = new Stack<int>();
+            
+
+            while (activeCases.Count > 0)
+            {
+                var futurDirection = GetFuturDirection();
+                switch (futurDirection)
+                {
+                    case 0:
+                        activeCases.Pop();
+                        break;
+                    case 1:
+                        ChangeCaseType(currentPosition.PositionX,currentPosition.PositionY,1,new DeadEnd(0,0,0));
+                        
+                        currentPosition.PositionY--;
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
                 }
+                OpenCurrentCase(futurDirection);
             }
 
             return board;
         }
 
-        public Board ValidateMap()
+        public int GetFuturDirection()
         {
+            List<int> possibleMove = new List<int>();
+            Random random = new Random();
 
-            
-            return board;
+            if (CanGoUp())
+            {
+                possibleMove.Add(1);
+            }
+            if (CanGoRight())
+            {
+                possibleMove.Add(2);
+            }
+            if (CanGoDown())
+            {
+                possibleMove.Add(3);
+            }
+            if (CanGoLeft())
+            {
+                possibleMove.Add(4);
+            }
+
+            if (possibleMove.Count == 0)
+            {
+                return 0;
+            }
+
+            int r = random.Next(possibleMove.Count);
+            return possibleMove[r];
         }
 
 
         #region Generator Methods
+
 
 
         #region Case Management
@@ -199,7 +215,7 @@ namespace GameLib
         /// <returns></returns>
         public Case TopCase()
         {
-            if (currentPosition.PositionY == 0)
+            if (currentPosition.PositionY != 0)
             {
                 return board.BoardContent[currentPosition.PositionY-1].LineContent[currentPosition.PositionX];
             }
@@ -214,7 +230,7 @@ namespace GameLib
         /// <returns></returns>
         public Case RightCase()
         {
-            if (currentPosition.PositionX >= width)
+            if (currentPosition.PositionX != width)
             {
                 return board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX+1];
             }
@@ -229,7 +245,7 @@ namespace GameLib
         /// <returns></returns>
         public Case BottomCase()
         {
-            if (currentPosition.PositionY >= height)
+            if (currentPosition.PositionY != height)
             {
                 return board.BoardContent[currentPosition.PositionY + 1].LineContent[currentPosition.PositionX];
             }
@@ -244,7 +260,7 @@ namespace GameLib
         /// <returns></returns>
         public Case LeftCase()
         {
-            if (currentPosition.PositionX == 0)
+            if (currentPosition.PositionX != 0)
             {
                 return board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX-1];
             }
@@ -254,140 +270,165 @@ namespace GameLib
             }
         }
 
-        public Case NextCase(Case nextCase)
+
+        public void ChangeCaseType(int indexX, int indexY,int orientation, Case destinationType)
         {
-            this.nextCase = nextCase;
-            return this.nextCase;
+            var caseTochange = board.BoardContent[indexY].LineContent[indexX];
+            switch (destinationType)
+            {
+                case CornerCase cornerCase:
+                    caseTochange = new CornerCase(indexX,indexY,orientation);
+                    break;
+                case DeadEnd deadEnd:
+                    caseTochange = new DeadEnd(indexX, indexY, orientation);
+                    break;
+                case CrosswayCase crosswayCase:
+                    caseTochange = new CrosswayCase(indexX, indexY,orientation);
+                    break;
+                case CorridorCase corridorCase:
+                    caseTochange = new CorridorCase(indexX, indexY,orientation);
+                    break;
+                case TShapeCase shapeCase:
+                    caseTochange = new TShapeCase(indexX, indexY,orientation);
+                    break;
+            }
+        }
+
+        public Case SearchInBoard(int indexX, int indexY)
+        {
+            return board.BoardContent[indexY].LineContent[indexX];
+        }
+
+        public void OpenCurrentCase(int direction)
+        {
+            var currentCase = Self();
+            var x = currentPosition.PositionX;
+            var y = currentPosition.PositionY;
+
+            switch (currentCase)
+            {
+                case CornerCase cornerCase:
+                    switch (Self().Orientation)
+                    {
+                        case 1:
+                            if (direction == 1)
+                            {
+                                currentCase = new TShapeCase(currentPosition.PositionX,currentPosition.PositionY,4);
+                            }
+                            else if (direction == 4)
+                            {
+                                currentCase = new TShapeCase(currentPosition.PositionX, currentPosition.PositionY,1);
+                            }
+                            break;
+                        case 2:
+                            if (direction == 1)
+                            {
+                                currentCase = new TShapeCase(x, y, 2);
+                            }
+                            else if (direction == 2)
+                            {
+                                currentCase = new TShapeCase(x,y, 1);
+                            }
+                            break;
+                    }
+                    break;
+                case DeadEnd deadEnd:
+                    switch (currentCase.Orientation)
+                    {
+                        case 1:
+                            if (direction == 1)
+                            {
+                                currentCase = new CorridorCase(x, y, 1);
+                            }
+                            else if (direction == 2)
+                            {
+                                currentCase = new CornerCase(x, y, 1);
+                            }
+                            else if (direction == 4)
+                            {
+                                currentCase = new CornerCase(x, y, 2);
+                            }
+                            break;
+                        case 2:
+                            if (direction == 1)
+                            {
+                                currentCase = new CornerCase(x,y, 3);
+                            }
+                            else if (direction == 2)
+                            {
+                                currentCase = new CorridorCase(x,y,2);
+                            }
+                            else if (direction == 3)
+                            {
+                                currentCase = new CornerCase(x,y,2);
+                            }
+                            break;
+                        case 4:
+                            if (direction == 1)
+                            {
+                                currentCase = new CornerCase(x,y,3);
+                            }
+                            else if (direction == 3)
+                            {
+                                currentCase = new CornerCase(x,y,1);
+                            }
+                            else if (direction == 4)
+                            {
+                                currentCase = new CorridorCase(x,y,2);
+                            }
+                            break;
+                    }
+                    break;
+                case CorridorCase corridorCase:
+                    switch (currentCase.Orientation)
+                    {
+                        case 1:
+
+                            break;
+                        case 2:
+                            break;
+
+                    }
+                    break;
+                case TShapeCase shapeCase:
+                   
+                    break;
+            }
         }
         #endregion
 
-        #region Generator Movement
+        #region Generation Rules Method
 
         public bool CanGoUp()
         {
             if (TopCase() != null)
             {
-                if (TopCase().State == State.Corner)
-                {
-                    if (TopCase().Direction == Direction.Up)
-                    {
-                        return true;
-                    }
-                    else if (TopCase().Direction == Direction.Right)
-                    {
-                        return true;
-                    }
-            
-                }
-                else if (TopCase().State == State.CrossWay)
-                {
-                    return true;
-                }
-                else if (TopCase().State == State.DeadEnd)
-                {
-                    if (TopCase().Direction == Direction.Up)
-                    {
-                        return true;
-                    }
-                }
-                else if (TopCase().State == State.TShape)
-                {
-                    switch (TopCase().Direction)
-                    {
-                        case Direction.Up:
-                        case Direction.Left:
-                        case Direction.Right:
-                            return true;
-                    }
-                }
-                else if (TopCase().State == State.Corridor)
-                {
-                    if (TopCase().Direction == Direction.Up)
-                    {
-                        return true;
-                    }
-                }
 
-                return false;
             }
-
             return false;
         }
         public bool CanGoRight()
         {
-            if (RightCase() != null )
+            if (RightCase() != null)
             {
-                if (RightCase().Direction == Direction.Right)
-                {
-                    if (RightCase().State == State.Corner)
-                    {
-                        return true;
-                    }
-                    if (RightCase().State == State.DeadEnd)
-                    {
-                        return true;
-                    }
-                    if (RightCase().State == State.DeadEnd)
-                    {
-                        return true;
-                    }
-                    if (RightCase().State == State.Corridor)
-                    {
-                        return true;
-                    }
-                }
-                else if (RightCase().Direction == Direction.Down)
-                {
-                    if (RightCase().State == State.Corner)
-                    {
-                        return true;
-                    }
-                }
-                else if (RightCase().State == State.CrossWay)
-                {
-                    return true;
-                }
-                else if (RightCase().State == State.TShape)
-                {
-                    if (RightCase().Direction == Direction.Up || RightCase().Direction == Direction.Right || RightCase().Direction == Direction.Down)
-                    {
-                        return true;
-                    }                    
-                }
             }
 
             return false;
         }
         public bool CanGoDown()
         {
-            if ((Self().State == State.CrossWay) || (Self().State == State.DeadEnd && Self().Direction == Direction.Up) || (Self().State == State.Corner && (Self().Direction == Direction.Up || Self().Direction == Direction.Right)) || (Self().State == State.Corridor && Self().Direction == Direction.Up) || (Self().State == State.TShape && (Self().Direction == Direction.Up || Self().Direction == Direction.Right || Self().Direction == Direction.Left)))
+            if (BottomCase() != null)
             {
-                if (BottomCase().State == State.Corner)
-                {
-                    if (BottomCase().Direction == Direction.Down || BottomCase().Direction == Direction.Left)
-                    {
-                        return true;
-                    }
-                }
-                if (BottomCase().State == State.DeadEnd && BottomCase().Direction == Direction.Down)
-                {
-                    return true;
-                }
-                if (BottomCase().State == State.CrossWay) return true;
-                if (BottomCase().State == State.Corridor && BottomCase().Direction == Direction.Up)
-                {
-                    return true;
-                }
-                if (BottomCase().State == State.TShape && (BottomCase().Direction == Direction.Right || BottomCase().Direction == Direction.Down || BottomCase().Direction == Direction.Left))
-                {
-                    return true;
-                }
+
             }
             return false;
         }
         public bool CanGoLeft()
         {
+            if (LeftCase() != null)
+            { 
 
+            }
             return false;
         }
 
