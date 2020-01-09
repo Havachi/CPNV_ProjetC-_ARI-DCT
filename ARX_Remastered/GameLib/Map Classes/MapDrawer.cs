@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +25,7 @@ namespace GameLib
 
         public MapDrawer(Board board)
         {
-            mapImage = new MapImage(board.Height * 100 ,board.Width * 100 );
+            mapImage = new MapImage(board.Height * 20 ,board.Width * 20 );
             graphics = Graphics.FromImage(mapImage.MapBitmap);
             mapImage = DrawMap(board);
         }
@@ -32,8 +34,8 @@ namespace GameLib
         {
             int posX = 0;
             int posY = 0;
-            int caseWidth = 48;
-            int caseHeight = 48;
+            int caseWidth = 20;
+            int caseHeight = 20;
             graphics.FillRectangle(Brushes.White,posX,posY,mapImage.ImageWidth,mapImage.ImageHeight);
 
             foreach (var boardLine in board.BoardContent)
@@ -61,12 +63,14 @@ namespace GameLib
                         graphics.FillRectangle(Brushes.DarkRed, posX + 10, posY + 10, caseWidth - 20, caseHeight - 20);
                     }
 
-                    posX += 50;
+                    posX += 20;
                 }
                 posX = 0;
-                posY += 50;
+                posY += 20;
             }
-            mapImage.MapBitmap.Save("C:\\cmieux.bmp");
+            Stream stream = new FileStream($@"C:\tmp\Maze.bmp",FileMode.Create);
+            mapImage.MapBitmap.Save(stream,ImageFormat.Bmp);
+
             return mapImage;
         }
     }

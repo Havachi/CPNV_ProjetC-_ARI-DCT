@@ -52,7 +52,7 @@ namespace GameLib
         public VoidCase(int indexX,int indexY) : base(indexX,indexY)
         {
             this.indexX = indexX;
-            this.indexY = indexX;
+            this.indexY = indexY;
         }
     }
 
@@ -64,7 +64,7 @@ namespace GameLib
         public WallCase(int indexX, int indexY) : base(indexX, indexY)
         {
             this.indexX = indexX;
-            this.indexY = indexX;
+            this.indexY = indexY;
         }
     }
     /// <summary>

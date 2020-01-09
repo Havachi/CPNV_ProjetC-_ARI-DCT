@@ -19,7 +19,7 @@ namespace ARX_Tests
             //open the image
             Process photoViewer = new Process();
             photoViewer.StartInfo.FileName = @"C:\WINDOWS\system32\mspaint.exe";
-            photoViewer.StartInfo.Arguments = @"C:\cmieux.bmp";
+            photoViewer.StartInfo.Arguments = @"C:\tmp\Maze.bmp";
             photoViewer.Start();
         }
         [TestMethod]
@@ -31,7 +31,7 @@ namespace ARX_Tests
         [TestMethod]
         public void TryGenerateImage()
         {
-            var terrainCase = new TerrainCase(0,0);
+            var terrainCase = new TerrainCase(0,0,0);
             var wallCase = new WallCase(0,0);
             var mapdrawer = new MapDrawer();
             var board = new Board(10, 10);

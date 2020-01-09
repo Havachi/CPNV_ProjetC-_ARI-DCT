@@ -17,14 +17,14 @@ namespace GameLib
         {
             this.height = 10;
             this.width = 10;
-            boardContent = new List<BoardLine>();
+            boardContent = new List<BoardLine>(height);
         }
 
         public Board(int height, int width)
         {
             this.height = height;
             this.width = width;
-            boardContent = new List<BoardLine>();
+            boardContent = new List<BoardLine>(height);
         }
 
         public void AddLine(BoardLine boardLine)

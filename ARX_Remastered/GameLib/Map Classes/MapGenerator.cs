@@ -1,4 +1,4 @@
-﻿using System;
+﻿  using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,10 +15,9 @@ namespace GameLib
         private Board board;
         private Case nextCase;
         private Position currentPosition;
-        private int nbVisitedCases=0;
 
-        protected int width;
-        protected int height;
+        private int width;
+        private int height;
 
         public MapGenerator(bool randomGeneration)
         {
@@ -35,15 +34,7 @@ namespace GameLib
         public MapGenerator(int maxHeight, int maxWidth, bool randomGeneration)
         {
             board = new Board(maxHeight, maxWidth);
-            
-            if (randomGeneration)
-            {
-                board = GenerateMap();
-            }
-            else
-            {
-                board = GenerateFixedMap();
-            }
+            board = randomGeneration ? GenerateMap() : GenerateFixedMap();
         }
 
         /// <summary>
@@ -52,56 +43,59 @@ namespace GameLib
         /// <returns>The board of the map</returns>
         public Board GenerateFixedMap()
         {
-            for (int i = 0; i < 10; i++)
+            Board fixedBoard = new Board(50,50);
+
+            fixedBoard = GenerateVoidBoard(fixedBoard.Width,fixedBoard.Height);
+            fixedBoard = GenerateBorders(fixedBoard);
+            
+
+            return fixedBoard;
+        }
+
+        public Board GenerateVoidBoard(int maxWidth, int maxHeight)
+        {
+            Board voidBoard = new Board(maxHeight,maxWidth);
+            BoardLine voidBoardLine = new BoardLine();
+            int indexX = 0; 
+            int indexY = 0;
+            for (int i = 0; i < maxHeight; i++)
             {
-                board.BoardContent.Add(new BoardLine(10));
+                for (int j = 0; j < maxWidth; j++)
+                {
+                    indexX++;
+                    voidBoardLine.AddCase(new VoidCase(indexX,indexY));
+                }
+                indexX = 0;
+                indexY++;
+                voidBoard.AddLine(voidBoardLine);
+                voidBoardLine = new BoardLine();
             }
-            Case terrainCase = new TerrainCase(0,0);
-            Case wallCase = new WallCase(0,0);
-            Case startCase = new StartCase(0,0);
-            Case endCase = new EndCase(0,0);
-            BoardLine boardLine = new BoardLine();
-            board.BoardContent[0] = new BoardLine(new List<Case>()
+            return voidBoard;
+        }
+
+        public Board GenerateBorders(Board borderBoard)
+           {
+            
+            int indexX = 0;
+            int indexY = 0;
+            for (int i = 0; i < borderBoard.Height; i++)
             {
-                wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase
-            });
-            board.BoardContent[1] = new BoardLine(new List<Case>()
-            {
-                wallCase,terrainCase,terrainCase,terrainCase,wallCase,terrainCase,wallCase,terrainCase,terrainCase,wallCase
-            });
-            board.BoardContent[2] = new BoardLine(new List<Case>()
-            {
-                wallCase,terrainCase,wallCase,terrainCase,wallCase,terrainCase,wallCase,wallCase,terrainCase,wallCase
-            });
-            board.BoardContent[3] = new BoardLine(new List<Case>()
-            {
-                wallCase,terrainCase,wallCase,terrainCase,wallCase,terrainCase,terrainCase,terrainCase,terrainCase,wallCase
-            });
-            board.BoardContent[4] = new BoardLine(new List<Case>()
-            {
-                wallCase,terrainCase,wallCase,terrainCase,wallCase,terrainCase,wallCase,wallCase,terrainCase,wallCase
-            });
-            board.BoardContent[5] = new BoardLine(new List<Case>()
-            {
-                wallCase,terrainCase,wallCase,wallCase,wallCase,terrainCase,terrainCase,wallCase,terrainCase,wallCase
-            });
-            board.BoardContent[6] = new BoardLine(new List<Case>()
-            {
-                wallCase,terrainCase,terrainCase,terrainCase,terrainCase,terrainCase,wallCase,wallCase,terrainCase,wallCase
-            });
-            board.BoardContent[7] = new BoardLine(new List<Case>()
-            {
-                wallCase,terrainCase,wallCase,wallCase,wallCase,terrainCase,terrainCase,wallCase,terrainCase,wallCase
-            });
-            board.BoardContent[8] = new BoardLine(new List<Case>()
-            {
-                wallCase,startCase,wallCase,terrainCase,terrainCase,terrainCase,wallCase,endCase,terrainCase,wallCase
-            });
-            board.BoardContent[9] = new BoardLine(new List<Case>()
-            {
-                wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase,wallCase
-            });
-            return board;
+                for (int j = 0; j < borderBoard.Width; j++)
+                {
+                    if (i == 0 || i == borderBoard.Height-1)
+                    {
+                        borderBoard.BoardContent[i].LineContent[j] = new WallCase(indexX, indexY);
+                    }
+                    if (j == 0 || j == borderBoard.Width-1)
+                    {
+                        borderBoard.BoardContent[i].LineContent[j] = new WallCase(indexX, indexY);
+                    }
+                    indexX++;
+                }
+                indexX = 0;
+                indexY++;
+            }
+            return borderBoard;
         }
 
         /// <summary>
@@ -112,18 +106,9 @@ namespace GameLib
         {
             //todo generate borders
             //todo create rules to make the map playable
-            BoardLine tempboardLine = new BoardLine();
-
+            
             //Generate an empty board with void case
-            for (int i = 0; i < board.Height-1; i++)
-            {
-                for (int j = 0; j < board.Width-1; j++)
-                {
-                    tempboardLine.AddCase(new VoidCase(i,j));
-                }
-
-                board.AddLine(tempboardLine);
-            }
+            board=GenerateVoidBoard(20, 20);
 
             //Choose a random Starting point
             Random random = new Random();
