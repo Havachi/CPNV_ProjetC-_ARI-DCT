@@ -64,7 +64,9 @@ namespace GameLib
             {
                 return position;
             }
+            set => position = value;
         }
+
         /// <summary>
         /// Accessor for private attribut inventory
         /// </summary>
