@@ -18,6 +18,10 @@ namespace GameLib
             this.contentList = contentList;
         }
 
+        public Inventory()
+        {
+        }
+
         public void AddItemInInventory(Inventory inventory, Item itemToAdd)
         {
             inventory.ContentList.Add(itemToAdd);

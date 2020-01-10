@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.lblGameUserLogged = new System.Windows.Forms.Label();
+            this.lblPrimaryObjectiv = new System.Windows.Forms.Label();
+            this.lblGameStatut = new System.Windows.Forms.Label();
             this.pbxFormgameInventory6 = new System.Windows.Forms.PictureBox();
             this.pbxFormgameInventory7 = new System.Windows.Forms.PictureBox();
             this.pbxFormgameInventory8 = new System.Windows.Forms.PictureBox();
@@ -65,6 +67,24 @@
             this.lblGameUserLogged.Size = new System.Drawing.Size(66, 13);
             this.lblGameUserLogged.TabIndex = 2;
             this.lblGameUserLogged.Text = "Logged as : ";
+            // 
+            // lblPrimaryObjectiv
+            // 
+            this.lblPrimaryObjectiv.AutoSize = true;
+            this.lblPrimaryObjectiv.Location = new System.Drawing.Point(1309, 632);
+            this.lblPrimaryObjectiv.Name = "lblPrimaryObjectiv";
+            this.lblPrimaryObjectiv.Size = new System.Drawing.Size(52, 13);
+            this.lblPrimaryObjectiv.TabIndex = 14;
+            this.lblPrimaryObjectiv.Text = "Objectif : ";
+            // 
+            // lblGameStatut
+            // 
+            this.lblGameStatut.AutoSize = true;
+            this.lblGameStatut.Location = new System.Drawing.Point(1312, 1016);
+            this.lblGameStatut.Name = "lblGameStatut";
+            this.lblGameStatut.Size = new System.Drawing.Size(44, 13);
+            this.lblGameStatut.TabIndex = 15;
+            this.lblGameStatut.Text = "Statut : ";
             // 
             // pbxFormgameInventory6
             // 
@@ -185,6 +205,8 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1920, 1061);
+            this.Controls.Add(this.lblGameStatut);
+            this.Controls.Add(this.lblPrimaryObjectiv);
             this.Controls.Add(this.pbxFormgameInventory6);
             this.Controls.Add(this.pbxFormgameInventory7);
             this.Controls.Add(this.pbxFormgameInventory8);
@@ -238,6 +260,8 @@
         private System.Windows.Forms.PictureBox pbxFormgameInventory8;
         private System.Windows.Forms.PictureBox pbxFormgameInventory7;
         private System.Windows.Forms.PictureBox pbxFormgameInventory6;
+        private System.Windows.Forms.Label lblPrimaryObjectiv;
+        private System.Windows.Forms.Label lblGameStatut;
     }
 }
 

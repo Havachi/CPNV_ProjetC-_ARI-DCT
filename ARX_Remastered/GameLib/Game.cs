@@ -19,12 +19,6 @@ namespace GameLib
             this.map = map;
         }
 
-        public Player Player
-        {
-            get { return player; }
-            set { player = value; }
-        }
-
         public Map Map
         {
             get { return map; }
