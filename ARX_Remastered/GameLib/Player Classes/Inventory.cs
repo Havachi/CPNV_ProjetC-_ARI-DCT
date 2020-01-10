@@ -1,33 +1,18 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms;
 using Org.BouncyCastle.Math.EC.Multiplier;
+
+
 
 namespace GameLib
 {
     public class Inventory
     {
-
         private List<Item> contentList = new List<Item>();
 
-        public Inventory(string key, Color selectedPixelColor, Color TestPixel)
-        {
-            switch (key)
-            {
-                case "W":
-
-                    break;
-                case "A":
-
-                    break;
-                case "S":
-
-                    break;
-                case "D":
-
-                    break;
-
-            }
-        }
         public Inventory(List<Item> contentList)
         {
             this.contentList = contentList;
@@ -42,7 +27,6 @@ namespace GameLib
         {
             inventory.ContentList.Remove(itemToDel);
         }
-
         public List<Item> ContentList
         {
             get { return contentList; }

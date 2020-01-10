@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
-using GameLib;
+using System.CodeDom;
+using System.Data;
+using Microsoft.CSharp;
+
 
 namespace Game
 {
@@ -25,6 +29,7 @@ namespace Game
         private static readonly Image notSelectedImage = Properties.Resources.NotSelected;
         private static readonly Image selectedImage = Properties.Resources.Selected;
         private string key;
+        private string slot;
 
 
         public FormGame(string lblUsername)
@@ -35,39 +40,13 @@ namespace Game
             lblGameUserLogged.Text = @"Logged as : " + lblUsername;
             Refresh();
 
+            
             //temp
             pbxFormgameInventory1.BackgroundImage = Game.Properties.Resources.NotSelected;
-            pbxFormgameInventory6.BackgroundImage = Game.Properties.Resources.Selected;
-
-            /// Initialize picturebox -> foreach
-            var matches = new PictureBox[]
-            {
-                pbxFormgameInventory1,
-                pbxFormgameInventory2,
-                pbxFormgameInventory3,
-                pbxFormgameInventory4,
-                pbxFormgameInventory5,
-                pbxFormgameInventory6,
-                pbxFormgameInventory7,
-                pbxFormgameInventory8,
-                pbxFormgameInventory9,
-                pbxFormgameInventory10,
-            };
-            Console.WriteLine(matches[0].BackgroundImage);
-
-            //TEMP PERMET  DE SAVOIR QUEL PBX EST ACTIF
-            foreach (var match in matches)
-            {
-                Bitmap testPixel = new Bitmap(match.BackgroundImage);
-                this.testPixel = testPixel.GetPixel(50, 50);
-
-                if (this.testPixel == selectedPixelColor)
-                {
-                    Console.WriteLine(match.Name);
-                }
-            }
-            pbxFormgameInventory1.Tag = isSelected;
-
+            pbxFormgameInventory8.BackgroundImage = Game.Properties.Resources.Selected;
+            
+            InitializePbx();
+            CheckActivePbx();
 
             pbxFormGameGame.Load("Pics/FirstMenu.PNG");
             }
@@ -91,8 +70,8 @@ namespace Game
                         ///TODO  Move the inventory cursor's - up
 
                         key = "W";
-                        Inventory inventoryMovement = new Inventory(key, selectedPixelColor, testPixel);
-
+                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7,pbxFormgameInventory8,pbxFormgameInventory9, pbxFormgameInventory10);
+                        CheckActivePbx();
                     }
                     break;
 
@@ -109,7 +88,9 @@ namespace Game
                     {
 
                         /// TODO  Move the inventory cursor's - Left
-                        // TEMP IF déjà à gauche, ne bouge pas
+                        key = "A";
+                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
+                        CheckActivePbx();
                     }
 
                     break;
@@ -119,13 +100,16 @@ namespace Game
                     if (inGame)
                     {
 
-                        /// TODO  Move the inventory cursor's - Down
+                       
 
                     }
 
                     if (inInventory)
                     {
-
+                        /// TODO  Move the inventory cursor's - Down
+                        key = "S";
+                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
+                        CheckActivePbx();
                     }
 
                     break;
@@ -135,7 +119,6 @@ namespace Game
                     if (inGame)
                     {
 
-                        /// TODO  Move the inventory cursor's - Right
 
                     }
 
@@ -143,8 +126,9 @@ namespace Game
                     {
 
                         /// TODO  Move the inventory cursor's - Right
-                        // TEMP IF déjà à droite, ne bouge pas
-
+                        key = "D";
+                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
+                        CheckActivePbx();
                     }
 
                     break;
@@ -304,6 +288,43 @@ namespace Game
                     }
                     break;
             }
+
+        }
+        
+        public PictureBox[] InitializePbx()
+        {
+            /// Initialize picturebox -> foreach
+            PictureBox[] matches = new PictureBox[]
+            {
+                pbxFormgameInventory1,
+                pbxFormgameInventory2,
+                pbxFormgameInventory3,
+                pbxFormgameInventory4,
+                pbxFormgameInventory5,
+                pbxFormgameInventory6,
+                pbxFormgameInventory7,
+                pbxFormgameInventory8,
+                pbxFormgameInventory9,
+                pbxFormgameInventory10,
+            };
+            return matches;
+        }
+        
+        public string CheckActivePbx()
+        {
+            //TEMP PERMET  DE SAVOIR QUEL PBX EST ACTIF
+            foreach (PictureBox match in InitializePbx())
+            {
+                Bitmap testPixel = new Bitmap(match.BackgroundImage);
+                this.testPixel = testPixel.GetPixel(50, 50);
+
+                if (this.testPixel == selectedPixelColor)
+                {
+                    Console.WriteLine(match.Name);
+                    slot = match.Name;
+                }
+            }
+            return slot;
         }
     }
 }
