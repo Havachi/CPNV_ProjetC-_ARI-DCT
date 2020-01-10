@@ -27,6 +27,33 @@ namespace GameLib
             this.orientation = orientation;
         }
 
+        public int TypeToInt()
+        {
+            if (GetType() == typeof(CornerCase))
+            {
+                return 1;
+            }
+            if (GetType() == typeof(DeadEnd))
+            {
+                return 2;
+            }
+            if (GetType() == typeof(CrosswayCase))
+            {
+                return 3;
+            }
+            if (GetType() == typeof(CorridorCase))
+            {
+                return 4;
+            }
+            if (GetType() == typeof(TShapeCase))
+            {
+                return 5;
+            }
+            
+
+            return 0;
+        }
+
         public int IndexX
         {
             get { return indexX; }

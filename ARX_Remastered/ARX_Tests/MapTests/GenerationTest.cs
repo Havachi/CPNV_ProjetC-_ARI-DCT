@@ -25,16 +25,21 @@ namespace ARX_Tests
         [TestMethod]
         public void GenerateNewMap()
         {
-            var map = new Map();
+            var map = new Map(false);
         }
-
+        [TestMethod]
+        public void GenerateRandomMap()
+        {
+            var map = new Map(50,50,true);
+        }
         [TestMethod]
         public void TryGenerateImage()
         {
             var terrainCase = new TerrainCase(0,0,0);
             var wallCase = new WallCase(0,0);
-            var mapdrawer = new MapDrawer();
+
             var board = new Board(10, 10);
+            var mapdrawer = new MapDrawer(board);
             var line = new List<Case>()
             {
                 terrainCase,

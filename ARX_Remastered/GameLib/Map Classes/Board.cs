@@ -13,6 +13,7 @@ namespace GameLib
         private int width;
         private List<BoardLine> boardContent;
 
+
         public Board()
         {
             this.height = 10;

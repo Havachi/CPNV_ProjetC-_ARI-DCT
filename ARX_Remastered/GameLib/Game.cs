@@ -29,7 +29,7 @@ namespace GameLib
         public Game(Player player)
         {
             this.player = player;
-            map = new Map();
+            map = new Map(30,30,true);
         }
 
         public Player Player
@@ -43,6 +43,6 @@ namespace GameLib
             get { return map; }
             set { map = value; }
         }
-
+        
     }
 }
