@@ -32,12 +32,6 @@ namespace GameLib
             map = new Map(30,30,true);
         }
 
-        public Player Player
-        {
-            get { return player; }
-            set { player = value; }
-        }
-
         public Map Map
         {
             get { return map; }
