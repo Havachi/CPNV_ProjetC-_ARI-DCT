@@ -31,11 +31,11 @@ namespace Game
         private string key;
         private string slot;
         private string objectiv;
-
+        private GameLib.Game currentGame = new GameLib.Game();
 
         public FormGame(string lblUsername)
         {
-            GameLib.Game game = new GameLib.Game();
+            
             InitializeComponent();
             inFirstMenu = true;
             selectedPixelColor = Properties.Resources.Selected.GetPixel(50, 50);
@@ -62,7 +62,10 @@ namespace Game
                 case (char) 119:
                     if (inGame)
                     {
-                        
+                        if (currentGame)
+                        {
+                            
+                        }
                     }
 
                         //TEMP
