@@ -1,4 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms;
+using System.CodeDom;
+using System.Data;
+using Microsoft.CSharp;
+
 
 namespace Game
 {
@@ -8,20 +16,40 @@ namespace Game
         private bool actionPossible;
         private bool backToGame;
         private bool inGame;
+        private bool inFirstMenu;
+        private bool backToFirstMenu = true;
         private bool inInventory;
         private bool inMenu;
+        private bool disableFirstMenu;
         private bool inMenuCommands;
         private bool mapFound;
+        private bool isSelected;
+        private Color testPixel;
+        private Color selectedPixelColor;
+        private static readonly Image notSelectedImage = Properties.Resources.NotSelected;
+        private static readonly Image selectedImage = Properties.Resources.Selected;
+        private string key;
+        private string slot;
 
-        public FormGame()
+
+        public FormGame(string lblUsername)
         {
             InitializeComponent();
-            inGame = true;
-            pbx_FormGameGame.Load("Pics/X.PNG");
+            inFirstMenu = true;
+            selectedPixelColor = Properties.Resources.Selected.GetPixel(50, 50);
+            lblGameUserLogged.Text = @"Logged as : " + lblUsername;
+            Refresh();
 
-            //TODO Faire un bouton pour quitter le jeu sur le Mainmenu, le bouton jouer et un bouton d'aide affichant les touches de contrôle et les règles du jeu.
-            //TEMP peut-être faire un background pour le main menu et pour chawue bouton avec la typo prometeus.
-        }
+            
+            //temp
+            pbxFormgameInventory1.BackgroundImage = Game.Properties.Resources.NotSelected;
+            pbxFormgameInventory8.BackgroundImage = Game.Properties.Resources.Selected;
+            
+            InitializePbx();
+            CheckActivePbx();
+
+            pbxFormGameGame.Load("Pics/FirstMenu.PNG");
+            }
 
         private void FormGame_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -32,28 +60,19 @@ namespace Game
                     if (inGame)
 
                         //TEMP
-                        pbx_FormGameGame.Load("Pics/X.PNG");
+                        pbxFormGameGame.Load("Pics/X.PNG");
 
-                    ///TODO Move the player - forward  
+                    ///TODO Move the player - forward
+
                     if (inInventory)
                     {
+
                         ///TODO  Move the inventory cursor's - up
+
+                        key = "W";
+                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7,pbxFormgameInventory8,pbxFormgameInventory9, pbxFormgameInventory10);
+                        CheckActivePbx();
                     }
-                    break;
-
-                /// Up arrow
-                case (char) 8:
-                    if (inGame) 
-                        
-                        //TEMP
-                        pbx_FormGameGame.Load("Pics/I.PNG");
-
-                    ///TODO Move the player forward 
-                    if (inInventory)
-                    {
-                        ///TODO  Move the inventory cursor's - up
-                    }
-
                     break;
 
                 /// A  
@@ -61,27 +80,17 @@ namespace Game
                     if (inGame)
 
                         //TEMP
-                        pbx_FormGameGame.Load("Pics/I.PNG");
+                        pbxFormGameGame.Load("Pics/I.PNG");
 
                     /// TODO Move the player - Left
-                    if (inInventory)
-                    {
-                        /// TODO  Move the inventory cursor's - Left
-                        // TEMP IF déjà à gauche, ne bouge pas
-                    }
-                    break;
-
-                /// Left arrow
-                case (char) 37:
-                    if (inGame)
-                    {
-                        /// TODO Move the player - Left
-                    }
 
                     if (inInventory)
                     {
+
                         /// TODO  Move the inventory cursor's - Left
-                        // TEMP IF déjà à gauche, ne bouge pas
+                        key = "A";
+                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
+                        CheckActivePbx();
                     }
 
                     break;
@@ -90,28 +99,17 @@ namespace Game
                 case (char) 115:
                     if (inGame)
                     {
-                        /// TODO  Move the inventory cursor's - Down
+
+                       
+
                     }
 
                     if (inInventory)
                     {
                         /// TODO  Move the inventory cursor's - Down
-                        // TEMP IF déjà en bas, ne bouge pas
-                    }
-
-                    break;
-
-                /// Down arrow
-                case (char) 40:
-                    if (inGame)
-                    {
-                        /// TODO  Move the inventory cursor's - Down
-                    }
-
-                    if (inInventory)
-                    {
-                        /// TODO  Move the inventory cursor's - Down
-                        // TEMP IF déjà en bas, ne bouge pas
+                        key = "S";
+                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
+                        CheckActivePbx();
                     }
 
                     break;
@@ -120,28 +118,17 @@ namespace Game
                 case (char) 100:
                     if (inGame)
                     {
-                        /// TODO  Move the inventory cursor's - Right
+
+
                     }
 
                     if (inInventory)
                     {
-                        /// TODO  Move the inventory cursor's - Right
-                        // TEMP IF déjà à droite, ne bouge pas
-                    }
 
-                    break;
-
-                /// Right arrow
-                case (char) 39:
-                    if (inGame)
-                    {
                         /// TODO  Move the inventory cursor's - Right
-                    }
-
-                    if (inInventory)
-                    {
-                        /// TODO  Move the inventory cursor's - Right
-                        // TEMP IF déjà à droite, ne bouge pas
+                        key = "D";
+                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
+                        CheckActivePbx();
                     }
 
                     break;
@@ -151,37 +138,21 @@ namespace Game
                     if (inGame)
                         if (mapFound)
                         {
+
                             /// TODO Zoom on the map
+
                         }
 
                     break;
-
-                /// +
-                case (char) 107:
-                    if (inGame)
-                        if (mapFound)
-                        {
-                            /// TODO Zoom on the map
-                        }
-
-                    break;
-
+                
                 /// N
                 case (char) 110:
                     if (inGame)
                         if (mapFound)
                         {
-                            /// TODO Unzoom on the map
-                        }
 
-                    break;
-
-                /// -  
-                case (char) 0:
-                    if (inGame)
-                        if (mapFound)
-                        {
                             /// TODO Unzoom on the map
+
                         }
 
                     break;
@@ -192,12 +163,16 @@ namespace Game
                     {
                         if (actionPossible)
                         {
+
                             /// TODO Check if the player as requirement (object or event) to interract
+
                         }
 
                         if (actionPossible == false)
                         {
+
                             /// TODO Display a message "You can't do this bla bla bla"
+
                         }
                     }
 
@@ -207,38 +182,37 @@ namespace Game
                 case (char) 105:
                     if (inInventory)
                     {
+
                         /// TODO Quit the inventory and go back to game
-                    }
-
-                    if (inGame)
-                    {
-                        /// TODO Open Inventory
-                    }
-
-                    /// Flag's gestion
-                    if (inInventory)
-                    {
+                        
                         inInventory = false;
                         inGame = true;
                     }
 
                     if (inGame)
                     {
+
+                        /// TODO Open Inventory
+                        
                         inInventory = true;
                         inGame = false;
                     }
-
                     break;
 
                 /// C  
                 case (char) 99:
-                    if (inMenu) pbx_FormGameGame.Load("Pics/Menucmd.PNG");
-
-                    /// Flag's gestion
-
                     if (inMenu)
                     {
+                        pbxFormGameGame.Load("Pics/Menucmd.PNG");
                         inMenu = false;
+                        inMenuCommands = true;
+                    }
+
+                    if (inFirstMenu)
+                    {
+                        pbxFormGameGame.Load("Pics/Menucmd.PNG");
+                        inFirstMenu = false;
+                        backToFirstMenu = true;
                         inMenuCommands = true;
                     }
 
@@ -247,59 +221,110 @@ namespace Game
                 /// Q
                 case (char) 113:
                     if (inMenu) Close();
+                    if (inFirstMenu) Close();
                     break;
 
                 /// Esc  
                 case (char) 27:
                     if (inInventory)
                     {
+
                         ///TODO quit inventory an go back to game
-                    }
 
-                    if (inMenu)
-                        pbx_FormGameGame.Load("Pics/X.PNG");
-
-                    /// Quit menu and go back to game
-                    if (inGame)
-                        pbx_FormGameGame.Load("Pics/Menu.PNG");
-
-                    /// Quit CMD Menu and go back to Menu
-                    if (inMenuCommands)
-                        pbx_FormGameGame.Load("Pics/Menu.PNG");
-                    
-                    /// Flag's gestion
-                    if (inInventory)
-                    {
                         inInventory = false;
                         inGame = true;
                     }
-
+                    
                     if (inMenu)
                     {
+
+                        //TODO pbx_FormGameGame.Load("Même image que en metant menu");
+
+                        pbxFormGameGame.Load("Pics/X.PNG");
                         inMenu = false;
                         backToGame = true;
                     }
 
                     if (inGame)
                     {
+                        pbxFormGameGame.Load("Pics/Menu.PNG");
                         inGame = false;
                         inMenu = true;
+                    }
+                    
+                    if (inFirstMenu)
+                    {
+                        // TODO pbx_FormGameGame.Load("spawn");
+
+                        pbxFormGameGame.Load("Pics/X.PNG");
+                        inFirstMenu = false;
+                        backToFirstMenu = false;
+                        inGame = true;
                     }
 
                     if (inMenuCommands)
                     {
-                        inMenuCommands = false;
-                        inMenu = true;
+                        if (backToFirstMenu)
+                        {
+                            pbxFormGameGame.Load("Pics/FirstMenu.PNG");
+                            inMenuCommands = false;
+                            inFirstMenu = true;
+                        }
+
+                        if (backToFirstMenu == false)
+                        {
+                            pbxFormGameGame.Load("Pics/Menu.PNG");
+                            inMenuCommands = false;
+                            inMenu = true;
+                        }
                     }
+
+
 
                     if (backToGame)
                     {
                         inGame = true;
                         backToGame = false;
                     }
-
                     break;
             }
+
+        }
+        
+        public PictureBox[] InitializePbx()
+        {
+            /// Initialize picturebox -> foreach
+            PictureBox[] matches = new PictureBox[]
+            {
+                pbxFormgameInventory1,
+                pbxFormgameInventory2,
+                pbxFormgameInventory3,
+                pbxFormgameInventory4,
+                pbxFormgameInventory5,
+                pbxFormgameInventory6,
+                pbxFormgameInventory7,
+                pbxFormgameInventory8,
+                pbxFormgameInventory9,
+                pbxFormgameInventory10,
+            };
+            return matches;
+        }
+        
+        public string CheckActivePbx()
+        {
+            //TEMP PERMET  DE SAVOIR QUEL PBX EST ACTIF
+            foreach (PictureBox match in InitializePbx())
+            {
+                Bitmap testPixel = new Bitmap(match.BackgroundImage);
+                this.testPixel = testPixel.GetPixel(50, 50);
+
+                if (this.testPixel == selectedPixelColor)
+                {
+                    Console.WriteLine(match.Name);
+                    slot = match.Name;
+                }
+            }
+            return slot;
         }
     }
 }

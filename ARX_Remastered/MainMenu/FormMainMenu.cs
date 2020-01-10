@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Game;
+using MainMenu.Properties;
 
+// Resharper disable all
 
 namespace MainMenu
 {
     /// <summary>
-    /// This is the form for the main menu
+    ///     This is the form for the main menu
     /// </summary>
     public partial class FormMainMenu : Form
     {
@@ -23,79 +18,66 @@ namespace MainMenu
         {
             InitializeComponent();
         }
-        
-        /// <summary>
-        /// If the user Click on the login button, the login form appears
-        /// </summary>
-        private void btnLogin_Click(object sender, EventArgs e)
-        {
-
-            using (FormLogin formLogin = new FormLogin())
-            {
-               formLogin.ShowDialog(this);
-               userEmail = formLogin.UserEmail;
-               lblMainMenuLogged.Text = $@"Logged as
-{userEmail}";
-               btnLogin.Text = @"Play";
-               btnLogin.Click -= (btnLogin_Click);
-               btnLogin.Click += (btnLogin_Play);
-            }
-        }
-        /// <summary>
-        /// If the player click on the Play button, the game starts
-        /// </summary>
-        private void btnLogin_Play(object sender, EventArgs e)
-        {
-            // TODO Appeller le générateur du jeu
-            // TODO Générer les attributs du joueur (Position, inventaire etc)
-            // TODO Appeller les génerateurs d'évenements et item random
-            // TODO Appeller le form Gamescreen avec les paramètres pour l'affichage
-            // TODO frmGame frmGame = new frmGame();
-            // TODO frmGame.Show();
-        }
-
-        private void MainMenu_Load(object sender, EventArgs e)
-        {
-            // Upgrade?
-            if (Properties.Settings.Default.FormMainSize.Width == 0) Properties.Settings.Default.Upgrade();
-
-            if (Properties.Settings.Default.FormMainSize.Width == 0 || Properties.Settings.Default.FormMainSize.Height == 0)
-            {
-
-            }
-            else
-            {
-                this.WindowState = Properties.Settings.Default.FormMainState;
-                if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
-
-                this.Location = Properties.Settings.Default.FormMainLoc;
-                this.Size = Properties.Settings.Default.FormMainSize;
-            }
-        }
-
-        private void MainMenu_Closing(object sender, FormClosingEventArgs e)
-        {
-            Properties.Settings.Default.FormMainState = this.WindowState;
-            if (this.WindowState == FormWindowState.Normal)
-            {
-                /// Save location and size if the state is normal
-                Properties.Settings.Default.FormMainLoc = this.Location;
-                Properties.Settings.Default.FormMainSize = this.Size;
-            }
-            else
-            {
-                Properties.Settings.Default.FormMainLoc = this.RestoreBounds.Location;
-                Properties.Settings.Default.FormMainSize = this.RestoreBounds.Size;
-            }
-
-            /// Save the settings
-            Properties.Settings.Default.Save();
-        }
 
         public string UserEmail
         {
             get { return userEmail; }
             set { userEmail = value; }
+        }
+
+        /// <summary>
+        ///     If the user Click on the login button, the login form appears
+        /// </summary>
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            using (FormLogin formLogin = new FormLogin())
+            {
+                formLogin.ShowDialog(this);
+                string lblUsername = formLogin.UserEmail;
+
+                /// TODO Call game generator
+                /// TODO Generate player's attributes (Pos, inventory and so on)
+                /// TODO Call event and item generator
+
+                FormGame frmGame = new FormGame(lblUsername);
+                Show(); 
+            }
+        }
+
+            private void MainMenu_Load(object sender, EventArgs e)
+        {
+            if (Settings.Default.FormMainSize.Width == 0) Settings.Default.Upgrade();
+
+            if (Settings.Default.FormMainSize.Width == 0 || Settings.Default.FormMainSize.Height == 0)
+            {
+            }
+            else
+            {
+                this.WindowState = Settings.Default.FormMainState;
+                if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
+
+                this.Location = Settings.Default.FormMainLoc;
+                this.Size = Settings.Default.FormMainSize;
+            }
+        }
+
+        private void MainMenu_Closing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Default.FormMainState = this.WindowState;
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                // Save location and size if the state is normal
+                Settings.Default.FormMainLoc = this.Location;
+                Settings.Default.FormMainSize = this.Size;
+            }
+            else
+            {
+                Settings.Default.FormMainLoc = this.RestoreBounds.Location;
+                Settings.Default.FormMainSize = this.RestoreBounds.Size;
+            }
+
+            // Save the settings
+            Settings.Default.Save();
         }
     }
 }
