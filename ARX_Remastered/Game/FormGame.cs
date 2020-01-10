@@ -62,9 +62,78 @@ namespace Game
                 case (char) 119:
                     if (inGame)
                     {
-                        if (currentGame)
+                        if (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].GetType() != typeof(WallCase))
                         {
-                            
+                            //TODO Move() pour verif direction du player puis appliquer selon tableau (feuille)
+                            switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].TypeToInt())
+                            {
+                                case 1:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load("Pics/Corner-Right.PNG");
+                                            break;
+                                        case 2:
+                                            pbxFormGameGame.Load("Pics/Corner-Left.PNG");
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load("Pics/NoIssue.PNG");
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load("Pics/X.PNG");
+                                            break;
+                                    }
+                                    break;
+                                case 4:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                        case 2:
+                                            pbxFormGameGame.Load("Pics/I.PNG");
+                                            break;
+                                    }
+                                    break;
+                                case 5:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load("Pics/T-both.PNG");
+                                            break;
+                                        case 2:
+                                            pbxFormGameGame.Load("Pics/T-Left.PNG");
+                                            break;
+                                        case 4:
+                                            pbxFormGameGame.Load("Pics/T-Right.PNG");
+                                            break;
+                                    }
+                                    break;
+                            }
+                            if (currentGame.Player.Direction == "N")
+                            {
+                                currentGame.Player.Position.PositionY++;
+                            }
+                            if (currentGame.Player.Direction == "S")
+                            {
+                                currentGame.Player.Position.PositionY--;
+                            }
+                            if (currentGame.Player.Direction == "W")
+                            {
+                                currentGame.Player.Position.PositionX--;
+                            }
+                            if (currentGame.Player.Direction == "E")
+                            {
+                                currentGame.Player.Position.PositionX++;
+                            }
                         }
                     }
 
