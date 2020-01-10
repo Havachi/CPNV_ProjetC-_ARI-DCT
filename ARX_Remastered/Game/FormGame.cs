@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.CodeDom;
 using System.Data;
 using Microsoft.CSharp;
-
+using GameLib;
 
 namespace Game
 {
@@ -35,7 +35,7 @@ namespace Game
 
         public FormGame(string lblUsername)
         {
-
+            GameLib.Game game = new GameLib.Game();
             InitializeComponent();
             inFirstMenu = true;
             selectedPixelColor = Properties.Resources.Selected.GetPixel(50, 50);
@@ -61,6 +61,9 @@ namespace Game
                 /// W
                 case (char) 119:
                     if (inGame)
+                    {
+                        
+                    }
 
                         //TEMP
                         pbxFormGameGame.Load("Pics/X.PNG");

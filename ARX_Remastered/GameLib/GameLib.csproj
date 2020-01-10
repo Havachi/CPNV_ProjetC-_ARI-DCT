@@ -79,11 +79,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Game\Game.csproj">
-      <Project>{3d2526a6-ad79-4101-a3a0-d39755f1811e}</Project>
-      <Name>Game</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
