@@ -48,6 +48,10 @@ namespace GameLib
 
         }
 
+        public Board GameBoard
+        {
+            get { return gameBoard; }
+        }
         
     }
 }
