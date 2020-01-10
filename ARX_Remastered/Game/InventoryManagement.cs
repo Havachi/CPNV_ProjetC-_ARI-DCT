@@ -3,11 +3,9 @@ using System.Windows.Forms;
 
 namespace Game
 {
-    public class Inventory
-    { 
-
-
-        public Inventory(string key, string slot, PictureBox pbxFormgameInventory1, PictureBox pbxFormgameInventory2, PictureBox pbxFormgameInventory3, PictureBox pbxFormgameInventory4, PictureBox pbxFormgameInventory5, PictureBox pbxFormgameInventory6, PictureBox pbxFormgameInventory7, PictureBox pbxFormgameInventory8, PictureBox pbxFormgameInventory9, PictureBox pbxFormgameInventory10)
+    public class InventoryManagement
+    {
+        public InventoryManagement(string key, string slot, PictureBox pbxFormgameInventory1, PictureBox pbxFormgameInventory2, PictureBox pbxFormgameInventory3, PictureBox pbxFormgameInventory4, PictureBox pbxFormgameInventory5, PictureBox pbxFormgameInventory6, PictureBox pbxFormgameInventory7, PictureBox pbxFormgameInventory8, PictureBox pbxFormgameInventory9, PictureBox pbxFormgameInventory10)
         {
             switch (key)
             {

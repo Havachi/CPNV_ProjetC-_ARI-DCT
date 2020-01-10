@@ -30,20 +30,23 @@ namespace Game
         private static readonly Image selectedImage = Properties.Resources.Selected;
         private string key;
         private string slot;
+        private string objectiv;
 
 
         public FormGame(string lblUsername)
         {
+
             InitializeComponent();
             inFirstMenu = true;
             selectedPixelColor = Properties.Resources.Selected.GetPixel(50, 50);
             lblGameUserLogged.Text = @"Logged as : " + lblUsername;
-            Refresh();
+            pbx_FormGameMap.Image = Properties.Resources.Map;
 
-            
-            //temp
-            pbxFormgameInventory1.BackgroundImage = Game.Properties.Resources.NotSelected;
-            pbxFormgameInventory8.BackgroundImage = Game.Properties.Resources.Selected;
+            //TEMP
+            objectiv = "TEMP Trouvez la sortie ";
+            lblPrimaryObjectiv.Text = @"Objectif Principal : " + objectiv;
+
+            Refresh();
             
             InitializePbx();
             CheckActivePbx();
@@ -66,11 +69,8 @@ namespace Game
 
                     if (inInventory)
                     {
-
-                        ///TODO  Move the inventory cursor's - up
-
                         key = "W";
-                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7,pbxFormgameInventory8,pbxFormgameInventory9, pbxFormgameInventory10);
+                        InventoryManagement inventoryMovement = new InventoryManagement(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7,pbxFormgameInventory8,pbxFormgameInventory9, pbxFormgameInventory10);
                         CheckActivePbx();
                     }
                     break;
@@ -86,10 +86,8 @@ namespace Game
 
                     if (inInventory)
                     {
-
-                        /// TODO  Move the inventory cursor's - Left
                         key = "A";
-                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
+                        InventoryManagement inventoryMovement = new InventoryManagement(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
                         CheckActivePbx();
                     }
 
@@ -106,9 +104,8 @@ namespace Game
 
                     if (inInventory)
                     {
-                        /// TODO  Move the inventory cursor's - Down
                         key = "S";
-                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
+                        InventoryManagement inventoryMovement = new InventoryManagement(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
                         CheckActivePbx();
                     }
 
@@ -124,10 +121,8 @@ namespace Game
 
                     if (inInventory)
                     {
-
-                        /// TODO  Move the inventory cursor's - Right
                         key = "D";
-                        Inventory inventoryMovement = new Inventory(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
+                        InventoryManagement inventoryMovement = new InventoryManagement(key, slot, pbxFormgameInventory1, pbxFormgameInventory2, pbxFormgameInventory3, pbxFormgameInventory4, pbxFormgameInventory5, pbxFormgameInventory6, pbxFormgameInventory7, pbxFormgameInventory8, pbxFormgameInventory9, pbxFormgameInventory10);
                         CheckActivePbx();
                     }
 
@@ -180,20 +175,8 @@ namespace Game
 
                 /// I
                 case (char) 105:
-                    if (inInventory)
-                    {
-
-                        /// TODO Quit the inventory and go back to game
-                        
-                        inInventory = false;
-                        inGame = true;
-                    }
-
                     if (inGame)
                     {
-
-                        /// TODO Open Inventory
-                        
                         inInventory = true;
                         inGame = false;
                     }
@@ -228,9 +211,6 @@ namespace Game
                 case (char) 27:
                     if (inInventory)
                     {
-
-                        ///TODO quit inventory an go back to game
-
                         inInventory = false;
                         inGame = true;
                     }
@@ -243,6 +223,7 @@ namespace Game
                         pbxFormGameGame.Load("Pics/X.PNG");
                         inMenu = false;
                         backToGame = true;
+
                     }
 
                     if (inGame)
@@ -312,7 +293,7 @@ namespace Game
         
         public string CheckActivePbx()
         {
-            //TEMP PERMET  DE SAVOIR QUEL PBX EST ACTIF
+            ///Fuction to know wich slot is active
             foreach (PictureBox match in InitializePbx())
             {
                 Bitmap testPixel = new Bitmap(match.BackgroundImage);
@@ -326,5 +307,6 @@ namespace Game
             }
             return slot;
         }
+
     }
 }
