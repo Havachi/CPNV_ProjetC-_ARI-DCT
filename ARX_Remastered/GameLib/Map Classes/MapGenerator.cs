@@ -183,6 +183,7 @@ namespace GameLib
                         nbVisitedCases++;
                         break;
                 }
+                
             }
 
             return board;
@@ -873,11 +874,11 @@ namespace GameLib
                         case 1:
                             if (direction == 1)
                             {
-                                currentCase = new TShapeCase(currentPosition.PositionX,currentPosition.PositionY,4);
+                                currentCase = new TShapeCase(x,y,4);
                             }
                             else if (direction == 4)
                             {
-                                currentCase = new TShapeCase(currentPosition.PositionX, currentPosition.PositionY,1);
+                                currentCase = new TShapeCase(x, y,1);
                             }
                             break;
                         case 2:
