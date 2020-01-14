@@ -64,8 +64,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Map Classes\BoardLine.cs" />
     <Compile Include="Map Classes\Case.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Map Classes\Board.cs" />
+    <Compile Include="Map Classes\MapDrawer.cs" />
+    <Compile Include="Map Classes\MapGenerator.cs" />
+    <Compile Include="Map Classes\MapImage.cs" />
     <Compile Include="Map Classes\Wall.cs" />
     <Compile Include="Player Classes\Inventory.cs" />
     <Compile Include="Player Classes\Item.cs" />
@@ -80,6 +85,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

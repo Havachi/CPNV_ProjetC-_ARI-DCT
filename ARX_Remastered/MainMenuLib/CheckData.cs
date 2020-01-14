@@ -4,26 +4,24 @@ using DBConnectionLib;
 
 namespace MainMenuLib
 {
-    /// Cette classe a été faite pour vérifier les données entrée dans "LoginForm" avant de les envoyer au modèle. 
+    /// This class exist for check data in LoginForm and RegisterForm before using them
     public class CheckData
     {
+        private List<string> illegalChar = new List<string>();
         private string mail;
         private string password;
         private string passwordCheck;
-        private List<string> illegalChar = new List<string>();
-
 
 
         /// <summary>
-        /// Va chercher les variables necéssaires 
+        ///     Get necessary data
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="password"></param>
         public CheckData()
         {
-
-
         }
+
         public CheckData(string mail, string password, string passwordCheck)
         {
             this.mail = mail;
@@ -32,24 +30,19 @@ namespace MainMenuLib
         }
 
         /// <summary>
-        /// Vérifie que mail et password ne soient pas vide
+        ///     Check if username and username are not empty
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="password"></param>
         public void CheckLoginField(string mail, string password)
         {
-            if (mail == "" || password == "")
-            {
-                throw new EmptyFieldException("Please fill the field");
-            }
+            if (mail == "" || password == "") throw new EmptyFieldException("Please fill the field");
         }
 
         public bool CheckRegisterField(string mail, string password, string passwordCheck)
         {
             if (mail == "" || password == "" || passwordCheck == "")
-            {
                 throw new EmptyFieldException("Please fill the field");
-            }
 
             return true;
         }
@@ -60,29 +53,17 @@ namespace MainMenuLib
         }
 
         /// <summary>
-        /// Vérifie que les champs mail et password correspondent aux exigeances (mail && password > 8)
+        ///     Check mail and password (mail && password > 8)
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="password"></param>
         public void VerifRegister(string mail, string password)
         {
             if (mail.Length < 8)
-            {
                 throw new EmailTooShortException("The Email Address that you have entered is too short");
-            }
-            else
-            {
-                IsValidEmail(mail);
-
-            }
+            IsValidEmail(mail);
             if (password.Length < 8)
-            {
                 throw new PasswordTooShortException("The password that you have entered is too short");
-            }
-            else
-            {
-                //Password encryption
-            }
         }
     }
 }

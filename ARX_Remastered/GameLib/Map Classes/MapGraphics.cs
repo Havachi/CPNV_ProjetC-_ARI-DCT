@@ -11,7 +11,9 @@ namespace GameLib
 {
     public class MapGraphics
     {
+        //For Release 
         //private static string projectFolderPath = $"{Directory.GetParent(Environment.CurrentDirectory).Parent?.FullName}";
+        //For Test
         private static string projectFolderPath = $"C:\\CPNV_Project\\CSharp\\CPNV_ProjetC#_ARI+DCT";
         private static string assetsFolderPath = $"{projectFolderPath}\\ARX_Remastered\\Assets\\Map";
         private static string deadEndsAssetsPath = $"{assetsFolderPath}\\DeadEnd";
@@ -25,7 +27,7 @@ namespace GameLib
         private List<Point> mapCasePositions = new List<Point>();
         private List<Bitmap> mapGraphicsList = new List<Bitmap>();
         private List<Wall> wallsInfoList = new List<Wall>();
-        
+
         private static Bitmap fullMap = new Bitmap(500, 500);
         private Graphics drawingTools = Graphics.FromImage(fullMap);
 
@@ -33,16 +35,19 @@ namespace GameLib
         private static int maxWidth = 10;
         private int caseToDraw = maxHeight * maxWidth;
 
-
+        /// <summary>
+        /// Determine the orientation to use and draw on a .bmp different assets
+        /// </summary>
+        /// <param name="fullWallsList"></param>
         public void DrawMap(List<Wall> fullWallsList)
         {
             wallsInfoList = fullWallsList;
             DetermineCaseType();
             string imagePath = "";
-            int imageOrientation = 0;
-            //todo foreach type of wall assign a position, and an  orientation
-            //todo draw one-by-one each entry in mapGraphicslist on an .bmp
-            //todo save everything
+            RotateFlipType imageOrientation = 0;
+            int positionX = 0;
+            int positionY = 0;
+            
 
             foreach (var wallType in mapCaseTypeList)
             {
@@ -51,113 +56,100 @@ namespace GameLib
                     //Dead End
                     case "DE-S":
                         imagePath = deadEndsAssetsPath;
-                        imageOrientation = 1;
+                        imageOrientation = RotateFlipType.RotateNoneFlipNone;
                         break;
                     case "DE-W":
                         imagePath = deadEndsAssetsPath;
-                        imageOrientation = 2;
+                        imageOrientation = RotateFlipType.Rotate90FlipNone;
                         break;
                     case "DE-E":
                         imagePath = deadEndsAssetsPath;
-                        imageOrientation = 3;
+                        imageOrientation = RotateFlipType.Rotate180FlipNone;
                         break;
                     case "DE-N":
                         imagePath = deadEndsAssetsPath;
-                        imageOrientation = 4;
+                        imageOrientation = RotateFlipType.Rotate270FlipNone;
                         break;
 
                     //Corners
                     case "C-ES":
                         imagePath = cornersAssetsPath;
-                        imageOrientation = 1;
+                        imageOrientation = RotateFlipType.RotateNoneFlipNone;
                         break;
                     case "C-SW":
                         imagePath = cornersAssetsPath;
-                        imageOrientation = 2;
+                        imageOrientation = RotateFlipType.Rotate90FlipNone;
                         break;
                     case "C-NW":
                         imagePath = cornersAssetsPath;
-                        imageOrientation = 3;
+                        imageOrientation = RotateFlipType.Rotate180FlipNone;
                         break;
                     case "C-NE":
                         imagePath = cornersAssetsPath;
-                        imageOrientation = 4;
+                        imageOrientation = RotateFlipType.Rotate270FlipNone;
                         break;
 
-                    
+
                     //Corridors
                     case "CO-NS":
                         imagePath = corridorAssetsPath;
-                        imageOrientation = 1;
+                        imageOrientation = RotateFlipType.RotateNoneFlipNone;
                         break;
                     case "CO-WE":
                         imagePath = corridorAssetsPath;
-                        imageOrientation = 2;
+                        imageOrientation = RotateFlipType.Rotate90FlipNone;
                         break;
 
                     //T-Shaped
                     case "T-ESW":
                         imagePath = tShapeAssetsPath;
-                        imageOrientation = 1;
+                        imageOrientation = RotateFlipType.RotateNoneFlipNone;
                         break;
                     case "T-NSW":
                         imagePath = tShapeAssetsPath;
-                        imageOrientation = 2;
+                        imageOrientation = RotateFlipType.Rotate90FlipNone;
                         break;
                     case "T-NEW":
                         imagePath = tShapeAssetsPath;
-                        imageOrientation = 3;
+                        imageOrientation = RotateFlipType.Rotate180FlipNone;
                         break;
                     case "T-NES":
                         imagePath = tShapeAssetsPath;
-                        imageOrientation = 4;
+                        imageOrientation = RotateFlipType.Rotate270FlipNone;
                         break;
 
                     //Crossway
                     case "CR":
                         imagePath = crossWayAssetsPath;
-                        imageOrientation = 1;
+                        imageOrientation = RotateFlipType.RotateNoneFlipNone;
                         break;
                 }
-
-                //todo Draw on the bitmap
+                
                 Image image = new Bitmap($"{imagePath}\\50x50.bmp");
-                Point destinationPoint = new Point(0,0);
-                drawingTools.DrawImage(image,destinationPoint);
-                int posX = 0;
-                int posY = 0;
-                for (int i = 0; i < 10; i++)
+                Point destinationPoint = new Point(0, 0);
+                drawingTools.DrawImage(image, destinationPoint);
+
+                //Drawing the images on the map image
+/*                for (int i = 0; i < 10; i++)
                 {
                     for (int j = 0; j < 10; j++)
                     {
-                        switch (imageOrientation)
-                        {
-                            case 1:
-                                //nothing to do
-                                break;
-                            case 2:
-                                image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                                break;
-                            case 3:
-                                image.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                                break;
-                            case 4:
-                                image.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                                break;
-                        }
+                        image.RotateFlip(imageOrientation);
+                        //draw the image where it should go
+
                         drawingTools.DrawImage(image, destinationPoint);
                         destinationPoint.X += image.Width;
-
                     }
+
                     destinationPoint.X = 0;
                     destinationPoint.Y += image.Width;
-                }
-
-
+                }*/
             }
+
             fullMap.Save("C:\\Ausekourmek.bmp");
 
         }
+
         /// <summary>
         ///  This method determine which kind of wall for the drawing
         /// </summary>
@@ -174,6 +166,7 @@ namespace GameLib
         /// <returns></returns>
         public void DetermineCaseType()
         {
+            Point casePositionDraw = new Point();
             foreach (var wall in wallsInfoList)
             {
                 string wallType = "";
@@ -245,9 +238,19 @@ namespace GameLib
                 {
                     wallType = "CR";
                 }
-                mapCasePositions.Add(new Point(wall.PosX, wall.PosY));
+
+                casePositionDraw = PointTranslation(wall.PosX, wall.PosY);
+                mapCasePositions.Add(new Point(casePositionDraw.X,casePositionDraw.Y));
                 mapCaseTypeList.Add(wallType);
             }
+        }
+
+        public Point PointTranslation(int posX, int posY)
+        {
+            Point point = new Point();
+            point.X *= 50;
+            point.Y *= 50;
+            return point;
         }
     }
 }
