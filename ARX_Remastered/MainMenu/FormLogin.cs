@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DBConnectionLib;
 using MainMenuLib;
@@ -16,17 +7,17 @@ using MainMenuLib;
 
 namespace MainMenu
 {
-
     public partial class FormLogin : Form
     {
-        private string userEmail;
-        private string password;
         public Form formLogin;
+        private string password;
+        private string userEmail;
 
         public FormLogin()
         {
             InitializeComponent();
         }
+
         public string UserEmail
         {
             get { return userEmail; }
@@ -34,8 +25,8 @@ namespace MainMenu
 
         private void btnLoginConnexion_Click(object sender, EventArgs e)
         {
-            //Appelle la méthode permettant de se connecter
-            //Définit les valeurs de username et password avant envoi
+            /// Call Login method
+            /// Define username and password sata before throw
             userEmail = tbxLoginMail.Text;
             password = tbxLoginPassword.Text;
 
@@ -45,7 +36,7 @@ namespace MainMenu
                 if (login.LoginDb(login))
                 {
                     MessageBox.Show(@"Login Successful");
-                    
+
                     Close();
                 }
             }
@@ -61,8 +52,6 @@ namespace MainMenu
             {
                 MessageBox.Show(exception.Message);
             }
-
-            
         }
 
         private void btnLoginRegister_Click(object sender, EventArgs e)
@@ -77,7 +66,6 @@ namespace MainMenu
 
         private void tbxLoginPassword_TextChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

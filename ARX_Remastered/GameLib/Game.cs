@@ -20,8 +20,8 @@ namespace GameLib
         /// </summary>
         public Game()
         {
-            //player = new Player();
-            map = new Map();
+            player = new Player();
+            map = new Map(30, 30, true);
         }
         /// <summary>
         /// Constructor for games used when the player already exist
@@ -31,18 +31,16 @@ namespace GameLib
             this.player = player;
             map = new Map(30,30,true);
         }
+        public Map Map
+        {
+            get { return map; }
+            set { map = value; }
+        }
 
         public Player Player
         {
             get { return player; }
             set { player = value; }
         }
-
-        public Map Map
-        {
-            get { return map; }
-            set { map = value; }
-        }
-        
     }
 }
