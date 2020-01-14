@@ -30,7 +30,7 @@ namespace ARX_Tests
         [TestMethod]
         public void GenerateRandomMap()
         {
-            var map = new Map(50,50,true);
+            var map = new Map(30,30,true);
         }
         [TestMethod]
         public void TryGenerateImage()
