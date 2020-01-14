@@ -1,23 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms;
+using Org.BouncyCastle.Math.EC.Multiplier;
+
+
 
 namespace GameLib
 {
     public class Inventory
     {
-        
         private List<Item> contentList = new List<Item>();
-        
-        public Inventory()
-        {
-        }
+
         public Inventory(List<Item> contentList)
         {
             this.contentList = contentList;
+        }
+
+        public Inventory()
+        {
         }
 
         public void AddItemInInventory(Inventory inventory, Item itemToAdd)
@@ -29,7 +31,6 @@ namespace GameLib
         {
             inventory.ContentList.Remove(itemToDel);
         }
-
         public List<Item> ContentList
         {
             get { return contentList; }
