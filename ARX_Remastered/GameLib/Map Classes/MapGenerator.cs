@@ -126,23 +126,22 @@ namespace GameLib
                 int randX = random.Next(board.Width);
                 int randY = random.Next(board.Height);
                 startPosition = new Position(randX,randY);
-            } while (board.BoardContent[startPosition.PositionY].LineContent[startPosition.PositionX].GetType() == typeof(WallCase));
+            } while (board.BoardContent[startPosition.PositionY].LineContent[startPosition.PositionX].GetType() != typeof(VoidCase));
             
             currentPosition = startPosition;
 
             Stack<Case> activeCases = new Stack<Case>();
             board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX] = new StartCase(currentPosition.PositionX,currentPosition.PositionY,1);
             activeCases.Push(board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX]);
-
-            while (activeCases.Count > 0 || nbVisitedCases == board.Height * board.Width)
+            int nbUnvisitedCases = board.Count();
+            while (nbVisitedCases < board.Width * board.Height)
             {
+                
                 var currentCase = board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX];
                 var futureDirection = GetFutureDirection();
-                var destinationType = GetDestinationType(currentCase,futureDirection);
-                var futureOrientation = GetFutureOrientation(currentCase,futureDirection,destinationType);
 
-                currentCase = OpenCurrentCase(futureDirection);
-                board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX] = currentCase;
+                //currentCase = OpenCurrentCase(futureDirection);
+                //board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX] = currentCase;
 
                 switch (futureDirection)
                 {
@@ -154,35 +153,200 @@ namespace GameLib
                             currentPosition.PositionY = activeCases.First().IndexY;
                         }
                         break;
+                    //Case Up
                     case 1:
                         currentPosition.PositionY--;
-                        ChangeCaseType(currentPosition.PositionX, currentPosition.PositionY, futureOrientation, destinationType);
+                        ChangeCaseWalls(currentCase, futureDirection);
+                        currentCase = ChangeCaseType();
                         activeCases.Push(currentCase);
                         nbVisitedCases++;
+                        
                         break;
+                    //Case Right
                     case 2:
                         currentPosition.PositionX++;
-                        ChangeCaseType(currentPosition.PositionX, currentPosition.PositionY, futureOrientation, destinationType);
+                        ChangeCaseWalls(currentCase, futureDirection);
+                        currentCase = ChangeCaseType();
                         activeCases.Push(currentCase);
                         nbVisitedCases++;
+                        
                         break;
+                    //Case Down
                     case 3:
                         currentPosition.PositionY++;
-                        ChangeCaseType(currentPosition.PositionX, currentPosition.PositionY, futureOrientation, destinationType);
+                        ChangeCaseWalls(currentCase, futureDirection);
+                        currentCase = ChangeCaseType();
                         activeCases.Push(currentCase);
                         nbVisitedCases++;
+                       
                         break;
+                    //case left
                     case 4:
                         currentPosition.PositionX--;
-                        ChangeCaseType(currentPosition.PositionX, currentPosition.PositionY, futureOrientation, destinationType);
+                        ChangeCaseWalls(currentCase, futureDirection);
+                        currentCase = ChangeCaseType();
                         activeCases.Push(currentCase);
                         nbVisitedCases++;
+                        
+                        break;
+                }
+
+            }
+
+            return board;
+        }
+
+        public void ChangeCaseWalls(Case currentCase, int futureDirection)
+        {
+            if (currentCase.GetType() == typeof(StartCase))
+            {
+                currentCase.Walls[0] = false;
+                currentCase.Walls[1] = false;
+                currentCase.Walls[2] = false;
+                currentCase.Walls[3] = false;
+                return;
+            }
+            if (directionHistory.Count<=1)
+            {
+                switch (futureDirection)
+                {
+                    case 1:
+                        currentCase.Walls[0] = false;
+                        currentCase.Walls[1] = true;
+                        currentCase.Walls[2] = true;
+                        currentCase.Walls[3] = true;
+                        break;
+                    case 2:
+                        currentCase.Walls[0] = true;
+                        currentCase.Walls[1] = false;
+                        currentCase.Walls[2] = true;
+                        currentCase.Walls[3] = true;
+                        break;
+                    case 3:
+                        currentCase.Walls[0] = true;
+                        currentCase.Walls[1] = true;
+                        currentCase.Walls[2] = false;
+                        currentCase.Walls[3] = true;
+                        break;
+                    case 4:
+                        currentCase.Walls[0] = true;
+                        currentCase.Walls[1] = true;
+                        currentCase.Walls[2] = true;
+                        currentCase.Walls[3] = false;
                         break;
                 }
                 
             }
-
-            return board;
+            else
+            {
+                switch (futureDirection)
+                {
+                    //UP
+                    case 1:
+                        currentCase.Walls[0] = false;
+                        //UP
+                        if (directionHistory[directionHistory.Count-2] == 1)
+                        {
+                            currentCase.Walls[1] = true;
+                            currentCase.Walls[2] = false;
+                            currentCase.Walls[3] = true;
+                        }
+                        //Right
+                        else if (directionHistory[directionHistory.Count - 2] == 2)
+                        {
+                            currentCase.Walls[1] = true;
+                            currentCase.Walls[2] = true;
+                            currentCase.Walls[3] = false;
+                        }
+                        //Left
+                        else if (directionHistory[directionHistory.Count - 2] == 4)
+                        {
+                            currentCase.Walls[1] = false;
+                            currentCase.Walls[2] = true;
+                            currentCase.Walls[3] = true;
+                        }
+                        break;
+                    //Right
+                    case 2:
+                        currentCase.Walls[1] = false;
+                        //Up
+                        if (directionHistory[directionHistory.Count - 2] == 1)
+                        {
+                            currentCase.Walls[0] = true;
+                            currentCase.Walls[2] = false;
+                            currentCase.Walls[3] = true;
+                        }
+                        //Right
+                        else if (directionHistory[directionHistory.Count - 2] == 2)
+                        {
+                            currentCase.Walls[0] = true;
+                            currentCase.Walls[2] = true;
+                            currentCase.Walls[3] = false;
+                        }
+                        //Down
+                        else if (directionHistory[directionHistory.Count - 2] == 3)
+                        {
+                            currentCase.Walls[0] = false;
+                            currentCase.Walls[2] = true;
+                            currentCase.Walls[3] = true;
+                        }
+                        break;
+                    //Down
+                    case 3:
+                        //Right
+                        if (directionHistory[directionHistory.Count - 2] == 2)
+                        {
+                            currentCase.Walls[0] = true;
+                            currentCase.Walls[1] = true;
+                            currentCase.Walls[2] = false;
+                            currentCase.Walls[3] = false;
+                        }
+                        //Down
+                        else if (directionHistory[directionHistory.Count - 2] == 3)
+                        {
+                            currentCase.Walls[0] = false;
+                            currentCase.Walls[1] = true;
+                            currentCase.Walls[2] = false;
+                            currentCase.Walls[3] = true;
+                        }
+                        //Left
+                        else if (directionHistory[directionHistory.Count - 2] == 4)
+                        {
+                            currentCase.Walls[0] = true;
+                            currentCase.Walls[1] = false;
+                            currentCase.Walls[2] = false;
+                            currentCase.Walls[3] = true;
+                        }
+                        break;
+                    //Left
+                    case 4:
+                        //UP
+                        if (directionHistory[directionHistory.Count - 2] == 1)
+                        {
+                            currentCase.Walls[0] = true;
+                            currentCase.Walls[1] = true;
+                            currentCase.Walls[2] = false;
+                            currentCase.Walls[3] = false;
+                        }
+                        //Down
+                        else if (directionHistory[directionHistory.Count - 2] == 3)
+                        {
+                            currentCase.Walls[0] = false;
+                            currentCase.Walls[1] = true;
+                            currentCase.Walls[2] = true;
+                            currentCase.Walls[3] = false;
+                        }
+                        //Left
+                        else if (directionHistory[directionHistory.Count - 2] == 4)
+                        {
+                            currentCase.Walls[0] = true;
+                            currentCase.Walls[1] = false;
+                            currentCase.Walls[2] = true;
+                            currentCase.Walls[3] = false;
+                        }
+                        break;
+                }
+            }
         }
 
         public int GetFutureDirection()
@@ -190,8 +354,8 @@ namespace GameLib
             List<int> possibleMove = new List<int>();
             Random random = new Random();
 
-            if (directionHistory.Count == 0)
-            {
+            //if (directionHistory.Count == 0)
+            //{
                 if (CanGoUp())
                 {
                     possibleMove.Add(1);
@@ -208,9 +372,10 @@ namespace GameLib
                 {
                     possibleMove.Add(4);
                 }
-            }
-            else
-            {
+            // }
+            //else
+            //{
+            /*
                 if (CanGoUp())
                 {
                     if (directionHistory.Last() != 1)
@@ -240,7 +405,8 @@ namespace GameLib
                         possibleMove.Add(4);
                     }
                 }
-            }
+                */
+            //}
             if (possibleMove.Count == 0)
             {
                 return 0;
@@ -531,6 +697,7 @@ namespace GameLib
             {
                 return 2;
             }
+            
             return destinationType;
         }
 
@@ -822,32 +989,100 @@ namespace GameLib
         /// <param name="indexY"></param>
         /// <param name="orientation"></param>
         /// <param name="destinationType">1 = Corner, 2 = DeadEnd, 3 = Crossway, 4 = Corridor, 5 = T-Shaped</param>
-        public void ChangeCaseType(int indexX, int indexY, int orientation, int destinationType)
+        public Case ChangeCaseType()
         {
-            if (indexX > 0 && indexY > 0)
+            var currentCase = board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX];
+            int counter = 0;
+            foreach (var wall in currentCase.Walls)
             {
-                if (indexX <= board.Width - 1 && indexY <= board.Height)
+                if (wall)
                 {
-                    switch (destinationType)
-                    {
-                        case 1:
-                            board.BoardContent[indexY].LineContent[indexX] = new CornerCase(indexX, indexY, orientation);
-                            break;
-                        case 2:
-                            board.BoardContent[indexY].LineContent[indexX] = new DeadEnd(indexX, indexY, orientation);
-                            break;
-                        case 3:
-                            board.BoardContent[indexY].LineContent[indexX] = new CrosswayCase(indexX, indexY, orientation);
-                            break;
-                        case 4:
-                            board.BoardContent[indexY].LineContent[indexX] = new CorridorCase(indexX, indexY, orientation);
-                            break;
-                        case 5:
-                            board.BoardContent[indexY].LineContent[indexX] = new TShapeCase(indexX, indexY, orientation);
-                            break;
-                    }
+                    counter++;
                 }
             }
+
+            switch (counter)
+            {
+                case 0:
+                    currentCase = new CrosswayCase(currentCase.IndexX,currentCase.IndexY,1);
+                    break;
+                case 1:
+                    if (currentCase.Walls[0])
+                    {
+                        currentCase = new TShapeCase(currentCase.IndexX, currentCase.IndexY,1);
+                    }
+                    else if (currentCase.Walls[1])
+                    {
+                        currentCase = new TShapeCase(currentCase.IndexX, currentCase.IndexY, 2);
+                    }
+                    else if (currentCase.Walls[2])
+                    {
+                        currentCase = new TShapeCase(currentCase.IndexX, currentCase.IndexY, 3);
+                    }
+                    else if (currentCase.Walls[3])
+                    {
+                        currentCase = new TShapeCase(currentCase.IndexX, currentCase.IndexY, 4);
+                    }
+                    break;
+                case 2:
+                    if (currentCase.Walls[0])
+                    {
+                        if (currentCase.Walls[1])
+                        {
+                           currentCase = new CornerCase(currentCase.IndexX, currentCase.IndexY,2); 
+                        }
+                        if (currentCase.Walls[2])
+                        {
+                            currentCase = new CorridorCase(currentCase.IndexX, currentCase.IndexY,2);
+                        }
+                        if (currentCase.Walls[3])
+                        {
+                            currentCase = new CornerCase(currentCase.IndexX, currentCase.IndexY, 1);
+                        }
+                    }
+
+                    else if (currentCase.Walls[2])
+                    {
+                        if (currentCase.Walls[1])
+                        {
+                            currentCase = new CornerCase(currentCase.IndexX, currentCase.IndexY, 3);
+                        }
+                        else if (currentCase.Walls[3])
+                        {
+                            currentCase = new CornerCase(currentCase.IndexX, currentCase.IndexY, 4);
+                        }
+                    }
+                    else
+                    {
+                        currentCase = new CorridorCase(currentCase.IndexX, currentCase.IndexY, 1);
+                    }
+                    break;
+                case 3:
+                    int orientation = 0;
+                    if (!currentCase.Walls[0])
+                    {
+                        orientation = 3;
+                    }
+                    if (!currentCase.Walls[1])
+                    {
+                        orientation = 4;
+                    }
+                    if (!currentCase.Walls[2])
+                    {
+                        orientation = 1;
+                    }
+                    if (!currentCase.Walls[3])
+                    {
+                        orientation = 2;
+                    }
+                    currentCase = new DeadEnd(currentCase.IndexX,currentCase.IndexY,orientation);
+                    break;
+                default:
+                    currentCase = new CrosswayCase(currentCase.IndexX, currentCase.IndexY, 1);
+                    break;
+            }
+
+            return currentCase;
 
         }
 
@@ -973,85 +1208,294 @@ namespace GameLib
 
         #region Generation Rules Method
 
+        /// <summary>
+        /// This method check if it's possible to go up.
+        /// </summary>
+        /// <returns></returns>
         public bool CanGoUp()
         {
-            if (TopCase() != null)
-            {
-                if (TopCase().GetType() != typeof(WallCase))
-                {
-                    if (currentPosition.PositionY >= 1)
-                    {
-                        if (TopCase().GetType() == typeof(VoidCase))
-                        {
-                            return true;
-                        }
 
-                        return false;
-                    }
+            
+            //Check if the top case is null
+            if (TopCase() == null) return false;
+            //Check if the case on top is a wall
+            if (TopCase().GetType() == typeof(WallCase)) return false;
+
+            //Check if the current position is equal to 0, that represent the top great border
+            if (currentPosition.PositionY < 1) return false;
+            //Check if there is something in the direction history
+            if (directionHistory.Any())
+            {
+                //Then check if the last move was down
+                if (directionHistory.Last() == 3)
+                {
                     return false;
                 }
-                return false;
             }
+            //Check if the actual case if a dead end
+            if (Self().GetType() == typeof(DeadEnd))
+            {
+                //check if the orientation is equal to 3, that represent a possible move 
+                if (Self().Orientation != 3)
+                {
+                    return false;
+                }
+            }
+            if (Self().GetType() == typeof(CornerCase))
+            {
+                if (Self().Orientation == 1 || Self().Orientation == 2)
+                {
+                    return false;
+                }
+            }
+            if (Self().GetType() == typeof(CorridorCase))
+            {
+                if (Self().Orientation != 1 )
+                {
+                    return false;
+                }
+            }
+
+            if (Self().GetType() == typeof(TShapeCase))
+            {
+                if (Self().Orientation == 1)
+                {
+                    return false;
+                }
+            }
+
+            //Check if the top case is empty
+            if (TopCase().GetType() == typeof(VoidCase))
+            {
+                return true;
+            }
+            //check if the top case is a corner with 1 or 2 as orientation
+            if (TopCase().GetType() == typeof(CornerCase) && (TopCase().Orientation == 1 || TopCase().Orientation == 2))
+            {
+                return true;
+            }
+            //Check if the top case is a dead end
+            if (TopCase().GetType() == typeof(DeadEnd) && TopCase().Orientation == 1 )
+            {
+                return true;
+            }
+
+            if (TopCase().GetType() == typeof(CrosswayCase) && TopCase().Orientation == 1 )
+            {
+                return true;
+            }
+
+            if (TopCase().GetType() == typeof(CorridorCase) && TopCase().Orientation == 1)
+            {
+                return true;
+            }
+
+            if (TopCase().GetType() == typeof(TShapeCase) && (TopCase().Orientation == 1 || TopCase().Orientation == 2 || TopCase().Orientation == 4))
+            {
+                return true;
+            }
+
             return false;
         }
         public bool CanGoRight()
         {
-            if (RightCase() != null)
+            if (RightCase() == null) return false;
+            if (RightCase().GetType() == typeof(WallCase)) return false;
+            if (currentPosition.PositionX >= board.Width - 1) return false;
+            if (Self().GetType() == typeof(DeadEnd) && (Self().Orientation != 4)) return false;
+            if (directionHistory.Any())
             {
-                if (RightCase().GetType() != typeof(WallCase))
+                if (directionHistory.Last() == 4)
                 {
-                    if (currentPosition.PositionX < board.Width-1)
-                    {
-                        if (RightCase().GetType() == typeof(VoidCase) || RightCase().GetType() == typeof(DeadEnd))
-                        {
-                            return true;
-                        }
-                        return false;
-                    }
                     return false;
                 }
-                return false;
             }
+            if (Self().GetType() == typeof(CornerCase))
+            {
+                if (Self().Orientation == 2 || Self().Orientation == 3)
+                {
+                    return false;
+                }
+            }
+            if (Self().GetType() == typeof(CorridorCase))
+            {
+                if (Self().Orientation != 2)
+                {
+                    return false;
+                }
+            }
+
+            if (Self().GetType() == typeof(TShapeCase))
+            {
+                if (Self().Orientation == 2)
+                {
+                    return false;
+                }
+            }
+            if (RightCase().GetType() == typeof(VoidCase))
+            {
+                return true;
+            }
+
+            if (RightCase().GetType() == typeof(CornerCase) && (RightCase().Orientation == 2 || RightCase().Orientation == 3))
+            {
+                return true;
+            }
+
+            if (RightCase().GetType() == typeof(DeadEnd) && RightCase().Orientation == 2)
+            {
+                return true;
+            }
+
+            if (RightCase().GetType() == typeof(CrosswayCase) && RightCase().Orientation == 1)
+            {
+                return true;
+            }
+
+            if (RightCase().GetType() == typeof(CorridorCase) && RightCase().Orientation == 2)
+            {
+                return true;
+            }
+
+            if (RightCase().GetType() == typeof(TShapeCase) && (RightCase().Orientation == 1 || RightCase().Orientation == 2 || RightCase().Orientation == 3))
+            {
+                return true;
+            }
+
             return false;
         }
         public bool CanGoDown()
         {
-            if (BottomCase() != null)
+            if (BottomCase() == null) return false;
+            if (BottomCase().GetType() == typeof(WallCase)) return false;
+            if (currentPosition.PositionY >= board.Height - 1) return false;
+            if (Self().GetType() == typeof(DeadEnd) && (Self().Orientation != 1)) return false;
+            if (directionHistory.Any())
             {
-                if (BottomCase().GetType() != typeof(WallCase))
+                if (directionHistory.Last() == 1)
                 {
-                    if (currentPosition.PositionY < board.Height-1)
-                    {
-                        if (BottomCase().GetType() == typeof(VoidCase))
-                        {
-                            return true;
-                        }
-                        return false;
-                    }
                     return false;
                 }
-                return false;
+            }
+            if (Self().GetType() == typeof(CornerCase))
+            {
+                if (Self().Orientation == 3 || Self().Orientation == 4)
+                {
+                    return false;
+                }
+            }
+            if (Self().GetType() == typeof(CorridorCase))
+            {
+                if (Self().Orientation != 1)
+                {
+                    return false;
+                }
+            }
+
+            if (Self().GetType() == typeof(TShapeCase))
+            {
+                if (Self().Orientation == 3)
+                {
+                    return false;
+                }
+            }
+            if (BottomCase().GetType() == typeof(VoidCase))
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(CornerCase) &&(BottomCase().Orientation == 3 || BottomCase().Orientation == 4))
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(DeadEnd) && BottomCase().Orientation == 3 )
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(CrosswayCase) && BottomCase().Orientation == 1)
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(CorridorCase) && BottomCase().Orientation == 1)
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(TShapeCase) && BottomCase().Orientation != 1)
+            {
+                return true;
             }
             return false;
         }
         public bool CanGoLeft()
         {
-            if (LeftCase() != null)
+            
+            if (BottomCase() == null) return false;
+            if (BottomCase().GetType() == typeof(WallCase)) return false;
+            if (currentPosition.PositionX < 1) return false;
+            if (Self().GetType() == typeof(DeadEnd) && (Self().Orientation != 2)) return false;
+            if (directionHistory.Any())
             {
-                if (LeftCase().GetType() != typeof(WallCase))
+                if (directionHistory.Last() == 2)
                 {
-                    if (currentPosition.PositionX >= 1)
-                    {
-                        if (LeftCase().GetType() == typeof(VoidCase))
-                        {
-                            return true;
-                        }
-                        return false;
-                    }
                     return false;
                 }
-                return false;
             }
+            if (Self().GetType() == typeof(CornerCase))
+            {
+                if (Self().Orientation == 1 || Self().Orientation == 4)
+                {
+                    return false;
+                }
+            }
+            if (Self().GetType() == typeof(CorridorCase))
+            {
+                if (Self().Orientation != 2)
+                {
+                    return false;
+                }
+            }
+
+            if (Self().GetType() == typeof(TShapeCase))
+            {
+                if (Self().Orientation == 4)
+                {
+                    return false;
+                }
+            }
+            if (BottomCase().GetType() == typeof(VoidCase))
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(CornerCase) && (BottomCase().Orientation == 1 || BottomCase().Orientation == 4))
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(DeadEnd) && BottomCase().Orientation == 4)
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(CrosswayCase) && BottomCase().Orientation == 1)
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(CorridorCase) && BottomCase().Orientation == 2)
+            {
+                return true;
+            }
+
+            if (BottomCase().GetType() == typeof(TShapeCase) && BottomCase().Orientation != 2)
+            {
+
+            }
+
             return false;
         }
 

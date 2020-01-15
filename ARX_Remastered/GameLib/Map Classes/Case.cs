@@ -57,7 +57,7 @@ namespace GameLib
             return 0;
         }
 
-        public void assignWall()
+        public void AssignWall()
         {
             if (GetType() == typeof(CornerCase))
             {
@@ -184,6 +184,20 @@ namespace GameLib
                         walls[3] = true;
                         break;
                 }
+            }
+            if (GetType() == typeof(StartCase))
+            {
+                walls[0] = false;
+                walls[1] = false;
+                walls[2] = false;
+                walls[3] = false;
+            }
+            if (GetType() == typeof(EndCase))
+            {
+                walls[0] = false;
+                walls[1] = false;
+                walls[2] = false;
+                walls[3] = false;
             }
         }
         public int IndexX

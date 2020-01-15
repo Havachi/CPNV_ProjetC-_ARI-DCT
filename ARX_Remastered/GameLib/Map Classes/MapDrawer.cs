@@ -51,6 +51,8 @@ namespace GameLib
             Image tShapeImage = Image.FromFile($@"{mapAssetsPath}\T\T{caseWidth}x{caseHeight}.bmp");
             Image startImage = Image.FromFile($@"{mapAssetsPath}\Start\Start{caseWidth}x{caseHeight}.bmp");
 
+            Stream stream = new FileStream($@"{mapSavePath}\Map{mapImage.ImageWidth}x{mapImage.ImageHeight}.bmp", FileMode.Create);
+
             graphics.FillRectangle(Brushes.White,posX,posY,mapImage.ImageWidth,mapImage.ImageHeight);
             if (useDrawByType)
             {
@@ -67,6 +69,7 @@ namespace GameLib
                         else if (lineCase.GetType() == typeof(DeadEnd))
                         {
                             imageToDraw = deadEndImage;
+                            
                             // graphics.DrawImage(deadEndImage,posX,posY, caseWidth, caseHeight);
                             //graphics.FillRectangle(Brushes.Yellow, posX, posY, caseWidth, caseHeight);
                         }
@@ -142,6 +145,7 @@ namespace GameLib
             }
             else
             {
+                
                 verticalStartPoint.X = 0;
                 verticalStartPoint.Y = 0;
 
@@ -153,52 +157,89 @@ namespace GameLib
 
                 horizontalEndPoint.X = caseWidth;
                 horizontalEndPoint.Y = 0;
-
-
+                Case lastCase = null;
+                int counter = 0;
                 foreach (var boardLine in board.BoardContent)
                 {
                     foreach (var aCase in boardLine.LineContent)
                     {
-                       aCase.assignWall();
-                       if (aCase.Walls[0])
-                       {
-                           graphics.DrawLine(Pens.Black,horizontalStartPoint,horizontalEndPoint);
-                       }
-                       if (aCase.Walls[1])
-                       {
-                           graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
-                       }
-                       if (aCase.Walls[2])
-                       {
-                           graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
-                       }
-                       if (aCase.Walls[3])
-                       {
-                           graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
-                       }
+                        
+                        //aCase.AssignWall();
+                        if (aCase.Walls[0])
+                        {
+                            graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
+                            mapImage.MapBitmap.Save(stream, ImageFormat.Bmp);
+                        }
+                        else
+                        {
+                            //graphics.DrawLine(Pens.Yellow, horizontalStartPoint, horizontalEndPoint);
+                        }
 
-                       horizontalStartPoint.X += caseWidth;
-                       horizontalEndPoint.X += caseWidth;
+                        if (aCase.Walls[1])
+                        {
+                            verticalStartPoint.X += caseWidth;
+                            verticalEndPoint.X += caseWidth;
+                            graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
+                            verticalStartPoint.X -= caseWidth;
+                            verticalEndPoint.X -= caseWidth;
+                            mapImage.MapBitmap.Save(stream, ImageFormat.Bmp);
+                        }
+                        else
+                        {
+                            //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
+                        }
 
-                       verticalStartPoint.X += caseWidth;
-                       verticalEndPoint.X += caseWidth;
+                        if (aCase.Walls[2])
+                        {
+                            horizontalStartPoint.Y += caseHeight;
+                            horizontalEndPoint.Y += caseHeight;
+                            graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
+                            horizontalStartPoint.Y -= caseHeight;
+                            horizontalEndPoint.Y -= caseHeight;
+                            mapImage.MapBitmap.Save(stream, ImageFormat.Bmp);
+                        }
+                        else
+                        {
+                            
+                             //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
+                        }
+
+                        if (aCase.Walls[3])
+                        {
+                            graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
+                            mapImage.MapBitmap.Save(stream, ImageFormat.Bmp);
+                        }
+                        else
+                        {
+                            //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
+                        }
+
+
+
+                        horizontalStartPoint.X += caseWidth;
+                        horizontalEndPoint.X += caseWidth;
+
+                        verticalStartPoint.X += caseWidth;
+                        verticalEndPoint.X += caseWidth;
+                        lastCase = aCase;
                     }
 
                     horizontalStartPoint.X = 0;
-                    horizontalStartPoint.Y += caseHeight;
+                    horizontalStartPoint.Y += caseHeight ;
 
-                    horizontalEndPoint.X = caseWidth;
+                    horizontalEndPoint.X = horizontalStartPoint.X + caseWidth;
                     horizontalEndPoint.Y += caseHeight;
 
                     verticalStartPoint.X = 0;
-                    verticalStartPoint.Y += caseHeight;
+                    verticalStartPoint.Y += caseHeight ;
 
                     verticalEndPoint.X = 0;
                     verticalEndPoint.Y += verticalStartPoint.Y + caseHeight;
+                    
                 }
             }
 
-            Stream stream = new FileStream($@"{mapSavePath}\Map{mapImage.ImageWidth}x{mapImage.ImageHeight}.bmp", FileMode.Create);
+
             mapImage.MapBitmap.Save(stream,ImageFormat.Bmp);
 
             return mapImage;

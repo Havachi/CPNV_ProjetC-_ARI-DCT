@@ -32,6 +32,54 @@ namespace GameLib
         {
             boardContent.Add(boardLine);
         }
+
+        public int Count(int typeOfCount = 0)
+        {
+            int count = 0;
+            
+            //count the number of case, default case
+            if (typeOfCount == 0)
+            {
+                foreach (var boardLine in BoardContent)
+                {
+                    foreach (var aCase in boardLine.LineContent)
+                    {
+                        count++;
+                    }
+                }
+            }
+            //count the number of visited cases
+            else if (typeOfCount == 1)
+            {
+                foreach (var boardLine in BoardContent)
+                {
+                    foreach (var aCase in boardLine.LineContent)
+                    {
+                        if (aCase.GetType() != typeof(VoidCase))
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+            //count the number of unvisited cases
+            else if (typeOfCount == 2)
+            {
+                foreach (var boardLine in BoardContent)
+                {
+                    foreach (var aCase in boardLine.LineContent)
+                    {
+                        if (aCase.GetType() == typeof(VoidCase))
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+
+            return count;
+        }
+
         public int Height
         {
             get { return height; }
