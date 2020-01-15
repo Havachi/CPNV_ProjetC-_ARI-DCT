@@ -80,6 +80,21 @@ namespace GameLib
             return count;
         }
 
+        public bool ContainVoid()
+        {
+            foreach (var boardLine in BoardContent)
+            {
+                foreach (var aCase in boardLine.LineContent)
+                {
+                    if (aCase.GetType() == typeof(VoidCase))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
         public int Height
         {
             get { return height; }
