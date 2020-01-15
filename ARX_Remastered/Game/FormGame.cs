@@ -33,6 +33,8 @@ namespace Game
         private string objectiv;
         private string imagename;
         private GameLib.Game currentGame = new GameLib.Game();
+        private GameLib.Player player = new GameLib.Player();
+        private Position position;
 
         public FormGame(string lblUsername)
         {
@@ -41,6 +43,7 @@ namespace Game
             inFirstMenu = true;
             selectedPixelColor = Properties.Resources.Selected.GetPixel(50, 50);
             lblGameUserLogged.Text = @"Logged as : " + lblUsername;
+
             //TEMP
             objectiv = "TEMP Trouvez la sortie ";
             lblPrimaryObjectiv.Text = @"Objectif Principal : " + objectiv;
@@ -564,7 +567,11 @@ namespace Game
             };
             return matches;
         }
-        
+        public Position Position
+        {
+            get{ return position;}
+            set { position = value; }
+        }
         public string CheckActivePbx()
         {
             ///Fuction to know wich slot is active

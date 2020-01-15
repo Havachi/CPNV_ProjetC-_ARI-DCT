@@ -22,13 +22,11 @@ namespace GameLib
         public int PositionX
         {
             get { return positionX; }
-            //TEMP
             set { positionX = value; }
         }
         public int PositionY
         {
             get { return positionY;}
-            //TEMP
             set { positionY =value; }
         }
     }
