@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace GameLib
         
         private MapImage mapImage = new MapImage();
         private Graphics graphics;
+
+        public HatchStyle BorderStyle;
         //10,20,50 or 100
         private int caseWidth = 20;
         private int caseHeight = 20;
@@ -165,58 +168,66 @@ namespace GameLib
                 {
                     foreach (var aCase in boardLine.LineContent)
                     {
-                        
-                        //aCase.AssignWall();
-                        if (aCase.Walls[0])
+                        if (aCase.GetType() == typeof(WallCase))
                         {
-                            graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
-                            mapImage.MapBitmap.Save(stream, ImageFormat.Bmp);
+                            Rectangle r = new Rectangle(horizontalStartPoint.X,horizontalStartPoint.Y, caseWidth,caseHeight);
+                            graphics.FillRectangle(new HatchBrush(BorderStyle, Color.Black, Color.White),r);
+                        }
+                        else if (aCase.GetType() == typeof(StartCase))
+                        {
+                            Rectangle r = new Rectangle(horizontalStartPoint.X, horizontalStartPoint.Y, caseWidth, caseHeight);
+                            graphics.FillRectangle(new HatchBrush(HatchStyle.DiagonalBrick, Color.Black, Color.LawnGreen), r);
                         }
                         else
                         {
-                            //graphics.DrawLine(Pens.Yellow, horizontalStartPoint, horizontalEndPoint);
-                        }
+                            //aCase.AssignWall();
+                            if (aCase.Walls[0])
+                            {
+                                graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
 
-                        if (aCase.Walls[1])
-                        {
-                            verticalStartPoint.X += caseWidth;
-                            verticalEndPoint.X += caseWidth;
-                            graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
-                            verticalStartPoint.X -= caseWidth;
-                            verticalEndPoint.X -= caseWidth;
-                            mapImage.MapBitmap.Save(stream, ImageFormat.Bmp);
-                        }
-                        else
-                        {
-                            //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
-                        }
+                            }
+                            else
+                            {
+                                //graphics.DrawLine(Pens.Yellow, horizontalStartPoint, horizontalEndPoint);
+                            }
 
-                        if (aCase.Walls[2])
-                        {
-                            horizontalStartPoint.Y += caseHeight;
-                            horizontalEndPoint.Y += caseHeight;
-                            graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
-                            horizontalStartPoint.Y -= caseHeight;
-                            horizontalEndPoint.Y -= caseHeight;
-                            mapImage.MapBitmap.Save(stream, ImageFormat.Bmp);
-                        }
-                        else
-                        {
-                            
-                             //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
-                        }
+                            if (aCase.Walls[1])
+                            {
+                                verticalStartPoint.X += caseWidth;
+                                verticalEndPoint.X += caseWidth;
+                                graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
+                                verticalStartPoint.X -= caseWidth;
+                                verticalEndPoint.X -= caseWidth;
+                            }
+                            else
+                            {
+                                //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
+                            }
 
-                        if (aCase.Walls[3])
-                        {
-                            graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
-                            mapImage.MapBitmap.Save(stream, ImageFormat.Bmp);
-                        }
-                        else
-                        {
-                            //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
-                        }
+                            if (aCase.Walls[2])
+                            {
+                                horizontalStartPoint.Y += caseHeight;
+                                horizontalEndPoint.Y += caseHeight;
+                                graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
+                                horizontalStartPoint.Y -= caseHeight;
+                                horizontalEndPoint.Y -= caseHeight;
+                            }
+                            else
+                            {
 
+                                //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
+                            }
 
+                            if (aCase.Walls[3])
+                            {
+                                graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
+                            }
+                            else
+                            {
+                                //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
+                            }
+
+                        }
 
                         horizontalStartPoint.X += caseWidth;
                         horizontalEndPoint.X += caseWidth;
@@ -245,6 +256,11 @@ namespace GameLib
             mapImage.MapBitmap.Save(stream,ImageFormat.Bmp);
             stream.Close();
             return mapImage;
+        }
+
+        public void ChangeStyle()
+        {
+           
         }
     }
 }

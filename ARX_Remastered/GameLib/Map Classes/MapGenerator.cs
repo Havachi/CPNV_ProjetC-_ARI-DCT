@@ -15,6 +15,8 @@ namespace GameLib
         private Board board;
         private Case nextCase;
         private Position currentPosition;
+        Stack<Case> activeCases = new Stack<Case>();
+
 
         private string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
         //private string projectPath = System.IO.Directory.GetCurrentDirectory();
@@ -25,6 +27,7 @@ namespace GameLib
         
         private int width;
         private int height;
+        private int nbVisitedCases = 0;
 
         public MapGenerator(bool randomGeneration)
         {
@@ -91,10 +94,12 @@ namespace GameLib
                     if (i == 0 || i == borderBoard.Height-1)
                     {
                         borderBoard.BoardContent[i].LineContent[j] = new WallCase(indexX, indexY);
+
                     }
                     if (j == 0 || j == borderBoard.Width-1)
                     {
                         borderBoard.BoardContent[i].LineContent[j] = new WallCase(indexX, indexY);
+
                     }
                     indexX++;
                 }
@@ -114,7 +119,7 @@ namespace GameLib
             //todo generate borders
             //todo create rules to make the map playable
 
-            int nbVisitedCases = 0;
+            
 
             //Generate an empty board with void case
             board = GenerateVoidBoard(board.Width, board.Height);
@@ -134,72 +139,74 @@ namespace GameLib
             
             currentPosition = startPosition;
 
-            Stack<Case> activeCases = new Stack<Case>();
+            
             board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX] = new StartCase(currentPosition.PositionX,currentPosition.PositionY,1);
             activeCases.Push(board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX]);
             int nbUnvisitedCases = board.Count();
             while (nbVisitedCases < board.Width * board.Height)
             {
-                
-                var currentCase = board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX];
-                var futureDirection = GetFutureDirection();
-
-                //currentCase = OpenCurrentCase(futureDirection);
-                //board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX] = currentCase;
-
-                switch (futureDirection)
-                {
-                    case 0:
-                        activeCases.Pop();
-                        if (activeCases.Count != 0)
-                        {
-                            currentPosition.PositionX = activeCases.First().IndexX;
-                            currentPosition.PositionY = activeCases.First().IndexY;
-                        }
-                        break;
-                    //Case Up
-                    case 1:
-                        currentPosition.PositionY--;
-                        ChangeCaseWalls(currentCase, futureDirection);
-                        currentCase = ChangeCaseType();
-                        activeCases.Push(currentCase);
-                        nbVisitedCases++;
-                        
-                        break;
-                    //Case Right
-                    case 2:
-                        currentPosition.PositionX++;
-                        ChangeCaseWalls(currentCase, futureDirection);
-                        currentCase = ChangeCaseType();
-                        activeCases.Push(currentCase);
-                        nbVisitedCases++;
-                        
-                        break;
-                    //Case Down
-                    case 3:
-                        currentPosition.PositionY++;
-                        ChangeCaseWalls(currentCase, futureDirection);
-                        currentCase = ChangeCaseType();
-                        activeCases.Push(currentCase);
-                        nbVisitedCases++;
-                       
-                        break;
-                    //case left
-                    case 4:
-                        currentPosition.PositionX--;
-                        ChangeCaseWalls(currentCase, futureDirection);
-                        currentCase = ChangeCaseType();
-                        activeCases.Push(currentCase);
-                        nbVisitedCases++;
-                        
-                        break;
-                }
-
+                MoveAndChange();
             }
 
             return board;
         }
 
+        public void MoveAndChange()
+        {
+            var currentCase = board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX];
+            var futureDirection = GetFutureDirection();
+
+            //currentCase = OpenCurrentCase(futureDirection);
+            //board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX] = currentCase;
+
+            switch (futureDirection)
+            {
+                case 0:
+                    activeCases.Pop();
+                    if (activeCases.Count != 0)
+                    {
+                        currentPosition.PositionX = activeCases.First().IndexX;
+                        currentPosition.PositionY = activeCases.First().IndexY;
+                    }
+                    break;
+                //Case Up
+                case 1:
+                    currentPosition.PositionY--;
+                    ChangeCaseWalls(currentCase, futureDirection);
+                    currentCase = ChangeCaseType();
+                    activeCases.Push(currentCase);
+                    nbVisitedCases++;
+
+                    break;
+                //Case Right
+                case 2:
+                    currentPosition.PositionX++;
+                    ChangeCaseWalls(currentCase, futureDirection);
+                    currentCase = ChangeCaseType();
+                    activeCases.Push(currentCase);
+                    nbVisitedCases++;
+
+                    break;
+                //Case Down
+                case 3:
+                    currentPosition.PositionY++;
+                    ChangeCaseWalls(currentCase, futureDirection);
+                    currentCase = ChangeCaseType();
+                    activeCases.Push(currentCase);
+                    nbVisitedCases++;
+
+                    break;
+                //case left
+                case 4:
+                    currentPosition.PositionX--;
+                    ChangeCaseWalls(currentCase, futureDirection);
+                    currentCase = ChangeCaseType();
+                    activeCases.Push(currentCase);
+                    nbVisitedCases++;
+
+                    break;
+            }
+        }
         public void ChangeCaseWalls(Case currentCase, int futureDirection)
         {
             if (currentCase.GetType() == typeof(StartCase))
