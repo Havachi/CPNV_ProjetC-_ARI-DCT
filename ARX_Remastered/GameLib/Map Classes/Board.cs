@@ -13,6 +13,8 @@ namespace GameLib
         private int width;
         private List<BoardLine> boardContent;
 
+        private Position startPosition;
+        private Position endPosition;
 
         public Board()
         {
@@ -110,6 +112,15 @@ namespace GameLib
             get { return boardContent; }
             set { boardContent = value; } 
         }
-
+        public Position StartPosition
+        {
+            get { return startPosition; }
+            set { startPosition = value; }
+        }
+        public Position EndPosition
+        {
+            get { return endPosition; }
+            set { endPosition = value; }
+        }
     }
 }

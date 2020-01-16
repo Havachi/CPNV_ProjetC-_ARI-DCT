@@ -21,7 +21,6 @@ namespace ARX_Tests.VisualTests
         public ProceduralGenerationShowImage()
         {
             InitializeComponent();
-
         }
 
 
@@ -32,6 +31,10 @@ namespace ARX_Tests.VisualTests
             string debugprojectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
             string outputFolder = $@"{debugprojectPath}\Outputs";
             pbxMapImage.ImageLocation = $@"{outputFolder}\Map600x600.bmp";
+            lblStartX.Text = map.GameBoard.StartPosition.PositionX.ToString();
+            lblStartY.Text = map.GameBoard.StartPosition.PositionY.ToString();
+            lblEndX.Text = map.GameBoard.EndPosition.PositionX.ToString();
+            lblEndY.Text = map.GameBoard.EndPosition.PositionY.ToString();
 
         }
 
