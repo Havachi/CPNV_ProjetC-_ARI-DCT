@@ -14,9 +14,12 @@ namespace GameLib
     {
         private Board board;
         private Case nextCase;
+        private Case currentCase;
         private Position currentPosition;
         Stack<Case> activeCases = new Stack<Case>();
 
+        private Position startPosition;
+        private Position endPosition;
 
         private string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
         //private string projectPath = System.IO.Directory.GetCurrentDirectory();
@@ -116,20 +119,12 @@ namespace GameLib
         public Board GenerateMap()
         {
 
-            //todo generate borders
-            //todo create rules to make the map playable
-
-            
-
             //Generate an empty board with void case
             board = GenerateVoidBoard(board.Width, board.Height);
             board = GenerateBorders(board);
             //Choose a random Starting point
             Random random = new Random();
 
-
-
-            Position startPosition;
             do
             {
                 int randX = random.Next(board.Width);
@@ -138,22 +133,26 @@ namespace GameLib
             } while (board.BoardContent[startPosition.PositionY].LineContent[startPosition.PositionX].GetType() != typeof(VoidCase));
             
             currentPosition = startPosition;
-
             
-            board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX] = new StartCase(currentPosition.PositionX,currentPosition.PositionY,1);
-            activeCases.Push(board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX]);
+            board.BoardContent[startPosition .PositionY].LineContent[startPosition .PositionX] = new StartCase(startPosition.PositionX,startPosition .PositionY,1);
+            activeCases.Push(board.BoardContent[startPosition .PositionY].LineContent[startPosition .PositionX]);
             int nbUnvisitedCases = board.Count();
             while (nbVisitedCases < board.Width * board.Height)
             {
                 MoveAndChange();
             }
-            board.BoardContent[activeCases.Last().IndexY].LineContent[activeCases.Last().IndexX] = new EndCase(activeCases.Last().IndexX, activeCases.Last().IndexY,1);
+            board.BoardContent[activeCases.First().IndexY].LineContent[activeCases.First().IndexX] = new EndCase(activeCases.First().IndexX, activeCases.First().IndexY,1);
+            endPosition = new Position(activeCases.First().IndexX, activeCases.First().IndexY);
+
+            board.StartPosition = startPosition;
+            board.EndPosition = endPosition;
             return board;
+
         }
 
         public void MoveAndChange()
         {
-            var currentCase = board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX];
+            currentCase = board.BoardContent[currentPosition.PositionY].LineContent[currentPosition.PositionX];
             var futureDirection = GetFutureDirection();
 
             //currentCase = OpenCurrentCase(futureDirection);
@@ -162,17 +161,12 @@ namespace GameLib
             switch (futureDirection)
             {
                 case 0:
-                    activeCases.Pop();
-                    if (activeCases.Count != 0)
-                    {
-                        currentPosition.PositionX = activeCases.First().IndexX;
-                        currentPosition.PositionY = activeCases.First().IndexY;
-                    }
+                    BackTrack();
                     break;
                 //Case Up
                 case 1:
                     currentPosition.PositionY--;
-                    ChangeCaseWalls(currentCase, futureDirection);
+                    ChangeCaseWalls(futureDirection);
                     currentCase = ChangeCaseType();
                     activeCases.Push(currentCase);
                     nbVisitedCases++;
@@ -181,7 +175,7 @@ namespace GameLib
                 //Case Right
                 case 2:
                     currentPosition.PositionX++;
-                    ChangeCaseWalls(currentCase, futureDirection);
+                    ChangeCaseWalls(futureDirection);
                     currentCase = ChangeCaseType();
                     activeCases.Push(currentCase);
                     nbVisitedCases++;
@@ -190,7 +184,7 @@ namespace GameLib
                 //Case Down
                 case 3:
                     currentPosition.PositionY++;
-                    ChangeCaseWalls(currentCase, futureDirection);
+                    ChangeCaseWalls(futureDirection);
                     currentCase = ChangeCaseType();
                     activeCases.Push(currentCase);
                     nbVisitedCases++;
@@ -199,7 +193,7 @@ namespace GameLib
                 //case left
                 case 4:
                     currentPosition.PositionX--;
-                    ChangeCaseWalls(currentCase, futureDirection);
+                    ChangeCaseWalls(futureDirection);
                     currentCase = ChangeCaseType();
                     activeCases.Push(currentCase);
                     nbVisitedCases++;
@@ -207,9 +201,28 @@ namespace GameLib
                     break;
             }
         }
-        public void ChangeCaseWalls(Case currentCase, int futureDirection)
+
+        public void BackTrack()
+        {
+            activeCases.Pop();
+            if (activeCases.Count != 0)
+            {
+                currentPosition.PositionX = activeCases.First().IndexX;
+                currentPosition.PositionY = activeCases.First().IndexY;
+
+            }
+        }
+        public void ChangeCaseWalls(int futureDirection)
         {
             if (currentCase.GetType() == typeof(StartCase))
+            {
+                currentCase.Walls[0] = false;
+                currentCase.Walls[1] = false;
+                currentCase.Walls[2] = false;
+                currentCase.Walls[3] = false;
+                return;
+            }
+            if (currentCase.GetType() == typeof(EndCase))
             {
                 currentCase.Walls[0] = false;
                 currentCase.Walls[1] = false;
@@ -1523,6 +1536,14 @@ namespace GameLib
             get { return board; }
         }
 
+        public Position StartPosition
+        {
+            get { return startPosition; }
+        }
+        public Position EndPosition
+        {
+            get { return endPosition; }
+        }
         #endregion
 
     }

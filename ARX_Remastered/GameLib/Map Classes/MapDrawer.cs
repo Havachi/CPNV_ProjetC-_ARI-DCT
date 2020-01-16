@@ -19,7 +19,7 @@ namespace GameLib
         private MapImage mapImage = new MapImage();
         private Graphics graphics;
 
-        public HatchStyle borderStyle = HatchStyle.Plaid;
+        public HatchStyle wallStyle = HatchStyle.Plaid;
         //10,20,50 or 100
         private int caseWidth = 20;
         private int caseHeight = 20;
@@ -50,6 +50,7 @@ namespace GameLib
             string mapAssetsPath = $@"{projectPath}\Assets\Map";
             string mapSavePath = $@"{projectPath}\Outputs";
 
+            //Images path
             Image cornerImage = Image.FromFile($@"{mapAssetsPath}\Corner\Corner{caseWidth}x{caseHeight}.bmp");
             Image corridorImage = Image.FromFile($@"{mapAssetsPath}\Corridor\Corridor{caseWidth}x{caseHeight}.bmp");
             Image crossWayImage = Image.FromFile($@"{mapAssetsPath}\CrossWay\Crossway{caseWidth}x{caseHeight}.bmp");
@@ -57,59 +58,64 @@ namespace GameLib
             Image tShapeImage = Image.FromFile($@"{mapAssetsPath}\T\T{caseWidth}x{caseHeight}.bmp");
             Image startImage = Image.FromFile($@"{mapAssetsPath}\Start\Start{caseWidth}x{caseHeight}.bmp");
 
+            //stream for the savingpath
             Stream stream = new FileStream($@"{mapSavePath}\Map{mapImage.ImageWidth}x{mapImage.ImageHeight}.bmp", FileMode.Create);
+
+            //drawing tools
             HatchBrush brick = new HatchBrush(HatchStyle.HorizontalBrick, Color.Aquamarine, Color.Gray);
             HatchBrush other = new HatchBrush(HatchStyle.Trellis, Color.Black, Color.Transparent);
+            HatchStyle terrainStyle = HatchStyle.DarkDownwardDiagonal;
+            HatchStyle startStyle = HatchStyle.Sphere;
+
             Pen horizontalLinePen;
             Pen verticalLinePen;
 
+            //Draw the background
             graphics.FillRectangle(other, posX,posY,mapImage.ImageWidth,mapImage.ImageHeight);
+
             if (useDrawByType)
             {
                 foreach (var boardLine in board.BoardContent)
                 {
                     foreach (var lineCase in boardLine.LineContent)
                     {
-                        Image imageToDraw = null;
+                        Rectangle r = new Rectangle(lineCase.IndexX * caseWidth, lineCase.IndexY * caseHeight, caseWidth, caseHeight);
                         if (lineCase.GetType() == typeof(WallCase))
                         {
-                            graphics.FillRectangle(Brushes.Black, posX, posY, caseWidth, caseHeight);
+                            graphics.FillRectangle(new HatchBrush(wallStyle, Color.Black, Color.DimGray), r);
                         }
 
                         else if (lineCase.GetType() == typeof(DeadEnd))
                         {
-                            imageToDraw = deadEndImage;
-                            
-                            // graphics.DrawImage(deadEndImage,posX,posY, caseWidth, caseHeight);
-                            //graphics.FillRectangle(Brushes.Yellow, posX, posY, caseWidth, caseHeight);
+                            graphics.FillRectangle(new HatchBrush(terrainStyle, Color.White, Color.DimGray), r);
                         }
                         else if (lineCase.GetType() == typeof(CornerCase))
                         {
-                            imageToDraw = cornerImage;
+                            graphics.FillRectangle(new HatchBrush(terrainStyle, Color.White, Color.DimGray), r);
                             //graphics.DrawImage(cornerImage, posX, posY, caseWidth, caseHeight);
                             //graphics.FillRectangle(Brushes.Violet, posX, posY, caseWidth, caseHeight);
                         }
                         else if (lineCase.GetType() == typeof(CrosswayCase))
                         {
-                            imageToDraw = crossWayImage;
+                            graphics.FillRectangle(new HatchBrush(terrainStyle, Color.White, Color.DimGray), r);
                             //graphics.DrawImage(crossWayImage, posX, posY, caseWidth, caseHeight);
                             //graphics.FillRectangle(Brushes.DarkOliveGreen, posX, posY, caseWidth, caseHeight);
                         }
                         else if (lineCase.GetType() == typeof(CorridorCase))
                         {
-                            imageToDraw = corridorImage;
+                            graphics.FillRectangle(new HatchBrush(terrainStyle, Color.White, Color.DimGray), r);
                             //graphics.DrawImage(corridorImage, posX, posY, caseWidth, caseHeight);
                             //graphics.FillRectangle(Brushes.White, posX, posY, caseWidth, caseHeight);
                         }
                         else if (lineCase.GetType() == typeof(TShapeCase))
                         {
-                            imageToDraw = tShapeImage;
+                            graphics.FillRectangle(new HatchBrush(terrainStyle, Color.White, Color.DimGray), r);
                             //graphics.DrawImage(tShapeImage, posX, posY, caseWidth, caseHeight);
                             //graphics.FillRectangle(Brushes.Blue, posX, posY, caseWidth, caseHeight);
                         }
                         else if (lineCase.GetType() == typeof(StartCase))
                         {
-                            imageToDraw = startImage;
+                            graphics.FillRectangle(new HatchBrush(startStyle, Color.LawnGreen, Color.White), r);
                         }
                         else if (lineCase.GetType() == typeof(EndCase))
                         {
@@ -123,7 +129,7 @@ namespace GameLib
                             graphics.FillRectangle(Brushes.Transparent, posX, posY, caseWidth, caseHeight);
                         }
 
-
+                        /*
                         if (imageToDraw != null)
                         {
                             switch (lineCase.Orientation)
@@ -144,7 +150,7 @@ namespace GameLib
 
                             graphics.DrawImage(imageToDraw, posX, posY, caseWidth, caseHeight);
                         }
-
+                        */
 
                         posX += caseWidth + caseSeparation;
                     }
@@ -179,7 +185,7 @@ namespace GameLib
                         if (aCase.GetType() == typeof(WallCase))
                         {
                             Rectangle r = new Rectangle(horizontalStartPoint.X,horizontalStartPoint.Y, caseWidth,caseHeight);
-                            graphics.FillRectangle(new HatchBrush(borderStyle, Color.Black, Color.DimGray),r);
+                            graphics.FillRectangle(new HatchBrush(wallStyle, Color.Black, Color.DimGray),r);
                         }
                         else if (aCase.GetType() == typeof(StartCase))
                         {
