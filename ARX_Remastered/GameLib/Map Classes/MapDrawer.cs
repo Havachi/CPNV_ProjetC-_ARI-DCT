@@ -14,6 +14,7 @@ namespace GameLib
     /// </summary>
     public class MapDrawer
     {
+        
         private MapImage mapImage = new MapImage();
         private Graphics graphics;
         //10,20,50 or 100
@@ -31,6 +32,7 @@ namespace GameLib
 
         public MapImage DrawMap(Board board)
         {
+            
             int posX = 0;
             int posY = 0;
 

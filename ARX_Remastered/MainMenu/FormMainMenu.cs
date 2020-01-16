@@ -40,7 +40,7 @@ namespace MainMenu
                 /// TODO Call event and item generator
 
                 FormGame frmGame = new FormGame(lblUsername);
-                Show(); 
+                frmGame.ShowDialog();
             }
         }
 

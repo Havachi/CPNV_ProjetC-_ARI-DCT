@@ -37,7 +37,8 @@ namespace Game
 
         public FormGame(string lblUsername)
         {
-            
+            //
+
             InitializeComponent();
             inFirstMenu = true;
             selectedPixelColor = Properties.Resources.Selected.GetPixel(50, 50);
@@ -45,9 +46,15 @@ namespace Game
             //TEMP
             objectiv = "TEMP Trouvez la sortie ";
             lblPrimaryObjectiv.Text = @"Objectif Principal : " + objectiv;
-            //string debugprojectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            pbxFormGameGame.Load("Pics/FirstMenu.PNG");
+
+
             string debugprojectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            //string debugprojectPath = Path.GetDirectoryName((System.IO.Directory.GetCurrentDirectory()));
+
+            //Environment.CurrentDirectory = $@"../../../Game";
+
+            pbxFormGameGame.Load($@"{debugprojectPath}/Pics/FirstMenu.PNG");
+            
             imagename = "Map600x600.bmp";
             string mapImageOutput = $@"{debugprojectPath}\Outputs\{imagename}";
             pbx_FormGameMap.ImageLocation = mapImageOutput;
