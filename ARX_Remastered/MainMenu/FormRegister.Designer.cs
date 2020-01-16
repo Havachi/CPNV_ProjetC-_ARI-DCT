@@ -90,6 +90,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MainMenu.Properties.Resources.BCK_Register;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ControlBox = false;
             this.Controls.Add(this.tbxRegisterPasswordCheck);
             this.Controls.Add(this.btnRegisterRegister);
             this.Controls.Add(this.tbxRegisterPassword);

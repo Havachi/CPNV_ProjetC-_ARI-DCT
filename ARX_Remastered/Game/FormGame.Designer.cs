@@ -204,7 +204,9 @@
             // FormGame
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(1920, 1061);
+            this.ControlBox = false;
             this.Controls.Add(this.lblGameStatut);
             this.Controls.Add(this.lblPrimaryObjectiv);
             this.Controls.Add(this.pbxFormgameInventory6);

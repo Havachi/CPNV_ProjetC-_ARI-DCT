@@ -80,6 +80,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MainMenu.Properties.Resources.BCK_Login;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ControlBox = false;
             this.Controls.Add(this.btnLoginRegister);
             this.Controls.Add(this.tbxLoginPassword);
             this.Controls.Add(this.tbxLoginMail);

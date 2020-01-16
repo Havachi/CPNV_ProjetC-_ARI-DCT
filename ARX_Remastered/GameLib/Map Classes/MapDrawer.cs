@@ -14,6 +14,7 @@ namespace GameLib
     /// </summary>
     public class MapDrawer
     {
+        
         private MapImage mapImage = new MapImage();
         private Graphics graphics;
         //10,20,50 or 100
@@ -31,12 +32,14 @@ namespace GameLib
 
         public MapImage DrawMap(Board board)
         {
+            
             int posX = 0;
             int posY = 0;
 
-            string debugprojectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            string mapAssetsPath = $@"{debugprojectPath}\Assets\Map";
-            string mapSavePath = $@"{debugprojectPath}\Outputs";
+            //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            string projectPath = System.IO.Directory.GetCurrentDirectory();
+            string mapAssetsPath = $@"{projectPath}\Assets\Map";
+            string mapSavePath = $@"{projectPath}\Outputs";
 
             Image cornerImage = Image.FromFile($@"{mapAssetsPath}\Corner\Corner{caseWidth}x{caseHeight}.bmp");
             Image corridorImage = Image.FromFile($@"{mapAssetsPath}\Corridor\Corridor{caseWidth}x{caseHeight}.bmp");
@@ -102,9 +105,9 @@ namespace GameLib
                 posX = 0;
                 posY += 20;
             }
-            Stream stream = new FileStream($@"{mapSavePath}\Map{mapImage.ImageWidth}x{mapImage.ImageHeight}.bmp", FileMode.Create);
+            Stream stream = new FileStream($@"{mapSavePath}\Map.bmp", FileMode.Create);
             mapImage.MapBitmap.Save(stream,ImageFormat.Bmp);
-
+            stream.Close();
             return mapImage;
         }
     }
