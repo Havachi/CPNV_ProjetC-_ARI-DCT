@@ -20,14 +20,8 @@ namespace ARX_Tests.VisualTests
         private MapDrawer mapDrawer;
         public ProceduralGenerationShowImage()
         {
-            
-            foreach (var hatchstyle in Enum.GetNames(typeof(HatchStyle)))
-            {
-                cmbBorderStyle.Items.Add(hatchstyle);
-            }
-
-            
             InitializeComponent();
+
         }
 
 
@@ -39,17 +33,11 @@ namespace ARX_Tests.VisualTests
             string outputFolder = $@"{debugprojectPath}\Outputs";
             pbxMapImage.ImageLocation = $@"{outputFolder}\Map600x600.bmp";
 
-
         }
 
         private void ProceduralGenerationShowImage_Load(object sender, EventArgs e)
         {
 
-        }
-
-        private void cmbBorderStyle_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //mapDrawer.BorderStyle = cmbBorderStyle.SelectedItem
         }
     }
 }

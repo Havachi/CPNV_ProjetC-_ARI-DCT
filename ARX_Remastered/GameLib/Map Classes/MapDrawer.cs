@@ -18,7 +18,7 @@ namespace GameLib
         private MapImage mapImage = new MapImage();
         private Graphics graphics;
 
-        public HatchStyle BorderStyle;
+        public HatchStyle borderStyle = HatchStyle.Plaid;
         //10,20,50 or 100
         private int caseWidth = 20;
         private int caseHeight = 20;
@@ -43,9 +43,10 @@ namespace GameLib
             Point verticalStartPoint = new Point();
             Point verticalEndPoint = new Point();
 
-            string debugprojectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            string mapAssetsPath = $@"{debugprojectPath}\Assets\Map";
-            string mapSavePath = $@"{debugprojectPath}\Outputs";
+            string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            string mapAssetsPath = $@"{projectPath}\Assets\Map";
+            string mapSavePath = $@"{projectPath}\Outputs";
 
             Image cornerImage = Image.FromFile($@"{mapAssetsPath}\Corner\Corner{caseWidth}x{caseHeight}.bmp");
             Image corridorImage = Image.FromFile($@"{mapAssetsPath}\Corridor\Corridor{caseWidth}x{caseHeight}.bmp");
@@ -55,8 +56,12 @@ namespace GameLib
             Image startImage = Image.FromFile($@"{mapAssetsPath}\Start\Start{caseWidth}x{caseHeight}.bmp");
 
             Stream stream = new FileStream($@"{mapSavePath}\Map{mapImage.ImageWidth}x{mapImage.ImageHeight}.bmp", FileMode.Create);
+            HatchBrush brick = new HatchBrush(HatchStyle.HorizontalBrick, Color.Aquamarine, Color.Gray);
+            HatchBrush other = new HatchBrush(HatchStyle.Trellis, Color.Black, Color.Transparent);
+            Pen horizontalLinePen;
+            Pen verticalLinePen;
 
-            graphics.FillRectangle(Brushes.White,posX,posY,mapImage.ImageWidth,mapImage.ImageHeight);
+            graphics.FillRectangle(other, posX,posY,mapImage.ImageWidth,mapImage.ImageHeight);
             if (useDrawByType)
             {
                 foreach (var boardLine in board.BoardContent)
@@ -148,7 +153,6 @@ namespace GameLib
             }
             else
             {
-                
                 verticalStartPoint.X = 0;
                 verticalStartPoint.Y = 0;
 
@@ -162,6 +166,10 @@ namespace GameLib
                 horizontalEndPoint.Y = 0;
                 Case lastCase = null;
                 int counter = 0;
+                
+                horizontalLinePen = new Pen(new HatchBrush(HatchStyle.BackwardDiagonal,Color.White),2);
+                verticalLinePen = new Pen(new HatchBrush(HatchStyle.BackwardDiagonal, Color.White), 2);
+
                 foreach (var boardLine in board.BoardContent)
                 {
                     foreach (var aCase in boardLine.LineContent)
@@ -169,19 +177,27 @@ namespace GameLib
                         if (aCase.GetType() == typeof(WallCase))
                         {
                             Rectangle r = new Rectangle(horizontalStartPoint.X,horizontalStartPoint.Y, caseWidth,caseHeight);
-                            graphics.FillRectangle(new HatchBrush(BorderStyle, Color.Black, Color.White),r);
+                            graphics.FillRectangle(new HatchBrush(borderStyle, Color.Black, Color.DimGray),r);
                         }
                         else if (aCase.GetType() == typeof(StartCase))
                         {
                             Rectangle r = new Rectangle(horizontalStartPoint.X, horizontalStartPoint.Y, caseWidth, caseHeight);
-                            graphics.FillRectangle(new HatchBrush(HatchStyle.DiagonalBrick, Color.Black, Color.LawnGreen), r);
+                            graphics.FillRectangle(new HatchBrush(HatchStyle.DiagonalBrick, Color.LawnGreen, Color.White), r);
+                        }
+                        else if (aCase.GetType() == typeof(EndCase))
+                        {
+                            Rectangle rectfull = new Rectangle(horizontalStartPoint.X, horizontalStartPoint.Y, caseWidth, caseHeight);
+                            Rectangle r = new Rectangle(horizontalStartPoint.X+caseWidth/4, horizontalStartPoint.Y+caseHeight/4, caseWidth/2, caseHeight/2);
+                            graphics.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Red, Color.White), rectfull);
+                            graphics.FillRectangle(new HatchBrush(HatchStyle.Sphere, Color.Red, Color.White), r);
+                            
                         }
                         else
                         {
                             //aCase.AssignWall();
                             if (aCase.Walls[0])
                             {
-                                graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
+                                graphics.DrawLine(horizontalLinePen, horizontalStartPoint, horizontalEndPoint);
 
                             }
                             else
@@ -193,7 +209,7 @@ namespace GameLib
                             {
                                 verticalStartPoint.X += caseWidth;
                                 verticalEndPoint.X += caseWidth;
-                                graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
+                                graphics.DrawLine(verticalLinePen, verticalStartPoint, verticalEndPoint);
                                 verticalStartPoint.X -= caseWidth;
                                 verticalEndPoint.X -= caseWidth;
                             }
@@ -206,7 +222,7 @@ namespace GameLib
                             {
                                 horizontalStartPoint.Y += caseHeight;
                                 horizontalEndPoint.Y += caseHeight;
-                                graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
+                                graphics.DrawLine(horizontalLinePen, horizontalStartPoint, horizontalEndPoint);
                                 horizontalStartPoint.Y -= caseHeight;
                                 horizontalEndPoint.Y -= caseHeight;
                             }
@@ -218,7 +234,7 @@ namespace GameLib
 
                             if (aCase.Walls[3])
                             {
-                                graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
+                                graphics.DrawLine(verticalLinePen, verticalStartPoint, verticalEndPoint);
                             }
                             else
                             {
