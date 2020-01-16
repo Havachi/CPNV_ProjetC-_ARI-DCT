@@ -147,7 +147,7 @@ namespace GameLib
             {
                 MoveAndChange();
             }
-
+            board.BoardContent[activeCases.Last().IndexY].LineContent[activeCases.Last().IndexX] = new EndCase(activeCases.Last().IndexX, activeCases.Last().IndexY,1);
             return board;
         }
 
