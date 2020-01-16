@@ -37,6 +37,7 @@ namespace GameLib
 
         public Player()
         {
+            position = new Position(0,0);
         }
         /// <summary>
         /// Accessor for private attribut username

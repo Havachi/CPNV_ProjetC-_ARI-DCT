@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using System.CodeDom;
 using System.Data;
+using System.IO;
 using Microsoft.CSharp;
 using GameLib;
 
@@ -44,10 +45,13 @@ namespace Game
             //TEMP
             objectiv = "TEMP Trouvez la sortie ";
             lblPrimaryObjectiv.Text = @"Objectif Principal : " + objectiv;
+            //string debugprojectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
             pbxFormGameGame.Load("Pics/FirstMenu.PNG");
+            string debugprojectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
             imagename = "Map600x600.bmp";
-            pbx_FormGameMap.ImageLocation = lblUsername;
-
+            string mapImageOutput = $@"{debugprojectPath}\Outputs\{imagename}";
+            pbx_FormGameMap.ImageLocation = mapImageOutput;
+            pbx_FormGameMap.Load();
             //temp L'image est là après chaque exécution : CPNV_ProjetC-_ARI-DCT\ARX_Remastered\Outputs 
 
             Refresh();

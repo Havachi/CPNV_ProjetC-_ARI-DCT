@@ -104,7 +104,7 @@ namespace GameLib
             }
             Stream stream = new FileStream($@"{mapSavePath}\Map{mapImage.ImageWidth}x{mapImage.ImageHeight}.bmp", FileMode.Create);
             mapImage.MapBitmap.Save(stream,ImageFormat.Bmp);
-
+            stream.Close();
             return mapImage;
         }
     }
