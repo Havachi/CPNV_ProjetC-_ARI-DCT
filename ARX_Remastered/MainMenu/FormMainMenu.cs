@@ -13,10 +13,11 @@ namespace MainMenu
     public partial class FormMainMenu : Form
     {
         private string userEmail;
-
+        private bool isLogged;
         public FormMainMenu()
         {
             InitializeComponent();
+            this.Tag = isLogged;
         }
 
         public string UserEmail
@@ -40,7 +41,7 @@ namespace MainMenu
                 /// TODO Call event and item generator
 
                 FormGame frmGame = new FormGame(lblUsername);
-                Show(); 
+                frmGame.ShowDialog();
             }
         }
 
@@ -79,5 +80,11 @@ namespace MainMenu
             // Save the settings
             Settings.Default.Save();
         }
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
+        }
+        
     }
 }

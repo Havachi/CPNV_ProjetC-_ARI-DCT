@@ -81,7 +81,7 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUserEmailAddressException("Wrong password or Email Address, please try again");
+            throw new UnknownUserEmailAddressException("Adresse email ou Mot de passe incorrecte");
         }
 
         /// <summary>
@@ -129,11 +129,8 @@ namespace DBConnectionLib
                 if (dr.HasRows)
                 {
                     CloseConnection();
-                    return true;
-
+                    throw new UserEmailAlreadyExistException("Cette adresse email est déja utilisée");
                 }
-                CloseConnection();
-                return false;
             }
             CloseConnection();
             return false;
@@ -156,13 +153,13 @@ namespace DBConnectionLib
                 }
             }
 
-            throw new UnknownUserEmailAddressException("This Email Address doesn\'t exist");
+            throw new UnknownUserEmailAddressException("Adresse email ou Mot de passe incorrecte");
         }
 
         /// <summary>
         /// This method insert data in the database
         /// </summary>
-        public void InsertDataInDb(string username, string userEmail, string password)
+        public bool InsertDataInDb(string username, string userEmail, string password)
         {
             OpenConnection();
             string query = $"INSERT INTO Users (Username, UserEmail, UserPassword) values (\"{username}\",\"{userEmail}\", \"{password}\")";
@@ -174,6 +171,7 @@ namespace DBConnectionLib
 
             }
             CloseConnection();
+            return true;
         }
 
 

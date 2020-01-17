@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using System.CodeDom;
 using System.Data;
+using System.IO;
 using Microsoft.CSharp;
 using GameLib;
 
@@ -31,28 +32,43 @@ namespace Game
         private string key;
         private string slot;
         private string objectiv;
+        private string imagename;
+        private string projectPath;
+        private GameLib.Game currentGame = new GameLib.Game();
 
 
         public FormGame(string lblUsername)
         {
-            GameLib.Game game = new GameLib.Game();
+            //
+
             InitializeComponent();
             inFirstMenu = true;
             selectedPixelColor = Properties.Resources.Selected.GetPixel(50, 50);
             lblGameUserLogged.Text = @"Logged as : " + lblUsername;
-            pbx_FormGameMap.Image = Properties.Resources.Map;
-
             //TEMP
             objectiv = "TEMP Trouvez la sortie ";
             lblPrimaryObjectiv.Text = @"Objectif Principal : " + objectiv;
+
+            //Path for debug
+            projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            //Path for setup
+            //projectPath = System.IO.Directory.GetCurrentDirectory();
+
+
+            pbxFormGameGame.Load($@"{projectPath}/Pics/FirstMenu.png");
+            
+            imagename = "Map.bmp";
+            string mapImageOutput = $@"{projectPath}\Outputs\{imagename}";
+            pbx_FormGameMap.ImageLocation = mapImageOutput;
+            pbx_FormGameMap.Load();
+            //temp L'image est là après chaque exécution : CPNV_ProjetC-_ARI-DCT\ARX_Remastered\Outputs 
 
             Refresh();
             
             InitializePbx();
             CheckActivePbx();
 
-            pbxFormGameGame.Load("Pics/FirstMenu.PNG");
-            }
+        }
 
         private void FormGame_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -62,11 +78,67 @@ namespace Game
                 case (char) 119:
                     if (inGame)
                     {
-                        
+                        if (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].GetType() != typeof(WallCase))
+                        {
+                            Movement move = new Movement();
+                            switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].TypeToInt())
+                            {
+                                case 1:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/Corner-Right.PNG");
+                                            break;
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/Corner-Left.PNG");
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/NoIssue.PNG");
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/X.PNG");
+                                            break;
+                                    }
+                                    break;
+                                case 4:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/I.PNG");
+                                            break;
+                                    }
+                                    break;
+                                case 5:
+                                    switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY].LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-both.PNG");
+                                            break;
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-Left.PNG");
+                                            break;
+                                        case 4:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-Right.PNG");
+                                            break;
+                                    }
+                                    break;
+                            }
+                        }
                     }
 
                         //TEMP
-                        pbxFormGameGame.Load("Pics/X.PNG");
+                        pbxFormGameGame.Load($@"{projectPath}/Pics/X.PNG");
 
                     ///TODO Move the player - forward
 
@@ -81,11 +153,81 @@ namespace Game
                 /// A  
                 case (char) 97:
                     if (inGame)
+                    {
+                        if (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY]
+                                .LineContent[currentGame.Player.Position.PositionX].GetType() != typeof(WallCase))
+                        {
+                            Movement move = new Movement();
+                            switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY]
+                                .LineContent[currentGame.Player.Position.PositionX].TypeToInt())
+                            {
+                                case 1:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/Corner-Left.PNG");
+                                            break;
+                                        case 4:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/Corner-Right.PNG");
+                                            break;
+                                    }
 
-                        //TEMP
-                        pbxFormGameGame.Load("Pics/I.PNG");
+                                    break;
+                                case 2:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 4:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/NoIssue.PNG");
+                                            break;
+                                    }
 
-                    /// TODO Move the player - Left
+                                    break;
+                                case 3:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/X.PNG");
+                                            break;
+                                    }
+
+                                    break;
+                                case 4:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/I.PNG");
+                                            break;
+                                    }
+
+                                    break;
+                                case 5:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-Left.PNG");
+                                            break;
+                                        case 3:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-Right.PNG");
+                                            break;
+                                        case 4:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-both.PNG");
+                                            break;
+                                    }
+                                    break;
+                                }
+                        }
+                    }
 
                     if (inInventory)
                     {
@@ -100,9 +242,79 @@ namespace Game
                 case (char) 115:
                     if (inGame)
                     {
+                        if (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY]
+                                .LineContent[currentGame.Player.Position.PositionX].GetType() != typeof(WallCase))
+                        {
+                            Movement move = new Movement();
+                            switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY]
+                                .LineContent[currentGame.Player.Position.PositionX].TypeToInt())
+                            {
+                                case 1:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 3:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/Corner-Right.PNG");
+                                            break;
+                                        case 4:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/Corner-Left.PNG");
+                                            break;
+                                    }
 
-                       
+                                    break;
+                                case 2:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 3:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/NoIssue.PNG");
+                                            break;
+                                    }
 
+                                    break;
+                                case 3:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/X.PNG");
+                                            break;
+                                    }
+
+                                    break;
+                                case 4:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/I.PNG");
+                                            break;
+                                    }
+
+                                    break;
+                                case 5:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-Right.PNG");
+                                            break;
+                                        case 3:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-both.PNG");
+                                            break;
+                                        case 4:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-Left.PNG");
+                                            break;
+                                    }
+                                    break;
+                            }
+                        }
                     }
 
                     if (inInventory)
@@ -118,7 +330,79 @@ namespace Game
                 case (char) 100:
                     if (inGame)
                     {
+                        if (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY]
+                                .LineContent[currentGame.Player.Position.PositionX].GetType() != typeof(WallCase))
+                        {
+                            Movement move = new Movement();
+                            switch (currentGame.Map.GameBoard.BoardContent[currentGame.Player.Position.PositionY]
+                                .LineContent[currentGame.Player.Position.PositionX].TypeToInt())
+                            {
+                                case 1:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/Corner-Right.PNG");
+                                            break;
+                                        case 3:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/Corner-Left.PNG");
+                                            break;
+                                    }
 
+                                    break;
+                                case 2:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/NoIssue.PNG");
+                                            break;
+                                    }
+
+                                    break;
+                                case 3:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/X.PNG");
+                                            break;
+                                    }
+
+                                    break;
+                                case 4:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/I.PNG");
+                                            break;
+                                    }
+
+                                    break;
+                                case 5:
+                                    switch (currentGame.Map.GameBoard
+                                        .BoardContent[currentGame.Player.Position.PositionY]
+                                        .LineContent[currentGame.Player.Position.PositionX].Orientation)
+                                    {
+                                        case 1:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-Right.PNG");
+                                            break;
+                                        case 2:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-both.PNG");
+                                            break;
+                                        case 3:
+                                            pbxFormGameGame.Load($@"{projectPath}/Pics/T-Left.PNG");
+                                            break;
+                                    }
+                                    break;
+                            }
+                        }
 
                     }
 
@@ -189,14 +473,14 @@ namespace Game
                 case (char) 99:
                     if (inMenu)
                     {
-                        pbxFormGameGame.Load("Pics/Menucmd.PNG");
+                        pbxFormGameGame.Load($@"{projectPath}/Pics/Menucmd.PNG");
                         inMenu = false;
                         inMenuCommands = true;
                     }
 
                     if (inFirstMenu)
                     {
-                        pbxFormGameGame.Load("Pics/Menucmd.PNG");
+                        pbxFormGameGame.Load($@"{projectPath}/Pics/Menucmd.PNG");
                         inFirstMenu = false;
                         backToFirstMenu = true;
                         inMenuCommands = true;
@@ -223,7 +507,7 @@ namespace Game
 
                         //TODO pbx_FormGameGame.Load("Même image que en metant menu");
 
-                        pbxFormGameGame.Load("Pics/X.PNG");
+                        pbxFormGameGame.Load($@"{projectPath}/Pics/X.PNG");
                         inMenu = false;
                         backToGame = true;
 
@@ -231,7 +515,7 @@ namespace Game
 
                     if (inGame)
                     {
-                        pbxFormGameGame.Load("Pics/Menu.PNG");
+                        pbxFormGameGame.Load($@"{projectPath}/Pics/Menu.PNG");
                         inGame = false;
                         inMenu = true;
                     }
@@ -240,7 +524,7 @@ namespace Game
                     {
                         // TODO pbx_FormGameGame.Load("spawn");
 
-                        pbxFormGameGame.Load("Pics/X.PNG");
+                        pbxFormGameGame.Load($@"{projectPath}/Pics/X.PNG");
                         inFirstMenu = false;
                         backToFirstMenu = false;
                         inGame = true;
@@ -250,14 +534,14 @@ namespace Game
                     {
                         if (backToFirstMenu)
                         {
-                            pbxFormGameGame.Load("Pics/FirstMenu.PNG");
+                            pbxFormGameGame.Load($@"{projectPath}/Pics/FirstMenu.PNG");
                             inMenuCommands = false;
                             inFirstMenu = true;
                         }
 
                         if (backToFirstMenu == false)
                         {
-                            pbxFormGameGame.Load("Pics/Menu.PNG");
+                            pbxFormGameGame.Load($@"{projectPath}/Pics/Menu.PNG");
                             inMenuCommands = false;
                             inMenu = true;
                         }
@@ -310,6 +594,5 @@ namespace Game
             }
             return slot;
         }
-
     }
 }

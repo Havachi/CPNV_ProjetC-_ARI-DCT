@@ -1,10 +1,14 @@
+/*
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
+using Google.Protobuf.WellKnownTypes;
 
 namespace GameLib
 {
@@ -14,6 +18,8 @@ namespace GameLib
     /// </summary>
     public class Maze
     {
+        private MapGraphics mapGraphics = new MapGraphics();
+
         private int currentX = 0;
         private int currentY = 0;
         /// <summary>
@@ -43,24 +49,18 @@ namespace GameLib
         /// </remarks>
         private List<Case> caseInfoList = new List<Case>();
         /// <summary>
-        /// This list of array of bool contains information about the "walls"
-        /// </summary>
-        /// <remarks>
-        /// The structure of the array of bool should be {wallN, wallE, wallS, wallW}
-        /// </remarks>
-        private List<bool[]> caseNearInfo = new List<bool[]>();
-        /// <summary>
         /// This Stack of Point is used by the algorithm to temporary stock position coordinate.
         /// </summary>
         /// <remarks>
         /// This is used for backtracking because stack have the particularity of Last In, First Out.
         /// </remarks>
+        private List<Wall> wallsInfoList = new List<Wall>();
         private Stack<Point> mazeStack=new Stack<Point>();
 
         /// <summary>
         ///  Random number.
         /// </summary>
-        Random rand = new Random();
+        private Random rand;
 
         /// <summary>
         /// This is the main part of the algorithm,
@@ -87,7 +87,11 @@ namespace GameLib
             nbOfVisitedCase = 0;
             //The random number for the generation
             int r = 0;
-
+            //The last iteration random number
+            int lastR = 0; 
+            int randomX = 0;
+            int randomY = 0;
+            int rand = 0; 
             //Fullify the Maze with unvisited Case 
             for (int i = 0; i < maxWidth; i++)
             {
@@ -97,73 +101,490 @@ namespace GameLib
                 }
             }
 
+            //Generate random starting point
+            randomX = GenerateRandom(maxWidth -1);
+            randomY = GenerateRandom(maxHeight - 1);
+            currentX = randomX;
+            currentY = randomY;
+
             //Stack the Initial position in the stack
             mazeStack.Push(new Point(currentX, currentY));
+            caseInfoList[0].Visited = true;
             nbOfVisitedCase++;
-            
-            
+            var unvisitedCases = new List<Case>();
+
             //The do while end when all case are visited
             do
             {
-                var unvisitedCases = GetFourDirectionVisited(currentX,currentY);
-                 if (unvisitedCases.Count() != 0)
+                var currentCase = caseInfoList[0];
+                if (unvisitedCases.Count == 0)
                 {
-                    lastX = currentX;
-                    lastY = currentY;
-                    r = rand.Next(0, unvisitedCases.Count-1);
-                    switch (r)
+                    unvisitedCases = GetFourDirectionVisited(currentX, currentY);
+                }
+
+                lastX = currentX;
+                lastY = currentY;
+                if (unvisitedCases.Count() != 0)
+                {
+
+                    rand = GenerateRandom(unvisitedCases.Count);
+                    switch (rand)
                     {
                         case 0:
                             currentX = unvisitedCases[0].PosX;
                             currentY = unvisitedCases[0].PosY;
-                            nbOfVisitedCase++;
-                            mazeStack.Push(new Point(currentX, currentY));
                             break;
                         case 1:
                             currentX = unvisitedCases[1].PosX;
                             currentY = unvisitedCases[1].PosY;
-                            nbOfVisitedCase++;
-                            mazeStack.Push(new Point(currentX, currentY));
                             break;
                         case 2:
                             currentX = unvisitedCases[2].PosX;
                             currentY = unvisitedCases[2].PosY;
-                            nbOfVisitedCase++;
-                            mazeStack.Push(new Point(currentX, currentY));
                             break;
                         case 3:
                             currentX = unvisitedCases[3].PosX;
                             currentY = unvisitedCases[3].PosY;
-                            nbOfVisitedCase++;
-                            mazeStack.Push(new Point(currentX, currentY));
                             break;
                     }
 
-                    if (currentX != lastX || currentY != lastY)
-                    {
-                        
-                    }
-                    foreach (var singleCase in caseInfoList)
-                    {
-                        if (singleCase.PosX == currentX && singleCase.PosY == currentY)
-                        {
-                            singleCase.Visited = true;
-                        }
-                    }
-
+                    mazeStack.Push(new Point(currentX, currentY));
+                    currentCase.PosX = currentX;
+                    currentCase.PosY = currentY;
+                    nbOfVisitedCase++;
+                    caseInfoList[GetPositionInList(currentCase.PosX,currentCase.PosY)].Visited = true;
+                    unvisitedCases.Clear();
                 }
                 else
                 {
-                    Backtrack();
+                    try
+                    {
+                        do
+                        {
+                            if (mazeStack.Count != 0)
+                            {
+                                unvisitedCases = Backtrack();
+                                if (unvisitedCases == null)
+                                {
+                                    unvisitedCases = Backtrack();
+                                }
+                            }
+                        } while (lastX == currentX && lastY == currentY && mazeStack.Count > 0);
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        MessageBox.Show($"Error at {nbOfVisitedCase} iteration.");
+                    }
+
                 }
-                
             } while (nbOfVisitedCase != MaxVisitedCase);
 
+            wallsInfoList = WallCalculation();
+            mapGraphics.DrawMap(wallsInfoList);
+            GenerateReport();
+        }
+
+        /// <summary>
+        /// This method is used by the algorithm when in an dead-end
+        /// </summary>
+        public List<Case> Backtrack()
+        {
+            return Backtrack(currentX,currentY);
+        }
+        /// <summary>
+        /// This method is used by the algorithm when in an dead-end
+        /// </summary>
+        public List<Case> Backtrack(int posX,int posY)
+        {
+            var backtrackUnvisitedCases = new List<Case>();
+            var backtrackPoint = new Point();
+            if (mazeStack.Count != 0)
+            {
+                backtrackPoint = mazeStack.Pop();
+                currentX = backtrackPoint.X;
+                currentY = backtrackPoint.Y;
+                backtrackUnvisitedCases = GetFourDirectionVisited(currentX, currentY);
+                if (backtrackUnvisitedCases.Count == 0)
+                {
+                    Backtrack(currentX,currentY);
+                }
+                else
+                {
+                    return backtrackUnvisitedCases;
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+
+            return backtrackUnvisitedCases;
+        }
+        /// <summary>
+        /// This method check in the 4 direction to see if the case has already been visited
+        /// </summary>
+        public List<Case> GetFourDirectionVisited(int posX, int posY)
+        {
+
+            var caseToSearch = new Case(posX,posY);
+
+            Case caseToSearchRight;
+            Case caseToSearchUp;
+            Case caseToSearchBottom;
+            Case caseToSearchLeft;
+
+            var listOfUnvisited = new List<Case>();
+
+            //if in top left corner
+            if (currentX == 0 && currentY == 0)
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+            }
+            //if in top right corner
+            else if (currentX == maxWidth - 1 && currentY == 0)
+            {
+                caseToSearchLeft = new Case(posX - 1, posY);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+
+            }
+            //if in bottom right corner
+            else if (currentX == maxWidth - 1 && currentY == maxHeight - 1)
+            {
+                caseToSearchUp = new Case(posX, posY - 1);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
+                caseToSearchLeft = new Case(posX - 1, posY);
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+
+            }
+            //if in bottom left corner
+            else if (currentX == 0 && currentY == maxHeight - 1)
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchUp = new Case(posX, posY - 1);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+            }
+            //if on left border
+            else if (currentX == 0)
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchUp = new Case(posX, posY - 1);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
+
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+            }
+            //if on top border
+            else if (currentY == 0)
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                caseToSearchLeft = new Case(posX - 1, posY);
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+            }
+            //if on right border
+            else if (currentX == maxWidth - 1)
+            {
+                caseToSearchUp = new Case(posX, posY - 1);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                caseToSearchLeft = new Case(posX - 1, posY);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+            }
+            //if on bottom border
+            else if (currentY == maxHeight - 1)
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchUp = new Case(posX, posY - 1);
+                caseToSearchLeft = new Case(posX - 1, posY);
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+            }
+            //if not on any border
+           else
+            {
+                caseToSearchRight = new Case(posX + 1, posY);
+                caseToSearchUp = new Case(posX, posY - 1);
+                caseToSearchBottom = new Case(posX, posY + 1);
+                caseToSearchLeft = new Case(posX - 1, posY);
+
+                //up
+                if (caseInfoList[GetPositionInList(caseToSearchUp.PosX, caseToSearchUp.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchUp);
+                }
+                //left
+                if (caseInfoList[GetPositionInList(caseToSearchLeft.PosX, caseToSearchLeft.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchLeft);
+                }
+                //right
+                if (caseInfoList[GetPositionInList(caseToSearchRight.PosX, caseToSearchRight.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchRight);
+                }
+                //down
+                if (caseInfoList[GetPositionInList(caseToSearchBottom.PosX, caseToSearchBottom.PosY)].Visited == false)
+                {
+                    listOfUnvisited.Add(caseToSearchBottom);
+                }
+            }
+            return listOfUnvisited;
+        }
+        /// <summary>
+        /// This method return the position of a case in caseInfoList
+        /// </summary>
+        /// <param name="posX"></param>
+        /// <param name="posY"></param>
+        /// <returns>The position of a case in caseInfoList</returns>
+        public int GetPositionInList(int posX,int posY)
+        {
+            int positionInList = -1;
+            if (posY == 0)
+            {
+                if (posX == 0)
+                {
+                    positionInList = 0;
+                }
+
+                positionInList = posX;
+            }
+            if (posY > 0)
+            {
+                positionInList = (posY * 10) + posX;
+            }
+            return positionInList;
+        }
+        /// <summary>
+        /// This is the algorithm part were wall are calculated.
+        /// </summary>
+        /// <remarks>
+        /// The Wall Calculation goes like that:
+        /// - todo First the mazeStack Stack variable is used in a step by step backtrack method, not the BacktrackUntilUnvisited() method
+        /// - todo Then walls are placed if there is no direct link between case if there is a direct link, no wall are placed
+        /// </remarks>
+        public List<Wall> WallCalculation()
+        {
+            List<Wall> casesWallsInfos = new List<Wall>();
+            Wall wall;
+            Point lastPoint = new Point();
+            bool isWallNorth = false;
+            bool isWallEast = false;
+            bool isWallSouth = false;
+            bool isWallWest = false;
+            //Represent where ther is no wall, 1 = N, 2 = E, 3 = S, 4 = W
+            int lastOpenWall = 0;
+            int lastX = 0;
+            int lastY = 0;
+            while (mazeStack.Count > 0)
+            {
+                lastPoint = mazeStack.Pop();
+                //if it is the first iteration
+                if (casesWallsInfos.Count == 0)
+                {
+                    //last point up
+                    if (lastPoint.Y > currentY)
+                    {
+                        isWallNorth = false;
+                        isWallEast = true;
+                        isWallSouth = true;
+                        isWallWest = true;
+                        lastOpenWall = 1;
+                    }
+                    //last point on the right
+                    else if (lastPoint.X > currentX)
+                    {
+                        isWallNorth = true;
+                        isWallEast = false;
+                        isWallSouth = true;
+                        isWallWest = true;
+                        lastOpenWall = 2;
+                    }
+                    // last point down
+                    else if (lastPoint.Y < currentY)
+                    {
+                        isWallNorth = true;
+                        isWallEast = true;
+                        isWallSouth = false;
+                        isWallWest = true;
+                        lastOpenWall = 3;
+                    }
+                    //last point on the left
+                    else if (lastPoint.X < currentX)
+                    {
+                        isWallNorth = true;
+                        isWallEast = true;
+                        isWallSouth = true;
+                        isWallWest = false;
+                        lastOpenWall = 4;
+                    }
+                }
+                else
+                {
+                    //last point up
+                    if (lastPoint.Y > currentY)
+                    {
+                        isWallNorth = false;
+                        isWallEast = true;
+                        isWallSouth = true;
+                        isWallWest = true;
+                        lastOpenWall = 1;
+                    }
+                    //last point on the right
+                    else if (lastPoint.X > currentX)
+                    {
+                        isWallNorth = true;
+                        isWallEast = false;
+                        isWallSouth = true;
+                        isWallWest = true;
+                        lastOpenWall = 2;
+                    }
+                    // last point down
+                    else if (lastPoint.Y < currentY)
+                    {
+                        isWallNorth = true;
+                        isWallEast = true;
+                        isWallSouth = false;
+                        isWallWest = true;
+                        lastOpenWall = 3;
+                    }
+                    //last point on the left
+                    else if (lastPoint.X < currentX)
+                    {
+                        isWallNorth = true;
+                        isWallEast = true;
+                        isWallSouth = true;
+                        isWallWest = false;
+                        lastOpenWall = 4;
+                    }
+
+                    switch (lastOpenWall)
+                    {
+                        case 1:
+                            isWallNorth = false;
+                            break;
+                        case 2:
+                            isWallEast = false;
+                            break;
+                        case 3:
+                            isWallSouth = false;
+                            break;
+                        case 4:
+                            isWallWest = false;
+                            break;
+                    }
+                }
+                wall = new Wall(isWallNorth, isWallEast, isWallSouth, isWallWest, currentX, currentY);
+                casesWallsInfos.Add(wall);
+                lastX = currentX;
+                lastY = currentY;
+                currentX = lastPoint.X;
+                currentY = lastPoint.Y;
+            }
+            return casesWallsInfos;
+        }
+
+        public void GenerateReport()
+        {
             //This is just for debugging purpose
             using (System.IO.StreamWriter file =
                 new System.IO.StreamWriter(@"C:\aled.txt", false))
             {
-                file.WriteLine($"{nbOfVisitedCase}");
+
+
+                file.WriteLine($"Debug Report of ARX Remastered Map Generation(DRARMG):");
+                file.WriteLine(new DateTime());
                 int unvisitedCasesTotal = 0;
                 int visitedCasesTotal = 0;
                 foreach (var cacase in caseInfoList)
@@ -176,132 +597,61 @@ namespace GameLib
                     {
                         visitedCasesTotal++;
                     }
-
-
                 }
                 file.WriteLine($"Total :{nbOfVisitedCase} ");
                 file.WriteLine($"Total Unvisited:{unvisitedCasesTotal} ");
                 file.WriteLine($"Total Visited:{visitedCasesTotal} \n\n\n");
 
-                foreach (var cacase in caseInfoList)
+                for (int i = 0; i < maxHeight; i++)
                 {
-                    if (cacase.PosX==9)
+                    for (int j = 0; j < maxWidth; j++)
                     {
-                        file.Write(!cacase.Visited ? "*\n" : "#\n");
+                        file.Write($@"[{j};{i}]");
+                    }
+                    file.Write("\n");
+                }
+                file.Write("\n\n");
+                file.WriteLine("mazeStack:");
+                file.WriteLine($"Amount of cases in mazeStack : {mazeStack.Count}");
+                int horizontalLength = 0;
+                foreach (var point in mazeStack)
+                {
+
+                    if (point.X == 9)
+                    {
+                        file.Write($"[{point.X};{point.Y}]");
+                        file.Write("\n");
+                        horizontalLength = 0;
                     }
                     else
                     {
-                        file.Write(!cacase.Visited ? "*" : "#");
+                        file.Write($"[{point.X};{point.Y}]");
+                        horizontalLength++;
                     }
 
-                    file.WriteLine($"{cacase.PosX},{cacase.PosY},{cacase.Visited}");
                 }
             }
         }
 
-        /// <summary>
-        /// This method check if the case is already visited
-        /// </summary>
-        public bool IsAlreadyVisited(int posX, int posY)
+        public int GenerateRandom(int max)
         {
-            var c = new Case(posX,posY,true);
-            if (caseInfoList.Contains(c))
+            byte[] randomBytes = new byte[100];
+            int result = 0;
+            RandomNumberGenerator random = new RNGCryptoServiceProvider();
+            random.GetBytes(randomBytes, 1, 99);
+            foreach (var randomByte in randomBytes)
             {
-                return true;
+                result += randomByte;
+                result %= max;
             }
-            return false;
+
+            if (result > max)
+            {
+                result %= max;
+            }
+
+            return result;
         }
-        /// <summary>
-        /// This method is used by the algorithm when in an dead-end
-        /// </summary>
-        public void Backtrack()
-        {
-            var actualPoint = new Point();
-            var listOfUnvisitedCases = new List<Case>();
-            do
-            {
-                actualPoint = mazeStack.Pop();
-                listOfUnvisitedCases = GetFourDirectionVisited(actualPoint.X, actualPoint.Y);
-
-            } while (listOfUnvisitedCases != null);
-            currentX = actualPoint.X;
-            currentY = actualPoint.Y;
-        }
-
-        
-        /// <summary>
-        /// This method check in the 4 direction to see if the case has already been visited
-        /// </summary>
-        public List<Case> GetFourDirectionVisited(int posX, int posY)
-        {
-            var caseToSearch = new Case(posX, posY, false);
-            
-            var listOfUnvisited = new List<Case>();
-
-
-            //Case North
-            
-            if (currentY != 0)
-            {
-                caseToSearch.PosY -= 1;
-                if (!caseInfoList.Contains(caseToSearch))
-                {
-                    listOfUnvisited.Add(new Case(caseToSearch.PosX,caseToSearch.PosY,caseToSearch.Visited));
-                }
-                caseToSearch.PosY += 1;
-            }
-            //Case West
-            if (currentX != 0)
-            {
-                caseToSearch.PosX -= 1;
-
-                if (!caseInfoList.Contains(caseToSearch))
-                {
-                    listOfUnvisited.Add(new Case(caseToSearch.PosX, caseToSearch.PosY, caseToSearch.Visited));
-                }
-                caseToSearch.PosX += 1;
-            }
-
-            //Case East
-            if (currentX != maxWidth)
-            {
-                caseToSearch.PosX += 1;
-                if (!caseInfoList.Contains(caseToSearch))
-                {
-                    listOfUnvisited.Add(new Case(caseToSearch.PosX, caseToSearch.PosY, caseToSearch.Visited));
-                }
-                caseToSearch.PosX -= 1;
-            }
-
-            //Case South
-            if (currentY != maxHeight)
-            {
-
-                caseToSearch.PosY += 1;
-                if (!caseInfoList.Contains(caseToSearch))
-                {
-                    listOfUnvisited.Add(new Case(caseToSearch.PosX, caseToSearch.PosY, caseToSearch.Visited));
-                }
-                caseToSearch.PosY -= 1;
-            }
-
-           
-
-            return listOfUnvisited;
-        }
-         
-        /// <summary>
-        /// This is the algorithm part were wall are calculated.
-        /// </summary>
-        /// <remarks>
-        /// The Wall Calculation goes like that:
-        /// - todo First the mazeStack Stack variable is used in a step by step backtrack method, not the BacktrackUntilUnvisited() method
-        /// - todo Then walls are placed if there is no direct link between case if there is a direct link, no wall are placed
-        /// </remarks>
-        public void WallCalculation()
-        {
-             
-        }
-
     }
 }
+*/

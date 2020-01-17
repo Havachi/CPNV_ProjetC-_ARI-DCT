@@ -1,65 +1,163 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GameLib
 {
-    public class Case
+
+    public abstract class Case
     {
-        private int posX;
-        private int posY;
-        private bool visited;
-        public Case(int posX,int posY, bool visited = false)
+        protected int indexX;
+        protected int indexY;
+        protected int orientation;
+
+        protected Case(int indexX, int indexY)
         {
-            this.posX = posX;
-            this.posY = posY;
-            this.visited = visited;
+            this.indexX = indexX;
+            this.indexY = indexY;
+        }
+        protected Case(int indexX, int indexY, int orientation)
+        {
+            this.indexX = indexX;
+            this.indexY = indexY;
+            this.orientation = orientation;
         }
 
-        public int PosX
+        public int TypeToInt()
         {
-            get { return posX; }
-            set { posX = value; }
+            if (GetType() == typeof(CornerCase))
+            {
+                return 1;
+            }
+            if (GetType() == typeof(DeadEnd))
+            {
+                return 2;
+            }
+            if (GetType() == typeof(CrosswayCase))
+            {
+                return 3;
+            }
+            if (GetType() == typeof(CorridorCase))
+            {
+                return 4;
+            }
+            if (GetType() == typeof(TShapeCase))
+            {
+                return 5;
+            }
+            
+
+            return 0;
         }
-        public int PosY
+
+        public int IndexX
         {
-            get { return posY; }
-            set { posY = value; }
+            get { return indexX; }
+            set { indexX = value; }
         }
-        public bool Visited
+        public int IndexY
         {
-            get { return visited; }
-            set { visited = value; }
+            get { return indexY; }
+            set { indexY = value; }
+        }
+        public int Orientation
+        {
+            get { return orientation; }
+            set { orientation = value; }
         }
     }
-
+    
+    /// <summary>
+    /// Represent an empty case
+    /// </summary>
     public class VoidCase : Case
     {
-        private int posX;
-        private int posY;
-        private bool visited;
-
-        public VoidCase(int posX, int posY, bool visited) : base(posX, posY, visited)
+        public VoidCase(int indexX,int indexY) : base(indexX,indexY)
         {
-            this.posX = posX;
-            this.posY = posY;
-            this.visited = visited;
+            this.indexX = indexX;
+            this.indexY = indexY;
         }
     }
+
+    /// <summary>
+    /// Represent a case that is a wall
+    /// </summary>
+    public class WallCase : Case
+    {
+        public WallCase(int indexX, int indexY) : base(indexX, indexY)
+        {
+            this.indexX = indexX;
+            this.indexY = indexY;
+        }
+    }
+    /// <summary>
+    /// Represent a case where the player can pass
+    /// </summary>
     public class TerrainCase : Case
     {
-        private int posX;
-        private int posY;
-        private bool visited;
-        public TerrainCase(int posX, int posY, bool visited) : base(posX, posY, visited)
+        public TerrainCase(int indexX, int indexY, int orientation) : base(indexX, indexY, orientation)
         {
-            this.posX = posX;
-            this.posY = posY;
-            this.visited = visited;
+
         }
     }
 
+    public class DeadEnd : TerrainCase
+    {
+        public DeadEnd(int indexX, int indexY, int orientation) : base(indexX, indexY, orientation)
+        {
+
+        }
+    }
+
+    public class CorridorCase : TerrainCase
+    {
+        public CorridorCase(int indexX, int indexY, int orientation) : base(indexX, indexY,orientation)
+        {
+
+        }
+    }
+    public class CornerCase : TerrainCase
+    {
+        public CornerCase(int indexX, int indexY, int orientation) : base(indexX, indexY,orientation)
+        {
+
+        }
+    }
+
+    public class TShapeCase : TerrainCase
+    {
+        public TShapeCase(int indexX, int indexY, int orientation) : base(indexX, indexY, orientation)
+        {
+
+        }
+    }
+
+    public class CrosswayCase : TerrainCase
+    {
+        public CrosswayCase(int indexX, int indexY, int orientation) : base(indexX, indexY, orientation)
+        {
+
+        }
+    }
+
+
+    public class StartCase : TerrainCase
+    {
+        public StartCase(int indexX, int indexY, int orientation) : base(indexX, indexY, orientation)
+        {
+
+        }
+    }
+    public class EndCase : TerrainCase
+    {
+        public EndCase(int indexX, int indexY, int orientation) : base(indexX, indexY, orientation)
+        {
+
+        }
+    }
 }
 

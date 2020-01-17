@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,6 @@ namespace MainMenuLib
         private string username;
         private string password;
         private string passwordCheck;
-
-
-
         /// <summary>
         /// Constructor for the Register Object
         /// </summary>
@@ -48,19 +46,58 @@ namespace MainMenuLib
             CryptoPassword c = new CryptoPassword();
             string hashedPassword = c.Hash(password);
             CheckData registerCheck = new CheckData();
-
-            if (!registerCheck.CheckRegisterField(reg.userEmail, reg.password, reg.passwordCheck))
+            try
             {
+                if (!registerCheck.CheckRegisterField(reg.userEmail, reg.password, reg.passwordCheck))
+                {
+                    return false;
+                }
+
+                if (!registerCheck.VerifRegister(reg.userEmail, reg.password))
+                {
+                    return false;
+                }
+                if (connection.CheckIfUserEmailExistInDb(userEmail))
+                {
+                    return false;
+                }
+
+                if (!connection.InsertDataInDb(username, userEmail, hashedPassword))
+                {
+                    return false;
+                }
+            }
+            catch(InvalidEmailAddressException e)
+            {
+                MessageBox.Show(e.Message);
                 return false;
             }
-            registerCheck.VerifRegister(reg.userEmail, reg.password);
-            //Try to Check if the userEmail exist in the database
-            if (connection.CheckIfUserEmailExistInDb(userEmail))
+            catch (EmptyFieldException e)
             {
-                throw new UserEmailAlreadyExistException("This Email Address is already used.");
-            } 
-            //insert the data in the Database
-            connection.InsertDataInDb(username, userEmail, hashedPassword);
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            catch (EmailTooShortException e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            catch (PasswordTooShortException e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            catch (UserEmailAlreadyExistException e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            catch (MySqlException e)
+            {
+                MessageBox.Show("Un erreur est survenu lors de la connection avec la base de donnée");
+                return false;
+            }
+
             return true;
         }
 

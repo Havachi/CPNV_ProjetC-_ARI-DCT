@@ -69,6 +69,7 @@
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +82,7 @@
     <Compile Include="MainMenuTests\RegisterTest.cs" />
     <Compile Include="PlayerTests\PlayerTest.cs" />
     <Compile Include="MapTests\GenerationTest.cs" />
+    <Compile Include="MapTests\MapGraphicsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
