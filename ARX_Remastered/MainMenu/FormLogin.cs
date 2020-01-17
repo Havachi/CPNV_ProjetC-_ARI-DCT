@@ -12,7 +12,7 @@ namespace MainMenu
         public Form formLogin;
         private string password;
         private string userEmail;
-
+        private bool isLogged;
         public FormLogin()
         {
             InitializeComponent();

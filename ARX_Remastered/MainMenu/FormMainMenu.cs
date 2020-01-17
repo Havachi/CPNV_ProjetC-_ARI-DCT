@@ -80,5 +80,11 @@ namespace MainMenu
             // Save the settings
             Settings.Default.Save();
         }
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
+        }
+        
     }
 }
