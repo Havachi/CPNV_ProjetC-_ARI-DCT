@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,112 @@ namespace GameLib
             boardContent = new List<BoardLine>(height);
         }
 
+        public void FromFile(string path)
+        {
+            List<string> fileContent = new List<string>();
+            using (var reader = new StreamReader(path))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var values = line.Split(';');
+
+                    foreach (var value in values)
+                    {
+                        fileContent.Add(value);
+                    }
+                }
+
+                Case caseToAdd;
+                foreach (var acase in fileContent)
+                {
+                    if (acase == "11")
+                    {
+                       
+                    }
+                    if (acase == "12")
+                    {
+
+                    }
+                    if (acase == "13")
+                    {
+
+                    }
+                    if (acase == "14")
+                    {
+
+                    }
+
+                    if (acase == "21")
+                    {
+
+                    }
+                    if (acase == "22")
+                    {
+
+                    }
+                    if (acase == "23")
+                    {
+
+                    }
+                    if (acase == "24")
+                    {
+
+                    }
+
+                    if (acase == "31")
+                    {
+
+                    }
+                    if (acase == "32")
+                    {
+
+                    }
+
+                    if (acase == "41")
+                    {
+
+                    }
+
+                    if (acase == "51")
+                    {
+
+                    }
+                    if (acase == "52")
+                    {
+
+                    }
+                    if (acase == "53")
+                    {
+
+                    }
+                    if (acase == "54")
+                    {
+
+                    }
+                    if (acase == "61")
+                    {
+
+                    }
+                    if (acase == "71")
+                    {
+
+                    }
+                    if (acase == "8")
+                    {
+
+                    }
+
+                    if (acase == "9")
+                    {
+                        
+                    }
+                }
+
+            }
+            
+
+        }
         public void AddLine(BoardLine boardLine)
         {
             boardContent.Add(boardLine);

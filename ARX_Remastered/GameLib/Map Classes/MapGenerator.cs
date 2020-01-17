@@ -16,8 +16,13 @@ namespace GameLib
         private Case nextCase;
         private Position currentPosition;
 
+        private string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+        //private string projectPath = System.IO.Directory.GetCurrentDirectory();
+        private string pathToFixedMap;
+
         private List<int> directionHistory = new List<int>();
 
+        
         private int width;
         private int height;
 
@@ -30,6 +35,8 @@ namespace GameLib
             }
             else
             {
+                pathToFixedMap = $@"{projectPath}\TestMap\map1.csv";
+                
                 board = GenerateFixedMap();
             }
         }
@@ -45,11 +52,8 @@ namespace GameLib
         /// <returns>The board of the map</returns>
         public Board GenerateFixedMap()
         {
-            Board fixedBoard = new Board(50,50);
-
-            fixedBoard = GenerateVoidBoard(fixedBoard.Width,fixedBoard.Height);
-            fixedBoard = GenerateBorders(fixedBoard);
-            
+            Board fixedBoard = new Board(30,30);
+            fixedBoard.FromFile(pathToFixedMap);
 
             return fixedBoard;
         }
