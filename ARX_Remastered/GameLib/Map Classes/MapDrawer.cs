@@ -36,8 +36,10 @@ namespace GameLib
             int posX = 0;
             int posY = 0;
 
-            //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            string projectPath = System.IO.Directory.GetCurrentDirectory();
+            //Path for debug
+            string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            //Path for setup
+            //string projectPath = System.IO.Directory.GetCurrentDirectory();
             string mapAssetsPath = $@"{projectPath}\Assets\Map";
             string mapSavePath = $@"{projectPath}\Outputs";
 
