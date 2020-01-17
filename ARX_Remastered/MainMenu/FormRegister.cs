@@ -15,6 +15,7 @@ namespace MainMenu
         private string passwordCheck;
         private string userEmail;
         private string username;
+        private bool isLogged;
 
         public FormRegister()
         {
@@ -65,6 +66,11 @@ namespace MainMenu
         private void btnRegisterCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
         }
     }
 }

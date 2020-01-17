@@ -103,10 +103,21 @@ namespace MainMenuLib
         public bool VerifRegister(string mail, string password)
         {
             if (mail.Length < 8)
+            {
                 throw new EmailTooShortException("The Email Address that you have entered is too short");
-            IsValidEmail(mail);
+            }
+
+            if (!IsValidEmail(mail))
+            {
+                throw new InvalidEmailAddressException("The Email Address that you have entered is not valid");
+            }
+            
             if (password.Length < 8)
+            {
                 throw new PasswordTooShortException("The password that you have entered is too short");
+            }
+
+            return true;
         }
     }
 }
