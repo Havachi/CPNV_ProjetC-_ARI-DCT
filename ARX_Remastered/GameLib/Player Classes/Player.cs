@@ -34,6 +34,11 @@ namespace GameLib
             this.inventory = inventory;
             this.direction = direction;
         }
+
+        public Player()
+        {
+            position = new Position(0,0);
+        }
         /// <summary>
         /// Accessor for private attribut username
         /// </summary>
@@ -60,7 +65,9 @@ namespace GameLib
             {
                 return position;
             }
+            set => position = value;
         }
+
         /// <summary>
         /// Accessor for private attribut inventory
         /// </summary>
