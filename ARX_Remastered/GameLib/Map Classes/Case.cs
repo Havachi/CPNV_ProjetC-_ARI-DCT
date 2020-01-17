@@ -57,6 +57,40 @@ namespace GameLib
             return 0;
         }
 
+        public string TypeToString()
+        {
+            if (GetType() == typeof(CornerCase))
+            {
+                return "CO";
+            }
+            if (GetType() == typeof(DeadEnd))
+            {
+                return "DE";
+            }
+            if (GetType() == typeof(CrosswayCase))
+            {
+                return "X";
+            }
+            if (GetType() == typeof(CorridorCase))
+            {
+                return "C";
+            }
+            if (GetType() == typeof(TShapeCase))
+            {
+                return "T";
+            }
+
+            if (GetType() == typeof(StartCase))
+            {
+                return "S";
+            }
+            if (GetType() == typeof(EndCase))
+            {
+                return "E";
+            }
+
+            return "V";
+        }
         public void AssignWall()
         {
             if (GetType() == typeof(CornerCase))

@@ -17,6 +17,7 @@ namespace GameLib
     {
         
         private MapImage mapImage = new MapImage();
+        private MapImage mapImage;
         private Graphics graphics;
 
         public HatchStyle wallStyle = HatchStyle.Plaid;
@@ -44,9 +45,10 @@ namespace GameLib
             Point horizontalEndPoint = new Point();
             Point verticalStartPoint = new Point();
             Point verticalEndPoint = new Point();
+            
 
             string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
             string mapAssetsPath = $@"{projectPath}\Assets\Map";
             string mapSavePath = $@"{projectPath}\Outputs";
 
@@ -64,7 +66,7 @@ namespace GameLib
             //drawing tools
             HatchBrush brick = new HatchBrush(HatchStyle.HorizontalBrick, Color.Aquamarine, Color.Gray);
             HatchBrush other = new HatchBrush(HatchStyle.Trellis, Color.Black, Color.Transparent);
-            HatchStyle terrainStyle = HatchStyle.DarkDownwardDiagonal;
+            HatchStyle terrainStyle = HatchStyle.Percent90;
             HatchStyle startStyle = HatchStyle.Sphere;
 
             Pen horizontalLinePen;
@@ -175,8 +177,8 @@ namespace GameLib
                 Case lastCase = null;
                 int counter = 0;
                 
-                horizontalLinePen = new Pen(new HatchBrush(HatchStyle.BackwardDiagonal,Color.White),2);
-                verticalLinePen = new Pen(new HatchBrush(HatchStyle.BackwardDiagonal, Color.White), 2);
+                horizontalLinePen = new Pen(new HatchBrush(HatchStyle.Percent90,Color.White),2);
+                verticalLinePen = new Pen(new HatchBrush(HatchStyle.Percent90, Color.White), 2);
 
                 foreach (var boardLine in board.BoardContent)
                 {
@@ -248,7 +250,8 @@ namespace GameLib
                             {
                                 //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
                             }
-
+                            Rectangle centerText = new Rectangle(horizontalStartPoint.X + caseWidth / 6, horizontalStartPoint.Y + caseHeight / 6, caseWidth , caseHeight );
+                            graphics.DrawString($"{aCase.TypeToString()}",new Font(FontFamily.GenericMonospace,5,FontStyle.Regular ), Brushes.Yellow, centerText);
                         }
 
                         horizontalStartPoint.X += caseWidth;
@@ -276,6 +279,7 @@ namespace GameLib
 
 
             mapImage.MapBitmap.Save(stream,ImageFormat.Bmp);
+            
             stream.Close();
             return mapImage;
         }
