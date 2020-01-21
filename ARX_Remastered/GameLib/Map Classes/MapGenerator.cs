@@ -20,10 +20,10 @@ namespace GameLib
 
         private Position startPosition;
         private Position endPosition;
-
         private string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
         //private string projectPath = System.IO.Directory.GetCurrentDirectory();
         private string pathToFixedMap;
+
 
         private List<int> directionHistory = new List<int>();
 

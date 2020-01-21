@@ -15,9 +15,7 @@ namespace GameLib
     /// </summary>
     public class MapDrawer
     {
-        
         private MapImage mapImage = new MapImage();
-        private MapImage mapImage;
         private Graphics graphics;
 
         public HatchStyle wallStyle = HatchStyle.Plaid;
@@ -279,8 +277,7 @@ namespace GameLib
 
 
             mapImage.MapBitmap.Save(stream,ImageFormat.Bmp);
-            
-            stream.Close();
+
             return mapImage;
         }
 
