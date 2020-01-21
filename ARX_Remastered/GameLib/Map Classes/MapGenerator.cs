@@ -60,7 +60,6 @@ namespace GameLib
         {
             Board fixedBoard = new Board(30,30);
             fixedBoard.FromFile(pathToFixedMap);
-
             return fixedBoard;
         }
 

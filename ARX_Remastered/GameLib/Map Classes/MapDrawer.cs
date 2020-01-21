@@ -24,7 +24,8 @@ namespace GameLib
         private int caseHeight = 20;
         private int caseSeparation = 0;
 
-        private bool useDrawByType = false;
+        private bool useDrawByType = true;
+        private bool showWalls = true;
 
         public MapDrawer(Board board)
         {
@@ -79,15 +80,18 @@ namespace GameLib
                 {
                     foreach (var lineCase in boardLine.LineContent)
                     {
+
                         Rectangle r = new Rectangle(lineCase.IndexX * caseWidth, lineCase.IndexY * caseHeight, caseWidth, caseHeight);
                         if (lineCase.GetType() == typeof(WallCase))
                         {
                             graphics.FillRectangle(new HatchBrush(wallStyle, Color.Black, Color.DimGray), r);
+                                
                         }
 
                         else if (lineCase.GetType() == typeof(DeadEnd))
                         {
                             graphics.FillRectangle(new HatchBrush(terrainStyle, Color.White, Color.DimGray), r);
+                                
                         }
                         else if (lineCase.GetType() == typeof(CornerCase))
                         {
@@ -129,28 +133,11 @@ namespace GameLib
                             graphics.FillRectangle(Brushes.Transparent, posX, posY, caseWidth, caseHeight);
                         }
 
-                        /*
-                        if (imageToDraw != null)
+                        if (showWalls)
                         {
-                            switch (lineCase.Orientation)
-                            {
-                                case 1:
-                                    imageToDraw.RotateFlip(RotateFlipType.RotateNoneFlipNone);
-                                    break;
-                                case 2:
-                                    imageToDraw.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                                    break;
-                                case 3:
-                                    imageToDraw.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                                    break;
-                                case 4:
-                                    imageToDraw.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                                    break;
-                            }
-
-                            graphics.DrawImage(imageToDraw, posX, posY, caseWidth, caseHeight);
+                            DrawWalls(lineCase);
                         }
-                        */
+                       
 
                         posX += caseWidth + caseSeparation;
                     }
@@ -182,6 +169,11 @@ namespace GameLib
                 {
                     foreach (var aCase in boardLine.LineContent)
                     {
+                        if (aCase.GetType() == typeof(VoidCase))
+                        {
+                            Rectangle r = new Rectangle(horizontalStartPoint.X, horizontalStartPoint.Y, caseWidth, caseHeight);
+                            graphics.FillRectangle(new HatchBrush(HatchStyle.DashedHorizontal, Color.Black, Color.DimGray), r);
+                        }
                         if (aCase.GetType() == typeof(WallCase))
                         {
                             Rectangle r = new Rectangle(horizontalStartPoint.X,horizontalStartPoint.Y, caseWidth,caseHeight);
@@ -200,21 +192,54 @@ namespace GameLib
                             graphics.FillRectangle(new HatchBrush(HatchStyle.Sphere, Color.Red, Color.White), r);
                             
                         }
-                        else
+                        else if (aCase.GetType() == typeof(TShapeCase))
+                        {
+                            switch (aCase.Orientation)
+                            {
+                                case 1:
+                                    horizontalLinePen.Color = Color.Yellow;
+                                    graphics.DrawLine(horizontalLinePen, horizontalStartPoint, horizontalEndPoint);
+                                    break;
+                                case 2:
+                                    verticalLinePen.Color = Color.Red;
+                                    verticalStartPoint.X += caseWidth;
+                                    verticalEndPoint.X += caseWidth;
+                                    graphics.DrawLine(verticalLinePen, verticalStartPoint, verticalEndPoint);
+                                    verticalStartPoint.X -= caseWidth;
+                                    verticalEndPoint.X -= caseWidth;
+                                    break;
+                                case 3:
+                                    horizontalLinePen.Color = Color.Blue;
+                                    horizontalStartPoint.Y += caseHeight;
+                                    horizontalEndPoint.Y += caseHeight;
+                                    graphics.DrawLine(horizontalLinePen, horizontalStartPoint, horizontalEndPoint);
+                                    horizontalStartPoint.Y -= caseHeight;
+                                    horizontalEndPoint.Y -= caseHeight;
+                                    break;
+                                case 4:
+                                    verticalLinePen.Color = Color.Green;
+                                    graphics.DrawLine(verticalLinePen, verticalStartPoint, verticalEndPoint);
+                                    break;
+                            }
+                        }
+      
+                        else if (aCase.GetType() != typeof(VoidCase) && aCase.GetType() != typeof(WallCase) && aCase.GetType() != typeof(StartCase) && aCase.GetType() != typeof(EndCase) && aCase.GetType() != typeof(TShapeCase))
                         {
                             //aCase.AssignWall();
                             if (aCase.Walls[0])
                             {
+                                horizontalLinePen.Color = Color.Yellow;
                                 graphics.DrawLine(horizontalLinePen, horizontalStartPoint, horizontalEndPoint);
 
                             }
                             else
                             {
-                                //graphics.DrawLine(Pens.Yellow, horizontalStartPoint, horizontalEndPoint);
+                                graphics.DrawLine(Pens.Black, horizontalStartPoint, horizontalEndPoint);
                             }
 
                             if (aCase.Walls[1])
                             {
+                                verticalLinePen.Color = Color.Red;
                                 verticalStartPoint.X += caseWidth;
                                 verticalEndPoint.X += caseWidth;
                                 graphics.DrawLine(verticalLinePen, verticalStartPoint, verticalEndPoint);
@@ -223,11 +248,16 @@ namespace GameLib
                             }
                             else
                             {
-                                //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
+                                verticalStartPoint.X += caseWidth;
+                                verticalEndPoint.X += caseWidth;
+                                graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
+                                verticalStartPoint.X -= caseWidth;
+                                verticalEndPoint.X -= caseWidth;
                             }
 
                             if (aCase.Walls[2])
                             {
+                                horizontalLinePen.Color = Color.Blue;
                                 horizontalStartPoint.Y += caseHeight;
                                 horizontalEndPoint.Y += caseHeight;
                                 graphics.DrawLine(horizontalLinePen, horizontalStartPoint, horizontalEndPoint);
@@ -236,17 +266,21 @@ namespace GameLib
                             }
                             else
                             {
-
-                                //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
+                                horizontalStartPoint.Y += caseHeight;
+                                horizontalEndPoint.Y += caseHeight;
+                                graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
+                                horizontalStartPoint.Y -= caseHeight;
+                                horizontalEndPoint.Y -= caseHeight;
                             }
 
                             if (aCase.Walls[3])
                             {
+                                verticalLinePen.Color = Color.Green;
                                 graphics.DrawLine(verticalLinePen, verticalStartPoint, verticalEndPoint);
                             }
                             else
                             {
-                                //graphics.DrawLine(Pens.White, verticalStartPoint, verticalEndPoint);
+                                graphics.DrawLine(Pens.Black, verticalStartPoint, verticalEndPoint);
                             }
                             Rectangle centerText = new Rectangle(horizontalStartPoint.X + caseWidth / 6, horizontalStartPoint.Y + caseHeight / 6, caseWidth , caseHeight );
                             graphics.DrawString($"{aCase.TypeToString()}",new Font(FontFamily.GenericMonospace,5,FontStyle.Regular ), Brushes.Yellow, centerText);
@@ -281,9 +315,39 @@ namespace GameLib
             return mapImage;
         }
 
-        public void ChangeStyle()
+        public void DrawWalls(Case aCase)
         {
-           
+
+            Point topLeftPoint = new Point(aCase.IndexX * caseWidth,aCase.IndexY * caseHeight);
+            Point topRightPoint = new Point((aCase.IndexX*caseWidth)+caseWidth, aCase.IndexY * caseHeight);
+            Point bottomLeftPoint = new Point(aCase.IndexX * caseWidth, (aCase.IndexY * caseHeight)+caseHeight);
+            Point bottomRightPoint = new Point((aCase.IndexX * caseWidth) + caseWidth, (aCase.IndexY * caseHeight) + caseHeight);
+
+
+            Pen topWallPen = new Pen(Color.Yellow,2);
+            Pen rightWallPen = new Pen(Color.Red, 2); ;
+            Pen bottomWallPen = new Pen(Color.Blue, 2); ;
+            Pen leftWallPen = new Pen(Color.Green, 2); ;
+
+            if (aCase.Walls[0])
+            {
+                
+                graphics.DrawLine(topWallPen,topLeftPoint, topRightPoint);
+            }
+            if (aCase.Walls[1])
+            {
+                graphics.DrawLine(rightWallPen,topRightPoint,bottomRightPoint);
+            }
+            if (aCase.Walls[2])
+            {
+                graphics.DrawLine(bottomWallPen,bottomRightPoint,bottomLeftPoint);
+
+            }
+            if (aCase.Walls[3])
+            {
+                graphics.DrawLine(leftWallPen,topLeftPoint,bottomLeftPoint);
+            }
         }
+
     }
 }

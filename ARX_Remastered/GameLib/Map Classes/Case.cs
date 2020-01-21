@@ -168,27 +168,6 @@ namespace GameLib
                         break;
                 }
             }
-            if (GetType() == typeof(CorridorCase))
-            {
-                switch (Orientation)
-                {
-                    case 1:
-                    case 3:
-                        walls[0] = false;
-                        walls[1] = true;
-                        walls[2] = false;
-                        walls[3] = true;
-                        break;
-                    case 2:
-                    case 4:
-                        walls[0] = true;
-                        walls[1] = false;
-                        walls[2] = true;
-                        walls[3] = false;
-                        break;
-
-                }
-            }
             if (GetType() == typeof(TShapeCase))
             {
                 switch (Orientation)
@@ -219,6 +198,25 @@ namespace GameLib
                         break;
                 }
             }
+            if (GetType() == typeof(CorridorCase))
+            {
+                switch (Orientation)
+                {
+                    case 1:
+                        walls[0] = false;
+                        walls[1] = true;
+                        walls[2] = false;
+                        walls[3] = true;
+                        break;
+                    case 2:
+                        walls[0] = true;
+                        walls[1] = false;
+                        walls[2] = true;
+                        walls[3] = false;
+                        break;
+
+                }
+            }
             if (GetType() == typeof(StartCase))
             {
                 walls[0] = false;
@@ -232,6 +230,13 @@ namespace GameLib
                 walls[1] = false;
                 walls[2] = false;
                 walls[3] = false;
+            }
+            if (GetType() == typeof(VoidCase))
+            {
+                walls[0] = true;
+                walls[1] = true;
+                walls[2] = true;
+                walls[3] = true;
             }
         }
         public int IndexX

@@ -33,7 +33,13 @@ namespace GameLib
 
         public void FromFile(string path)
         {
-            List<string> fileContent = new List<string>();
+            int indexX = 0;
+            int indexY = 0;
+
+            List<List<string>> fileContent = new List<List<string>>();
+            List<string> fileLine = new List<string>();
+
+
             using (var reader = new StreamReader(path))
             {
                 while (!reader.EndOfStream)
@@ -43,99 +49,94 @@ namespace GameLib
 
                     foreach (var value in values)
                     {
-                        fileContent.Add(value);
+                        fileLine.Add(value);
                     }
+
+                    fileContent.Add(fileLine);
+                    fileLine = new List<string>();
                 }
-
-                Case caseToAdd;
-                foreach (var acase in fileContent)
-                {
-                    if (acase == "11")
-                    {
-                       
-                    }
-                    if (acase == "12")
-                    {
-
-                    }
-                    if (acase == "13")
-                    {
-
-                    }
-                    if (acase == "14")
-                    {
-
-                    }
-
-                    if (acase == "21")
-                    {
-
-                    }
-                    if (acase == "22")
-                    {
-
-                    }
-                    if (acase == "23")
-                    {
-
-                    }
-                    if (acase == "24")
-                    {
-
-                    }
-
-                    if (acase == "31")
-                    {
-
-                    }
-                    if (acase == "32")
-                    {
-
-                    }
-
-                    if (acase == "41")
-                    {
-
-                    }
-
-                    if (acase == "51")
-                    {
-
-                    }
-                    if (acase == "52")
-                    {
-
-                    }
-                    if (acase == "53")
-                    {
-
-                    }
-                    if (acase == "54")
-                    {
-
-                    }
-                    if (acase == "61")
-                    {
-
-                    }
-                    if (acase == "71")
-                    {
-
-                    }
-                    if (acase == "8")
-                    {
-
-                    }
-
-                    if (acase == "9")
-                    {
-                        
-                    }
-                }
-
             }
-            
 
+            BoardLine tempBoardLine = new BoardLine();
+
+                foreach (var line in fileContent)
+                {
+                    foreach (var acase in line)
+                    {
+                        Case caseToAdd = new VoidCase(indexX,indexY);
+                        switch (acase)
+                        {
+                            case "11":
+                                caseToAdd = new CornerCase(indexX, indexY, 1);
+                                break;
+                            case "12":
+                                caseToAdd = new CornerCase(indexX, indexY, 2);
+                                break;
+                            case "13":
+                                caseToAdd = new CornerCase(indexX, indexY, 3);
+                                break;
+                            case "14":
+                                caseToAdd = new CornerCase(indexX, indexY, 4);
+                                break;
+                            case "21":
+                                caseToAdd = new DeadEnd(indexX, indexY, 1);
+                                break;
+                            case "22":
+                                caseToAdd = new DeadEnd(indexX, indexY, 2);
+                                break;
+                            case "23":
+                                caseToAdd = new DeadEnd(indexX, indexY, 3);
+                                break;
+                            case "24":
+                                caseToAdd = new DeadEnd(indexX, indexY, 4);
+                                break;
+                            case "31":
+                                caseToAdd = new CorridorCase(indexX, indexY, 1);
+                                break;
+                            case "32":
+                                caseToAdd = new CorridorCase(indexX, indexY, 2);
+                                break;
+                            case "41":
+                                caseToAdd = new CrosswayCase(indexX, indexY, 1);
+                                break;
+                            case "51":
+                                caseToAdd = new TShapeCase(indexX, indexY, 1);
+                                break;
+                            case "52":
+                                caseToAdd = new TShapeCase(indexX, indexY, 2);
+                                break;
+                            case "53":
+                                caseToAdd = new TShapeCase(indexX, indexY, 3);
+                                break;
+                            case "54":
+                                caseToAdd = new TShapeCase(indexX, indexY, 4);
+                                break;
+                            case "61":
+                                caseToAdd = new VoidCase(indexX, indexY);
+                                break;
+                            case "71":
+                                caseToAdd = new WallCase(indexX, indexY);
+                                break;
+                            case "8":
+                                caseToAdd = new StartCase(indexX, indexY, 1);
+                                break;
+                            case "9":
+                                caseToAdd = new EndCase(indexX, indexY, 1);
+                                break;
+
+                               
+                        }
+                        caseToAdd.AssignWall();
+                        tempBoardLine.AddCase(caseToAdd);
+                        indexX++;
+                    }
+                    this.AddLine(tempBoardLine);
+                    tempBoardLine = new BoardLine();
+                    indexX = 0;
+                    indexY++;
+                }
+
+            
         }
         public void AddLine(BoardLine boardLine)
         {
