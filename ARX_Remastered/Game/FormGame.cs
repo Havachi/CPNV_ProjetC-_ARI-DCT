@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using System.CodeDom;
 using System.Data;
 using System.IO;
+using System.Reflection;
+using System.Threading;
 using Microsoft.CSharp;
 using GameLib;
 
@@ -490,18 +492,12 @@ namespace Game
 
                 /// Q
                 case (char) 113:
-                    if (inMenu) Close();
-                    if (inFirstMenu) Close();
+                    if (inMenu) Application.Exit();
+                    if (inFirstMenu) Application.Exit();
                     break;
 
                 /// Esc  
                 case (char) 27:
-                    if (inInventory)
-                    {
-                        inInventory = false;
-                        inGame = true;
-                    }
-                    
                     if (inMenu)
                     {
 
@@ -519,7 +515,11 @@ namespace Game
                         inGame = false;
                         inMenu = true;
                     }
-                    
+                    if (inInventory)
+                    {
+                        inInventory = false;
+                        inGame = true;
+                    }
                     if (inFirstMenu)
                     {
                         // TODO pbx_FormGameGame.Load("spawn");
@@ -554,6 +554,7 @@ namespace Game
                         inGame = true;
                         backToGame = false;
                     }
+                    Thread.Sleep(250);
                     break;
             }
 
