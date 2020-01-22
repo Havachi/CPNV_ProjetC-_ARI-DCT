@@ -15,6 +15,7 @@ namespace MainMenu
         private string passwordCheck;
         private string userEmail;
         private string username;
+        private bool isLogged;
 
         public FormRegister()
         {
@@ -39,7 +40,7 @@ namespace MainMenu
             username = (userEmail.Split('@')[0]);
             Register register = new Register(userEmail, username, password, passwordCheck);
             try
-            {
+            { 
                 if (register.RegisterInDb(register))
                 {
                     MessageBox.Show(@"Votre compte a été créé");
@@ -55,7 +56,6 @@ namespace MainMenu
             catch (UserEmailAlreadyExistException exception)
             {
                 MessageBox.Show(exception.Message.ToString());
-                throw;
             }
         }
 
@@ -66,6 +66,11 @@ namespace MainMenu
         private void btnRegisterCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MainMenu
         public Form formLogin;
         private string password;
         private string userEmail;
-
+        private bool isLogged;
         public FormLogin()
         {
             InitializeComponent();
@@ -60,12 +60,18 @@ namespace MainMenu
             {
                 formRegister.ShowDialog(this);
                 userEmail = formRegister.UserEmail;
+                this.isLogged = formRegister.IsLogged;
                 Close();
             }
         }
 
         private void tbxLoginPassword_TextChanged(object sender, EventArgs e)
         {
+        }
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
         }
     }
 }

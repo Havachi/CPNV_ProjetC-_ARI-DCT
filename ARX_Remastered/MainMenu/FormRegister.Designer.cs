@@ -35,7 +35,7 @@
             this.tbxRegisterPasswordCheck = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // btnRegisterConnexion
+            // btnRegisterCancel
             // 
             this.btnRegisterConnexion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRegisterConnexion.Image = global::MainMenu.Properties.Resources.btnCancel;
@@ -85,6 +85,7 @@
             // 
             // FormRegister
             // 
+            this.AcceptButton = this.btnRegisterRegister;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MainMenu.Properties.Resources.BCK_Register;

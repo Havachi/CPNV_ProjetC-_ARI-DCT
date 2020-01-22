@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -83,6 +84,13 @@
     <Compile Include="PlayerTests\PlayerTest.cs" />
     <Compile Include="MapTests\GenerationTest.cs" />
     <Compile Include="MapTests\MapGraphicsTest.cs" />
+    <Compile Include="VisualTests\ProceduralGenerationShowImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualTests\ProceduralGenerationShowImage.Designer.cs">
+      <DependentUpon>ProceduralGenerationShowImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VisualTests\TestGenerateWithVisual.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -105,7 +113,11 @@
       <Name>MainMenu</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="VisualTests\ProceduralGenerationShowImage.resx">
+      <DependentUpon>ProceduralGenerationShowImage.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

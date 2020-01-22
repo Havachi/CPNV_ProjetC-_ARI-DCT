@@ -13,10 +13,11 @@ namespace MainMenu
     public partial class FormMainMenu : Form
     {
         private string userEmail;
-
+        private bool isLogged;
         public FormMainMenu()
         {
             InitializeComponent();
+            this.Tag = isLogged;
         }
 
         public string UserEmail
@@ -79,5 +80,11 @@ namespace MainMenu
             // Save the settings
             Settings.Default.Save();
         }
+        public bool IsLogged
+        {
+            get { return isLogged; }
+            set { isLogged = value; }
+        }
+        
     }
 }
