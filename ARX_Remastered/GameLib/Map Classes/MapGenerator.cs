@@ -41,7 +41,6 @@ namespace GameLib
             }
             else
             {
-                pathToFixedMap = $@"{projectPath}\TestMap\map1.csv";
                 
                 board = GenerateFixedMap();
             }
@@ -59,6 +58,7 @@ namespace GameLib
         public Board GenerateFixedMap()
         {
             Board fixedBoard = new Board(30,30);
+            pathToFixedMap = $@"{projectPath}\TestMap\map1.csv";
             fixedBoard.FromFile(pathToFixedMap);
             return fixedBoard;
         }

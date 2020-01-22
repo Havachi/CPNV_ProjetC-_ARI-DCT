@@ -25,7 +25,7 @@ namespace GameLib
         private int caseSeparation = 0;
 
         private bool useDrawByType = true;
-        private bool showWalls = true;
+        private bool showWalls = false;
 
         public MapDrawer(Board board)
         {
@@ -60,12 +60,12 @@ namespace GameLib
             Image startImage = Image.FromFile($@"{mapAssetsPath}\Start\Start{caseWidth}x{caseHeight}.bmp");
 
             //stream for the savingpath
-            Stream stream = new FileStream($@"{mapSavePath}\Map{mapImage.ImageWidth}x{mapImage.ImageHeight}.bmp", FileMode.Create);
+            Stream stream = new FileStream($@"{mapSavePath}\Map.bmp", FileMode.Create);
 
             //drawing tools
             HatchBrush brick = new HatchBrush(HatchStyle.HorizontalBrick, Color.Aquamarine, Color.Gray);
             HatchBrush other = new HatchBrush(HatchStyle.Trellis, Color.Black, Color.Transparent);
-            HatchStyle terrainStyle = HatchStyle.Percent90;
+            HatchStyle terrainStyle = HatchStyle.HorizontalBrick;
             HatchStyle startStyle = HatchStyle.Sphere;
 
             Pen horizontalLinePen;
@@ -225,7 +225,7 @@ namespace GameLib
       
                         else if (aCase.GetType() != typeof(VoidCase) && aCase.GetType() != typeof(WallCase) && aCase.GetType() != typeof(StartCase) && aCase.GetType() != typeof(EndCase) && aCase.GetType() != typeof(TShapeCase))
                         {
-                            //aCase.AssignWall();
+                            aCase.AssignWall();
                             if (aCase.Walls[0])
                             {
                                 horizontalLinePen.Color = Color.Yellow;
@@ -311,7 +311,7 @@ namespace GameLib
 
 
             mapImage.MapBitmap.Save(stream,ImageFormat.Bmp);
-
+            stream.Close();
             return mapImage;
         }
 
@@ -331,7 +331,6 @@ namespace GameLib
 
             if (aCase.Walls[0])
             {
-                
                 graphics.DrawLine(topWallPen,topLeftPoint, topRightPoint);
             }
             if (aCase.Walls[1])
@@ -341,7 +340,6 @@ namespace GameLib
             if (aCase.Walls[2])
             {
                 graphics.DrawLine(bottomWallPen,bottomRightPoint,bottomLeftPoint);
-
             }
             if (aCase.Walls[3])
             {
