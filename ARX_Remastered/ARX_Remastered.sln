@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A5839A29
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{3D2526A6-AD79-4101-A3A0-D39755F1811E}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ARX_Rmastered-Setup", "ARX_Rmastered-Setup\ARX_Rmastered-Setup.vdproj", "{9EFDD148-7E2C-41AF-950E-857D92132BB0}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ARX_Remastered", "ARX_Remastered\ARX_Remastered.vdproj", "{4BC8E070-71F5-4F4B-A947-6DAED647DD27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,8 +53,8 @@ Global
 		{3D2526A6-AD79-4101-A3A0-D39755F1811E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D2526A6-AD79-4101-A3A0-D39755F1811E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D2526A6-AD79-4101-A3A0-D39755F1811E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9EFDD148-7E2C-41AF-950E-857D92132BB0}.Debug|Any CPU.ActiveCfg = Debug
-		{9EFDD148-7E2C-41AF-950E-857D92132BB0}.Release|Any CPU.ActiveCfg = Release
+		{4BC8E070-71F5-4F4B-A947-6DAED647DD27}.Debug|Any CPU.ActiveCfg = Debug
+		{4BC8E070-71F5-4F4B-A947-6DAED647DD27}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

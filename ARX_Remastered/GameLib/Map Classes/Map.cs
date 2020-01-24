@@ -51,6 +51,5 @@ namespace GameLib
         {
             get { return gameBoard; }
         }
-        
     }
 }

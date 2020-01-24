@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using System.CodeDom;
 using System.Data;
 using System.IO;
+using System.Reflection;
+using System.Threading;
 using Microsoft.CSharp;
 using GameLib;
 
@@ -35,6 +37,8 @@ namespace Game
         private string imagename;
         private string projectPath;
         private GameLib.Game currentGame = new GameLib.Game();
+        private GameLib.Player player = new GameLib.Player();
+        private Position position;
 
 
         public FormGame(string lblUsername)
@@ -45,14 +49,15 @@ namespace Game
             inFirstMenu = true;
             selectedPixelColor = Properties.Resources.Selected.GetPixel(50, 50);
             lblGameUserLogged.Text = @"Logged as : " + lblUsername;
+
             //TEMP
             objectiv = "TEMP Trouvez la sortie ";
             lblPrimaryObjectiv.Text = @"Objectif Principal : " + objectiv;
 
             //Path for debug
-            projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            //projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
             //Path for setup
-            //projectPath = System.IO.Directory.GetCurrentDirectory();
+            projectPath = System.IO.Directory.GetCurrentDirectory();
 
 
             pbxFormGameGame.Load($@"{projectPath}/Pics/FirstMenu.png");
@@ -490,18 +495,12 @@ namespace Game
 
                 /// Q
                 case (char) 113:
-                    if (inMenu) Close();
-                    if (inFirstMenu) Close();
+                    if (inMenu) Application.Exit();
+                    if (inFirstMenu) Application.Exit();
                     break;
 
                 /// Esc  
                 case (char) 27:
-                    if (inInventory)
-                    {
-                        inInventory = false;
-                        inGame = true;
-                    }
-                    
                     if (inMenu)
                     {
 
@@ -519,7 +518,11 @@ namespace Game
                         inGame = false;
                         inMenu = true;
                     }
-                    
+                    if (inInventory)
+                    {
+                        inInventory = false;
+                        inGame = true;
+                    }
                     if (inFirstMenu)
                     {
                         // TODO pbx_FormGameGame.Load("spawn");
@@ -554,6 +557,7 @@ namespace Game
                         inGame = true;
                         backToGame = false;
                     }
+                    Thread.Sleep(250);
                     break;
             }
 
@@ -577,7 +581,11 @@ namespace Game
             };
             return matches;
         }
-        
+        public Position Position
+        {
+            get{ return position;}
+            set { position = value; }
+        }
         public string CheckActivePbx()
         {
             ///Fuction to know wich slot is active

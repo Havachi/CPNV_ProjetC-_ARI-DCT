@@ -52,6 +52,8 @@
             this.ControlBox = false;
             this.Controls.Add(this.btnLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximumSize = new System.Drawing.Size(800, 600);
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "FormMainMenu";
             this.Text = "ARX_Remastered : Main Menu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainMenu_Closing);
