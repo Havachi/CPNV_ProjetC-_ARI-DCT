@@ -46,8 +46,8 @@ namespace GameLib
             Point verticalEndPoint = new Point();
             
 
-            string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
             //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            string projectPath = System.IO.Directory.GetCurrentDirectory();
             string mapAssetsPath = $@"{projectPath}\Assets\Map";
             string mapSavePath = $@"{projectPath}\Outputs";
 

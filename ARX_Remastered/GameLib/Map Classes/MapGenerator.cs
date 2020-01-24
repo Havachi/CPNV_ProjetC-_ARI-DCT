@@ -20,8 +20,8 @@ namespace GameLib
 
         private Position startPosition;
         private Position endPosition;
-        private string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-        //private string projectPath = System.IO.Directory.GetCurrentDirectory();
+        //private string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+        private string projectPath = System.IO.Directory.GetCurrentDirectory();
         private string pathToFixedMap;
 
 
@@ -58,7 +58,7 @@ namespace GameLib
         public Board GenerateFixedMap()
         {
             Board fixedBoard = new Board(30,30);
-            pathToFixedMap = $@"{projectPath}\TestMap\map1.csv";
+            pathToFixedMap = $@"{projectPath}\Maps\map1.csv";
             fixedBoard.FromFile(pathToFixedMap);
             return fixedBoard;
         }

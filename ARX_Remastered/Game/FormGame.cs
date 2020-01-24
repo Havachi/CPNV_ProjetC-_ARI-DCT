@@ -55,9 +55,9 @@ namespace Game
             lblPrimaryObjectiv.Text = @"Objectif Principal : " + objectiv;
 
             //Path for debug
-            projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            //projectPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
             //Path for setup
-            //projectPath = System.IO.Directory.GetCurrentDirectory();
+            projectPath = System.IO.Directory.GetCurrentDirectory();
 
 
             pbxFormGameGame.Load($@"{projectPath}/Pics/FirstMenu.png");
