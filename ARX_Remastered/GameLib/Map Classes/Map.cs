@@ -32,7 +32,6 @@ namespace GameLib
             mapDrawer = new MapDrawer(mapGenerator.Board);
             gameBoard = mapGenerator.Board;
         }
-
         public Map(int mapMaxHeight, int mapMaxWidth)
         {
             mapGenerator = new MapGenerator(mapMaxHeight, mapMaxWidth, randomGeneration);
@@ -52,6 +51,5 @@ namespace GameLib
         {
             get { return gameBoard; }
         }
-        
     }
 }

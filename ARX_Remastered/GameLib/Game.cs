@@ -21,7 +21,7 @@ namespace GameLib
         public Game()
         {
             player = new Player();
-            map = new Map(30, 30, true);
+            map = new Map(30, 30, false);
         }
         /// <summary>
         /// Constructor for games used when the player already exist
